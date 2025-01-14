@@ -43,7 +43,7 @@ cmd({
 
         // Message Alive
         const aliveMessage = `
-🌟 *KERM MD V4 STATUS* 🌟
+🌟 *KERM MD V1 STATUS* 🌟
 
 🕒 *Time*: ${currentTime}
 📅 *Date*: ${currentDate}
