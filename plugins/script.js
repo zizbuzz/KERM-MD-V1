@@ -27,10 +27,10 @@ let repo =`
 *|* *KG TECH🇨🇲*
 
 > *KERM_MD-V4 REPO:*
-*|* *https://github.com/Kgtech-cmr/KERM_MD-V4*
+ | https://github.com/Kgtech-cmr/KERM-MD-V1
 
 > *SUPPORT GROUP:*
-*|* *https://whatsapp.com/channel/0029Vafn6hc7DAX3fzsKtn45*
+ | https://whatsapp.com/channel/0029Vafn6hc7DAX3fzsKtn45
 *╰──────────────●●►*
 
 > *CREATED BY KG TECH*
@@ -47,10 +47,10 @@ await conn.sendMessage(from, { text: repo ,
       serverMessageId: 999
     },
 externalAdReply: { 
-title: 'Kᴇʀᴍ_Mᴅ-V4',
+title: 'Kᴇʀᴍ_Mᴅ-V1',
 body: `${pushname}`,
 mediaType: 1,
-sourceUrl: "https://github.com/Kgtech-cmr/KERM_MD-V4" ,
+sourceUrl: "https://github.com/Kgtech-cmr/KERM-MD-V1" ,
 thumbnailUrl: "https://files.catbox.moe/osriwc.jpg" ,
 renderLargerThumbnail: true,
 showAdAttribution: true
