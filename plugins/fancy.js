@@ -1,16 +1,15 @@
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
 
-
-
-
-
-
-
-
-
-
-
-
-
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
+*/
 
 const { cmd } = require('../command');
 const axios = require('axios');
@@ -41,7 +40,7 @@ cmd({
             .join('\n\n'); // Join multiple fonts with spacing
 
         // Reply with the formatted fonts and credit message
-        reply(`*KERM_MD-V4 FANCY FONTS:*\n\n${formattedFonts}\n\n> *BY KG TECH*`);
+        reply(`*KERM_MD-V1 FANCY FONTS:*\n\n${formattedFonts}\n\n> *BY KG TECH*`);
     } catch (error) {
         // Log and display an error message if something goes wrong
         console.error(error);
