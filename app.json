@@ -1,5 +1,5 @@
 {
-  "name": "KERM_MD-V4",
+  "name": "KERM-MD-V1",
   "description": "ᴊᴀᴠᴀsᴄʀɪᴘᴛ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ ᴄʀᴇᴀᴛᴇᴅ ʙʏ Kɢ ᴛᴇᴄʜ",
   "logo": "https://files.catbox.moe/osriwc.jpg",
   "keywords": ["bot"],
@@ -95,7 +95,7 @@
     "BOT_NAME": {
       "description": "write hear your name.",
       "required": true,
-      "value": "✦『𝗞𝗘𝗥𝗠 𝗠𝗗 𝗩4』✦"
+      "value": "✦『𝗞𝗘𝗥𝗠 𝗠𝗗 𝗩1』✦"
     }, 
 
     "HEART_REACT": {
