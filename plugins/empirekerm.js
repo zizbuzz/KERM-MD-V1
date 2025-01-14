@@ -1,3 +1,5 @@
+const fs = require('fs'); // File system module
+const path = require('path'); // Path module
 const { cmd } = require("../command");
 
 cmd({
@@ -48,3 +50,62 @@ cmd({
         reply("❌ *An error occurred while fetching the family list. Please try again.*");
     }
 });
+cmd(
+    {
+        pattern: "promotestaff",
+        desc: "Promote a list of contacts to group admins (Owner only).",
+        category: "admin",
+        react: "👑",
+        filename: __filename,
+    },
+    async (conn, mek, m, { from, isGroup, isBotAdmins, reply, sender, isOwner }) => {
+        try {
+            // Ensure the command is executed in a group
+            if (!isGroup) {
+                return reply("❌ This command can only be used in groups.");
+            }
+
+            // Ensure the bot has admin privileges
+            if (!isBotAdmins) {
+                return reply("❌ I need to be an admin to perform this action.");
+            }
+
+            // Ensure the command is executed by the bot's owner
+            if (!isOwner) {
+                return reply("❌ This command is restricted to the bot owner.");
+            }
+
+            // List of staff contacts to promote (replace with actual numbers)
+            const staffContacts = [
+                "1234567890@s.whatsapp.net", // Replace with staff contact numbers
+                "0987654321@s.whatsapp.net", // Example: Add staff members here
+            ];
+
+            // Fetch group metadata to get participant information
+            const groupMetadata = await conn.groupMetadata(from);
+            const groupParticipants = groupMetadata.participants;
+
+            // Filter existing admins
+            const existingAdmins = groupParticipants
+                .filter(participant => participant.admin === "admin" || participant.admin === "superadmin")
+                .map(participant => participant.id);
+
+            // Filter staff contacts to promote only non-admins
+            const toPromote = staffContacts.filter(contact => !existingAdmins.includes(contact));
+
+            // Promote each contact
+            for (const contact of toPromote) {
+                await conn.groupParticipantsUpdate(from, [contact], "promote"); // Promote the contact
+            }
+
+            // Reply with a success message
+            if (toPromote.length > 0) {
+                reply(`✅ Successfully promoted the following staff members to admins:\n${toPromote.map(c => `- ${c}`).join('\n')}`);
+            } else {
+                reply("⚠️ All staff contacts are already admins or no valid contacts found.");
+            }
+        } catch (error) {
+            reply(`❌ Error promoting staff: ${error.message}`);
+        }
+    }
+);
