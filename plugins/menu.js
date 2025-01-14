@@ -43,7 +43,7 @@ let madeMenu = `╭━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 *❖│▸* *ᴍᴏᴅᴇ* : *[${config.MODE}]*
 *❖│▸* *ᴘʀᴇғɪx* : *[${config.PREFIX}]*
 *❖│▸* *ʀᴀᴍ ᴜsᴇ* : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${Math.round(require('os').totalmem / 1024 / 1024)}MB
-*❖│▸* *ɴᴀᴍᴇ ʙᴏᴛ* : *❖『𝗞𝗘𝗥𝗠 𝗠𝗗 𝗩4』❖*
+*❖│▸* *ɴᴀᴍᴇ ʙᴏᴛ* : *❖『𝗞𝗘𝗥𝗠 𝗠𝗗 𝗩1』❖*
 *❖│▸* *ᴄʀᴇᴀᴛᴏʀ* : *➺Kɢ Tᴇᴄʜ࿐*
 *❖│▸* *ᴀʟᴡᴀʏs ᴏɴʟɪɴᴇ* : *[${config.ALWAYS_ONLINE}]*
 *❖│▸* *ᴠᴇʀsɪᴏɴs* : *ᴠ.4.1.0*
