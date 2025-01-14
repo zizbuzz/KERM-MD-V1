@@ -12,9 +12,6 @@ Github: Kgtech-cmr
 */
 
 
-
-
-
 const axios = require('axios');
 const { cmd, commands } = require('../command');
 
@@ -31,7 +28,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         const response = await axios.get(apiUrl);
         const data = response.data;
 
-        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
+        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
     } catch (e) {
         console.log(e);
         reply(`*Error Fetching Anime Girl image*: ${e.message}`);
@@ -51,7 +48,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         const response = await axios.get(apiUrl);
         const data = response.data;
 
-        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
+        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
     } catch (e) {
         console.log(e);
         reply(`*Error Fetching Anime Girl image*: ${e.message}`);
@@ -71,7 +68,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         const response = await axios.get(apiUrl);
         const data = response.data;
 
-        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
+        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
     } catch (e) {
         console.log(e);
         reply(`*Error Fetching Anime Girl image*: ${e.message}`);
@@ -91,7 +88,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         const response = await axios.get(apiUrl);
         const data = response.data;
 
-        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
+        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
     } catch (e) {
         console.log(e);
         reply(`*Error Fetching Anime Girl image*: ${e.message}`);
@@ -111,7 +108,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         const response = await axios.get(apiUrl);
         const data = response.data;
 
-        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
+        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
     } catch (e) {
         console.log(e);
         reply(`*Error Fetching Anime Girl image*: ${e.message}`);
@@ -131,7 +128,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         const response = await axios.get(apiUrl);
         const data = response.data;
 
-        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
+        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
     } catch (e) {
         console.log(e);
         reply(`*Error Fetching Anime Girl image*: ${e.message}`);
@@ -152,7 +149,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         const response = await axios.get(apiUrl);
         const data = response.data;
 
-        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ_ᴍᴅ-ᴠ4 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
+        await conn.sendMessage(from, { image: { url: data.url }, caption: '👸 *Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʀᴀɴᴅᴏᴍ ᴀɴɪᴍᴇ ɢɪʀʟ ɪᴍᴀɢᴇs* 👸\n\n\n *🧬©Kᴇʀᴍ-ᴍᴅ-ᴠ1 ʙʏ Kɢ Tᴇᴄʜ*' }, { quoted: mek });
     } catch (e) {
         console.log(e);
         reply(`*Error Fetching Anime Girl image*: ${e.message}`);
