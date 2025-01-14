@@ -1,13 +1,15 @@
-/*created by Kgtech 🕵
-contact dev1 237656520674 ♻️
-contact dev2 237650564445 ♻️
-© Copy coder alert ⚠
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
+
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
 */
-
-
-
-
-
 
 const {cmd , commands} = require('../command');
 
@@ -21,7 +23,7 @@ cmd({
 async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const steps = [
-            '💻 *KERM_MD-V4 HACK STARTING...* 💻',
+            '💻 *KERM-MD-V1 HACK STARTING...* 💻',
             '',
             '*Initializing hacking tools...* 🛠️',
             '*Connecting to remote servers...* 🌐',
