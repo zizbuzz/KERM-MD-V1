@@ -10,7 +10,7 @@
 -------
 
  <p align="center">
-  <a href="#"><img src="http://readme-typing-svg.herokuapp.com?color=00008B&center=true&vCenter=true&multiline=false&lines=`KERM+-+MD+-+V4+WHATSAPP+BOT`" alt="">
+  <a href="#"><img src="http://readme-typing-svg.herokuapp.com?color=00008B&center=true&vCenter=true&multiline=false&lines=`KERM+-+MD+-+V1+WHATSAPP+BOT`" alt="">
 
 <br>
 
@@ -18,23 +18,23 @@
 
 <p align="center">
 <a href="https://github.com/Kgtech-cmr/"><img title="Followers" src="https://img.shields.io/github/followers/Kgtech-cmr?color=blue&style=flat-square"></a>
-<a href="https://github.com/Kgtech-cmr/KERM_MD-V4/stargazers/"><img title="Stars" src="https://img.shields.io/github/stars/Kgtech-cmr/KERM_MD-V4?color=blue&style=flat-square"></a>
-<a href="https://github.com/Kgtech-cmr/KERM_MD-V4/network/members"><img title="Forks" src="https://img.shields.io/github/forks/Kgtech-cmr/KERM_MD-V4?color=blue&style=flat-square"></a>
-<a href="https://github.com/Kgtech-cmr/KERM_MD-V4/"><img title="Size" src="https://img.shields.io/github/repo-size/Kgtech-cmr/KERM_MD-V4?style=flat-square&color=blue"></a>
-<a href="https://github.com/Kgtech-cmr/KERM_MD-V4/graphs/commit-activity"><img height="20" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg"></a>&nbsp;&nbsp;
+<a href="https://github.com/Kgtech-cmr/KERM-MD-V4/stargazers/"><img title="Stars" src="https://img.shields.io/github/stars/Kgtech-cmr/KERM-MD-V1?color=blue&style=flat-square"></a>
+<a href="https://github.com/Kgtech-cmr/KERM-MD-V4/network/members"><img title="Forks" src="https://img.shields.io/github/forks/Kgtech-cmr/KERM-MD-V1?color=blue&style=flat-square"></a>
+<a href="https://github.com/Kgtech-cmr/KERM-MD-V4/"><img title="Size" src="https://img.shields.io/github/repo-size/Kgtech-cmr/KERM-MD-V1?style=flat-square&color=blue"></a>
+<a href="https://github.com/Kgtech-cmr/KERM-MD-V4/graphs/commit-activity"><img height="20" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg"></a>&nbsp;&nbsp;
 </p>
 <p align='center'>
 </p>
 
 -----------
-<div align="center"><br> <img src="https://profile-counter.glitch.me/SILENT-SOBX-MD/count.svg" /><br>KERM_MD-V4</div>
+<div align="center"><br> <img src="https://profile-counter.glitch.me/KERM-MD-V1/count.svg" /><br>KERM-MD-V1</div>
 
 ------------
 
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 
-[![FORK KERM_MD-V4](https://img.shields.io/badge/FORK%20-KERM%20MD%20V4-white)](https://github.com/Kgtech-cmr/KERM_MD-V4/fork)
+[![FORK KERM_MD-V4](https://img.shields.io/badge/FORK%20-KERM%20MD%20V4-white)](https://github.com/Kgtech-cmr/KERM-MD-V1/fork)
 
 ### <br>    ❖ SESSION_ID ❖
 
@@ -64,12 +64,12 @@
 -------
 
 <p align="center">
-  <a href="https://wa.me/+237656520674?text=*ʜɪɪ+ᴋᴇʀᴍ+ɪ+ɴᴇᴇᴅ+ʜᴇʟᴘ!.+ɪ+ᴍᴇssᴀɢᴇᴅ+ʏᴏᴜ+ғʀᴏᴍ+ᴋᴇʀᴍ-ᴍᴅ-ᴠ4+ʀᴇᴘᴏ!!*" target="_blank">
+  <a href="https://wa.me/+237656520674?text=*ʜɪɪ+ᴋᴇʀᴍ+ɪ+ɴᴇᴇᴅ+ʜᴇʟᴘ!.+ɪ+ᴍᴇssᴀɢᴇᴅ+ʏᴏᴜ+ғʀᴏᴍ+ᴋᴇʀᴍ-ᴍᴅ-ᴠ1+ʀᴇᴘᴏ!!*" target="_blank">
     <img alt="whatsapp" src="https://img.shields.io/badge/ Whatsapp -25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
 
 -----------    
 
-`✠ IF YOU WANT MORE ABOUT KERM MD V4 WHATSAPP BOT :-NEW UPDATED NEW CMDS SO JOIN OUR WHATSAPP CHANNEL FOR MORE INFORMATION CLICK THIS RED BUTTON 🔳 AND JOIN THE GROUP ✠`
+`✠ IF YOU WANT MORE ABOUT KERM MD V1 WHATSAPP BOT :-NEW UPDATED NEW CMDS SO JOIN OUR WHATSAPP CHANNEL FOR MORE INFORMATION CLICK THIS RED BUTTON 🔳 AND JOIN THE GROUP ✠`
 
 ---------
 
@@ -77,7 +77,7 @@
 
 -----------
 
-`✠ IF YOU WANT MORE ABOUT KERM MD V4 WHATSAPP BOT :-NEW UPDATED NEW CMDS SO SUBSCRIBE OUR YOUTUBE CHANNEL FOR MORE INFORMATION CLICK THIS BLUE BUTTON 🔳 AND JOIN THE YOUTUBE CHANNEL ✠`
+`✠ IF YOU WANT MORE ABOUT KERM MD V1 WHATSAPP BOT :-NEW UPDATED NEW CMDS SO SUBSCRIBE OUR YOUTUBE CHANNEL FOR MORE INFORMATION CLICK THIS BLUE BUTTON 🔳 AND JOIN THE YOUTUBE CHANNEL ✠`
 
 ----------
 
@@ -87,11 +87,11 @@
  
 ### <br>   ❖ DEPLOY_HEROKU ❖
 
-`✠ IF YOU WANT TO DEPLOY KERM MD V4 BOT ON HEROKU SO FIRST GET YOUR SESSION_ID THEN CLICK THIS BLUE BUTTON [DEPLOY TO HEROKU] THEN YOU CAN ENJOY THIS BOT ✠`
+`✠ IF YOU WANT TO DEPLOY KERM MD V1 BOT ON HEROKU SO FIRST GET YOUR SESSION_ID THEN CLICK THIS BLUE BUTTON [DEPLOY TO HEROKU] THEN YOU CAN ENJOY THIS BOT ✠`
 
 ------------
  
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new-app?template=https://github.com/Kgtech-cmr/KERM_MD-V4)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new-app?template=https://github.com/Kgtech-cmr/KERM-MD-V1)
 
 ----------
 
@@ -109,13 +109,13 @@
 
 -------------
 
-<p align="left"><a href="https://repl.it/github/Kgtech-cmr/KERM_MD-V4"> <img src='https://img.shields.io/badge/-REPLIT-orange?style=for-the-badge&logo=replit&logoColor=white'/></a>
+<p align="left"><a href="https://repl.it/github/Kgtech-cmr/KERM-MD-V1"> <img src='https://img.shields.io/badge/-REPLIT-orange?style=for-the-badge&logo=replit&logoColor=white'/></a>
 
 --------------
 
 ### <br>   ❖ DEPLOY_KOYEB ❖
 
-`✠ IF YOU HAVE YOUR KOYEB ACCOUNT SO YOU CAN DEPLOY KERM MD V4 ON KOYEB WITH EASY SETUP NOTE:-MAYBE SOME PROBLEM TO DEPLOY ON KOYEB I ILL FIX SOON ✠`
+`✠ IF YOU HAVE YOUR KOYEB ACCOUNT SO YOU CAN DEPLOY KERM MD V1 ON KOYEB WITH EASY SETUP NOTE:-MAYBE SOME PROBLEM TO DEPLOY ON KOYEB I ILL FIX SOON ✠`
 
 ---------
 
@@ -125,7 +125,7 @@
 
 ### <br>  ❖ DEPLOY_RAILWAY ❖
 
-`✠ IF YOU HAVE YOUR RAILWAY ACCOUNT SO YOU CAN DEPLOY KERM MD V4 ON RAILWAY WITH EASY SETUP NOTE:-MAYBE SOME PROBLEM TO DEPLOY ON KOYEB I ILL FIX SOON ✠`
+`✠ IF YOU HAVE YOUR RAILWAY ACCOUNT SO YOU CAN DEPLOY KERM MD V1 ON RAILWAY WITH EASY SETUP NOTE:-MAYBE SOME PROBLEM TO DEPLOY ON KOYEB I ILL FIX SOON ✠`
 
 --------
 
@@ -153,7 +153,7 @@
 <a href='https://dashboard.render.com' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/RENDER-h?color=maroon&style=for-the-badge&logo=render'/></a></p>
 
 -----------
-`✠ HOW TO DEPLOY KERM MD V4 ON WORKFLOWS FREE GITHUB WATCH VIDEO ✠`
+`✠ HOW TO DEPLOY KERM MD V1 ON WORKFLOWS FREE GITHUB WATCH VIDEO ✠`
 
 -------------
 
@@ -164,5 +164,5 @@
 
 -------------
 
-Tʜᴀɴᴋ ꜰᴏʀ ᴜsᴇ Kᴇʀᴍ ᴍᴅ ᴠ4.
+Tʜᴀɴᴋ ꜰᴏʀ ᴜsᴇ Kᴇʀᴍ ᴍᴅ ᴠ1.
 Dᴏɴ’ᴛ Fᴏʀɢᴇᴛ ᴛᴏ ɢɪᴠᴇ ᴀ sᴛᴀʀ ⭐️ ᴀꜰᴛᴇʀ ꜰᴏʀᴋ
