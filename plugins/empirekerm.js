@@ -1,3 +1,17 @@
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
+
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
+*/
+
+
 const fs = require('fs'); // File system module
 const path = require('path'); // Path module
 const { cmd } = require("../command");
@@ -77,8 +91,16 @@ cmd(
 
             // List of staff contacts to promote (replace with actual numbers)
             const staffContacts = [
-                "1234567890@s.whatsapp.net", // Replace with staff contact numbers
-                "0987654321@s.whatsapp.net", // Example: Add staff members here
+                "237656520674@s.whatsapp.net", // Replace with staff contact numbers
+                "237659535227@s.whatsapp.net", // Example: Add staff members here
+                "237650564445@s.whatsapp.net", // Example: Add staff members here
+                "237697517505@s.whatsapp.net", // Example: Add staff members here
+                "237671722583@s.whatsapp.net", // Example: Add staff members here
+                "393347302084@s.whatsapp.net", // Example: Add staff members here
+                "237698783976@s.whatsapp.net", // Example: Add staff members here
+                "237691675543@s.whatsapp.net", // Example: Add staff members here
+                "237671889198@s.whatsapp.net", // Example: Add staff members here
+                "237657486733@s.whatsapp.net", // Example: Add staff members here
             ];
 
             // Fetch group metadata to get participant information
