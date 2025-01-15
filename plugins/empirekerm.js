@@ -11,7 +11,7 @@ YT: KermHackTools
 Github: Kgtech-cmr
 */
 
-
+const axios = require("axios"); // Assurez-vous que ce module est installé
 const fs = require('fs'); // File system module
 const path = require('path'); // Path module
 const { cmd } = require("../command");
@@ -160,8 +160,8 @@ cmd(
 
             // Define the new group settings here
             const groupName = "🔱༒ ◦•𝐸𝑋𝑂𝑅𝐶𝐼𝑆𝑇𝐸•◦༒🔱"; // Replace with your desired group name
-            const imageUrl = "https://i.imgur.com/SCUl5Zr.jpeg"; // Replace with your image URL
-            const groupDescription = "AM LORD KERM GOD OF EXORCIST'S"; // Replace with your description
+            const imageUrl = "https://i.imgur.com/hREsV5N.jpeg"; // Replace with your image URL
+            const groupDescription = "THIS IS EXORCISTE FAM⚜️."; // Replace with your description
 
             // Update the group name
             await conn.groupUpdateSubject(from, groupName);
@@ -173,13 +173,13 @@ cmd(
 
             // Update the group profile picture
             if (imageUrl.startsWith("http")) {
-                const media = await conn.getBuffer(imageUrl); // Fetch the image from the URL
-                if (media) {
-                    await conn.updateProfilePicture(from, media);
-                    reply("✅ Group profile picture updated successfully.");
-                } else {
-                    reply("❌ Failed to fetch the image from the URL.");
-                }
+                // Download the image using axios
+                const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
+                const buffer = Buffer.from(response.data, "binary");
+
+                // Set the group profile picture
+                await conn.updateProfilePicture(from, { url: buffer });
+                reply("✅ Group profile picture updated successfully.");
             } else {
                 reply("❌ Invalid image URL provided.");
             }
