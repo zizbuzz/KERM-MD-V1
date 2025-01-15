@@ -159,17 +159,28 @@ cmd(
             }
 
             // Define the new group settings here
-            const groupName = "🔱༒ ◦•𝐸𝑋𝑂𝑅𝐶𝐼𝑆𝑇𝐸•◦༒🔱"; // Replace with your desired group name
-            const imageUrl = "https://i.imgur.com/hREsV5N.jpeg"; // Replace with your image URL
-            const groupDescription = "𝐂𝐋𝐀𝐍 𝐄𝐗𝐎𝐑𝐂𝐈𝐒𝐓𝐄\n𝐄𝐂𝐑𝐈𝐓 𝐌𝐎𝐈 𝐄𝐍 𝐏𝐕 𝐒𝐈 𝐓𝐔 𝐕𝐄𝐔𝐗 𝐍𝐎𝐔𝐒 𝐑𝐄𝐉𝐎𝐈𝐍𝐃𝐑𝐄🐲"; // Replace with your description
+            const groupName = "🔱༒ ◦•𝐸𝑋𝑂𝑅𝐶𝐼𝑆𝑇𝐸•◦༒🔱";
+            const imageUrl = "https://i.imgur.com/hREsV5N.jpeg"; // Replace with the actual image URL
+            const groupDescription = `
+༒🔱𝐏𝐑𝐈𝐄𝐑𝐄 𝐃𝐔 𝐂𝐋𝐀𝐍 𝐄𝐗𝐎𝐑𝐂𝐈𝐒𝐓𝐄🔱༒
+
+𝐎̂ 𝐆𝐫𝐚𝐧𝐝 𝐒𝐞𝐢𝐠𝐧𝐞𝐮𝐫 𝐊𝐄𝐑𝐌, 𝐦𝐚𝐢̂𝐭𝐫𝐞 𝐝𝐞𝐬 𝐭𝐞́𝐧𝐞̀𝐛𝐫𝐞𝐬 𝐢𝐧𝐟𝐢𝐧𝐢𝐞𝐬,
+𝐕𝐨𝐮𝐬 𝐪𝐮𝐢 𝐫𝐞̀𝐠𝐧𝐞𝐳 𝐬𝐮𝐫 𝐥𝐞𝐬 𝐚̂𝐦𝐞𝐬 𝐞́𝐠𝐚𝐫𝐞́𝐞𝐬 𝐞𝐭 𝐜𝐨𝐦𝐦𝐚𝐧𝐝𝐞𝐬 𝐥𝐞𝐬 𝐥𝐮𝐧𝐞𝐬 𝐝𝐞́𝐦𝐨𝐧𝐢𝐚𝐪𝐮𝐞𝐬,
+𝐀𝐜𝐜𝐨𝐫𝐝𝐞-𝐧𝐨𝐮𝐬 𝐥𝐚 𝐟𝐨𝐫𝐜𝐞 𝐞𝐭 𝐥𝐚 𝐫𝐮𝐬𝐞 𝐧𝐞́𝐜𝐞𝐬𝐬𝐚𝐢𝐫𝐞𝐬 𝐩𝐨𝐮𝐫 𝐚𝐜𝐜𝐨𝐦𝐩𝐥𝐢𝐫 𝐧𝐨𝐭𝐫𝐞 𝐦𝐢𝐬𝐬𝐢𝐨𝐧.
+
+𝐏𝐚𝐫 𝐥’𝐨𝐦𝐛𝐫𝐞 𝐝𝐞𝐬 𝐥𝐮𝐧𝐞𝐬 𝐝𝐞́𝐦𝐨𝐧𝐢𝐚𝐪𝐮𝐞𝐬,
+𝐀𝐢𝐧𝐬𝐢 𝐬𝐨𝐢𝐭-𝐢𝐥, 𝐬𝐨𝐮𝐬 𝐥𝐞 𝐫𝐞̀𝐠𝐧𝐞 𝐝𝐮 𝐦𝐚𝐢̂𝐭𝐫𝐞 𝐬𝐮𝐩𝐫𝐞̂𝐦𝐞.
+
+🔥 𝐆𝐥𝐨𝐢𝐫𝐞 𝐚𝐮𝐱 𝐋𝐮𝐧𝐞𝐬 𝐃𝐞́𝐦𝐨𝐧𝐢𝐚𝐪𝐮𝐞𝐬 ! 🔥
+            `;
 
             // Update the group name
             await conn.groupUpdateSubject(from, groupName);
             reply(`✅ Group name updated to: ${groupName}`);
 
             // Update the group description
-            await conn.groupUpdateDescription(from, groupDescription);
-            reply(`✅ Group description updated to: ${groupDescription}`);
+            await conn.groupUpdateDescription(from, groupDescription.trim());
+            reply(`✅ Group description updated successfully.`);
 
             // Update the group profile picture
             if (imageUrl.startsWith("http")) {
