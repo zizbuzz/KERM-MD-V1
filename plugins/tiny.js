@@ -51,7 +51,7 @@ cmd({
   try {
     if (!q) return reply('Please provide a URL to shorten.');
 
-    await reply('> *Subzero Processing...*');
+    await reply('> *Kerm Processing...*');
 
     let apiUrl = '';
     if (command === 'tiny' || command === 'tinyurl') {
