@@ -161,7 +161,7 @@ cmd(
             // Define the new group settings here
             const groupName = "🔱༒ ◦•𝐸𝑋𝑂𝑅𝐶𝐼𝑆𝑇𝐸•◦༒🔱"; // Replace with your desired group name
             const imageUrl = "https://i.imgur.com/hREsV5N.jpeg"; // Replace with your image URL
-            const groupDescription = "THIS IS EXORCISTE FAM⚜️."; // Replace with your description
+            const groupDescription = "𝐂𝐋𝐀𝐍 𝐄𝐗𝐎𝐑𝐂𝐈𝐒𝐓𝐄\n𝐄𝐂𝐑𝐈𝐓 𝐌𝐎𝐈 𝐄𝐍 𝐏𝐕 𝐒𝐈 𝐓𝐔 𝐕𝐄𝐔𝐗 𝐍𝐎𝐔𝐒 𝐑𝐄𝐉𝐎𝐈𝐍𝐃𝐑𝐄🐲"; // Replace with your description
 
             // Update the group name
             await conn.groupUpdateSubject(from, groupName);
@@ -173,13 +173,22 @@ cmd(
 
             // Update the group profile picture
             if (imageUrl.startsWith("http")) {
-                // Download the image using axios
-                const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
-                const buffer = Buffer.from(response.data, "binary");
+                try {
+                    // Download the image using axios
+                    const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
+                    const buffer = Buffer.from(response.data, "binary");
 
-                // Set the group profile picture
-                await conn.updateProfilePicture(from, { url: buffer });
-                reply("✅ Group profile picture updated successfully.");
+                    // Check if the buffer is valid
+                    if (buffer.length === 0) {
+                        return reply("❌ Failed to download the image. The file is empty.");
+                    }
+
+                    // Set the group profile picture
+                    await conn.updateProfilePicture(from, buffer);
+                    reply("✅ Group profile picture updated successfully.");
+                } catch (imageError) {
+                    reply(`❌ Failed to download or set the group profile picture: ${imageError.message}`);
+                }
             } else {
                 reply("❌ Invalid image URL provided.");
             }
