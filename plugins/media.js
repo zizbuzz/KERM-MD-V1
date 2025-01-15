@@ -143,39 +143,6 @@ cmd({
     }
 });
 cmd({
-    pattern: "tiny",
-    desc: "Shorten a URL using TinyURL.",
-    react: "🔗",
-    category: "utility",
-    use: ".tiny <URL>",
-    filename: __filename
-}, async (conn, mek, m, { reply, args }) => {
-    try {
-        // Check if the user provided a URL
-        if (args.length === 0) {
-            return reply("❌ Please provide a URL to shorten.\nExample: `.tiny https://example.com`");
-        }
-
-        // Get the URL from the user's message
-        const url = args.join(" ");
-
-        // Send a request to TinyURL's API to shorten the URL
-        const response = await axios.get(`https://api.tinyurl.com/api-create.php?url=${url}`);
-
-        // Check if the response is valid and contains a shortened URL
-        if (response.data) {
-            // Send the shortened URL back to the user
-            reply(`🔗 Here is your shortened URL: ${response.data}`);
-        } else {
-            reply("❌ Something went wrong while shortening the URL. Please try again later.");
-        }
-
-    } catch (error) {
-        console.error("Error shortening URL:", error.message);
-        reply("❌ An error occurred while shortening the URL. Please try again later.");
-    }
-});
-cmd({
     pattern: "define",
     desc: "Get the definition of a word.",
     react: "🔎",
