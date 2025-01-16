@@ -13,82 +13,62 @@ Github: Kgtech-cmr
 
 
 
-
-
-
-
-
-
-
-
-
-
-const { cmd, commands } = require("../command");
+const axios = require('axios');
+const config = require('../config');
+const { cmd, commands } = require('../command');
 
 cmd({
-  pattern: "vv",
-  alias: ["vo", "viewonce"],
-  react: "✨",
-  desc: "Read ViewOnce messages",
-  category: "download",
-  filename: __filename,
-}, async (conn, mek, m, {
-  from,
-  quoted,
-  body,
-  isCmd,
-  command,
-  args,
-  q,
-  isGroup,
-  sender,
-  senderNumber,
-  botNumber2,
-  botNumber,
-  pushname,
-  isMe,
-  isOwner,
-  groupMetadata,
-  groupName,
-  participants,
-  groupAdmins,
-  isBotAdmins,
-  isAdmins,
-  reply,
-}) => {
-  try {
-    // Check if the quoted message exists and is a ViewOnce message
-    const viewOnceMessage = quoted?.msg?.contextInfo?.quotedMessage?.viewOnceMessageV2;
-    if (!viewOnceMessage) {
-      return reply("❌ Please reply to a ViewOnce message.");
-    }
+    pattern: "vv",
+    react : "🦠",
+    alias: ['retrive', "viewonce"],
+    desc: "Fetch and resend a ViewOnce message content (image/video/voice).",
+    category: "misc",
+    use: '<query>',
+    filename: __filename
+},
+async (conn, mek, m, { from, reply }) => {
+    try {
+        const quotedMessage = m.msg.contextInfo.quotedMessage; // Get quoted message
 
-    // Handle ViewOnce image messages
-    if (viewOnceMessage.message?.imageMessage) {
-      console.log("Processing a ViewOnce image.");
-      const caption = viewOnceMessage.message.imageMessage.caption || "No caption.";
-      const mediaPath = await conn.downloadAndSaveMediaMessage(viewOnceMessage.message.imageMessage);
-      return conn.sendMessage(from, {
-        image: { url: mediaPath },
-        caption: caption,
-      });
-    }
+        if (quotedMessage && quotedMessage.viewOnceMessageV2) {
+            const quot = quotedMessage.viewOnceMessageV2;
+            if (quot.message.imageMessage) {
+                let cap = quot.message.imageMessage.caption;
+                let anu = await conn.downloadAndSaveMediaMessage(quot.message.imageMessage);
+                return conn.sendMessage(from, { image: { url: anu }, caption: cap }, { quoted: mek });
+            }
+            if (quot.message.videoMessage) {
+                let cap = quot.message.videoMessage.caption;
+                let anu = await conn.downloadAndSaveMediaMessage(quot.message.videoMessage);
+                return conn.sendMessage(from, { video: { url: anu }, caption: cap }, { quoted: mek });
+            }
+            if (quot.message.audioMessage) {
+                let anu = await conn.downloadAndSaveMediaMessage(quot.message.audioMessage);
+                return conn.sendMessage(from, { audio: { url: anu } }, { quoted: mek });
+            }
+        }
 
-    // Handle ViewOnce video messages
-    if (viewOnceMessage.message?.videoMessage) {
-      console.log("Processing a ViewOnce video.");
-      const caption = viewOnceMessage.message.videoMessage.caption || "No caption.";
-      const mediaPath = await conn.downloadAndSaveMediaMessage(viewOnceMessage.message.videoMessage);
-      return conn.sendMessage(from, {
-        video: { url: mediaPath },
-        caption: caption,
-      });
+        // If there is no quoted message or it's not a ViewOnce message
+        if (!m.quoted) return reply("Please reply to a ViewOnce message.");
+        if (m.quoted.mtype === "viewOnceMessage") {
+            if (m.quoted.message.imageMessage) {
+                let cap = m.quoted.message.imageMessage.caption;
+                let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.imageMessage);
+                return conn.sendMessage(from, { image: { url: anu }, caption: cap }, { quoted: mek });
+            }
+            else if (m.quoted.message.videoMessage) {
+                let cap = m.quoted.message.videoMessage.caption;
+                let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.videoMessage);
+                return conn.sendMessage(from, { video: { url: anu }, caption: cap }, { quoted: mek });
+            }
+        } else if (m.quoted.message.audioMessage) {
+            let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.audioMessage);
+            return conn.sendMessage(from, { audio: { url: anu } }, { quoted: mek });
+        } else {
+            return reply("> *This is not a ViewOnce message.*");
+        }
+    } catch (e) {
+        console.log("Error:", e);
+        reply("An error occurred while fetching the ViewOnce message.");
     }
-
-    // If it's not an image or video, return an error
-    return reply("❌ Unsupported ViewOnce message type.");
-  } catch (error) {
-    console.error("Error processing ViewOnce message:", error);
-    return reply("❌ An error occurred while processing the ViewOnce message.");
-  }
 });
