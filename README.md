@@ -5,7 +5,7 @@
 
 ----------
 
-<a><img src='https://i.ibb.co/Lh6602b/Manul-Ofc-X.jpg'/></a>
+<a><img src='https://i.imgur.com/Ip3ubrt.jpeg'/></a>
 
 -------
 
