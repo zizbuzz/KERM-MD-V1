@@ -53,219 +53,214 @@ let madeMenu = `╭━━━━━━━━━━╮
 
 ━━━━━━━━━━━
 
-🌟*DOWNLOAD COMMANDS*🌟  
-* .fb  
-* .insta  
-* .video  
-* .gdrive  
-* .twitter  
-* .tt  
-* .mediafire  
-* .song  
-* .play  
-* .video2  
-* .spotify  
-* .video4  
-* .img  
-* .lyrics  
-* .apk  
-* .drama  
-* .play2  
-* .play4  
-* .baiscope  
-* .ginisisila  
+🌟*DOWNLOAD COMMANDS*🌟
+* .fb
+* .insta
+* .video
+* .gdrive
+* .twitter
+* .tt
+* .mediafire
+* .song
+* .play
+* .video2
+* .spotify
+* .video4
+* .lyrics
+* .apk
+* .darama
+* .play2
+* .play4
+* .baiscope
+* .ginisisila
 
 ━━━━━━━━━━━
 
-🎮 GAME COMMANDS*🎮  
-* .play  
-* .video2  
-* .spotify  
-* .video4  
-* .img  
-* .lyrics  
-* .apk  
-* .drama  
-* .play2  
-* .play4  
-* .baiscope  
-* .ginisisila  
+🎵 *MUSIC COMMANDS* 🎵
+* .play
+* .video2
+* .spotify
+* .video4
+* .lyrics
+* .darama
+* .play2
+* .play4
+* .baiscope
+* .ginisisila
 
 ━━━━━━━━━━━
 
-👑 *EMPIRE KERM COMMANDS* 👑  
-* .family  
-* .vawulence  
-* .channel  
-* .support  
-* .promostaff  
-* .exor  
-* .help  
+👑 *EMPIRE KERM COMMANDS* 👑
+* .family
+* .vawulence
+* .channel
+* .support
+* .promostaff
+* .exor
 
 ━━━━━━━━━━━
 
-🔍 *SEARCH COMMANDS* 🔍  
-* .yts  
-* .yta  
-* .loli  
-* .movieinfo  
-* .movie  
-* .weather  
-* .sticksearch  
-* .coupleapp  
+🔍 *SEARCH COMMANDS* 🔍
+* .yts
+* .yta
+* .loli
+* .movieinfo
+* .movie
+* .weather
+* .sticksearch
+* .couplepp
 
 ━━━━━━━━━━━
 
-💀 **NSFW COMMANDS** 💀  
-* .nsfw  
-* .ejaculation  
-* .penis  
-* .erec  
-* .nude  
-* .sex  
-* .cute  
-* .orgasm  
-* .anal  
-* .suspension  
-* .kiss  
+💀 *NSFW COMMANDS* 💀
+* .nsfw
+* .ejaculation
+* .penis
+* .erec
+* .nude
+* .sex
+* .cute
+* .orgasm
+* .anal
+* .suspension
+* .kiss
 
 ━━━━━━━━━━━
 
-🤖 **AI COMMANDS** 🤖  
-* .gpt  
-* .ai  
-* .bot  
+🤖 *AI COMMANDS* 🤖
+* .gpt
+* .ai
+* .bot
 
 ━━━━━━━━━━━
 
-👑 **OWNER COMMANDS** 👑  
-* .updatecmd  
-* .settings  
-* .owner  
-* .repo  
-* .system  
-* .status  
-* .about  
-* .block  
-* .unblock  
-* .shutdown  
-* .clearchats  
-* .setpp  
-* .broadcast  
-* .jid  
-* .gjid  
-* .pair  
-* .rank  
-* .restart  
+👑 *OWNER COMMANDS* 👑
+* .updatecmd
+* .settings
+* .owner
+* .repo
+* .system
+* .status
+* .about
+* .block
+* .unblock
+* .shutdown
+* .clearchats
+* .setpp
+* .broadcast
+* .jid
+* .gjid
+* .pair
+* .rank
+* .restart
 
 ━━━━━━━━━━━━
 
-👥 *GROUP COMMANDS* 👥  
-* .remove  
-* .delete  
-* .add  
-* .kick  
-* .kickall  
-* .setgoodbye  
-* .setwelcome  
-* .promote  
-* .demote  
-* .tagall  
-* .getpic  
-* .invite  
-* .revoke  
-* .joinrequests  
-* .allreq  
-* .mute  
-* .unmute  
-* .lockgc  
-* .unlockgc  
-* .leave  
-* .updategname  
-* .updategdesc  
-* .join  
-* .hidetag  
-* .ginfo  
-* .disappear on  
-* .disappear off  
-* .disappear 7d 24h 90d  
-* .senddm  
+👥 *GROUP COMMANDS* 👥
+* .remove
+* .delete
+* .add
+* .kick
+* .kickall
+* .setgoodbye
+* .setwelcome
+* .promote
+* .demote
+* .tagall
+* .getpic
+* .invite
+* .revoke
+* .joinrequests
+* .allreq
+* .mute
+* .unmute
+* .lockgc
+* .unlockgc
+* .leave
+* .updategname
+* .updategdesc
+* .join
+* .hidetag
+* .ginfo
+* .disappear on
+* .disappear off
+* .disappear 7d 24h 90d
+* .senddm
 
 ━━━━━━━━━━━━
 
-📃 *INFO COMMANDS* 📃  
-* .menu  
-* .menu2  
-* .menu3  
-* .about  
-* .dev  
-* .script  
-* .repo  
-* .kgtech  
-* .alive  
-* .botinfo  
-* .status  
-* .ping  
-* .ping2  
-* .system  
+📃 *INFO COMMANDS* 📃
+* .menu
+* .menu2
+* .menu3
+* .about
+* .dev
+* .script
+* .repo
+* .alive
+* .botinfo
+* .status
+* .ping
+* .ping2
+* .system
 
 ━━━━━━━━━━━━━
 
-✝️ *GOD COMMANDS* ✝️  
-* .bible  
-* .biblelist  
+✝️ *GOD COMMANDS* ✝️
+* .bible
+* .biblelist
 
 ━━━━━━━━━━━━━
 
-🎡 *CONVERTER COMMANDS* 🎡  
-* .sticker  
-* .trt  
-* .tts  
-* .url  
-* .age  
-* .tiny  
+🎡 *CONVERTER COMMANDS* 🎡
+* .sticker
+* .trt
+* .tts
+* .url
+* .age
+* .tiny
 
 ━━━━━━━━━━━━━
 
-⛱️ *RANDOM COMMANDS* ⛱️  
-* .kerm  
-* .dog  
-* .cat  
-* .anime  
-* .neko  
-* .waifu  
-* .cosplay  
-* .randomanime  
-* .animegirl  
-* .animegirl1  
-* .animegirl2  
-* .animegirl3  
-* .animegirl4  
-* .animegirl5  
+⛱️ *RANDOM COMMANDS* ⛱️
+* .kerm
+* .dog
+* .cat
+* .anime
+* .neko
+* .waifu
+* .cosplay
+* .randomanime
+* .animegirl
+* .animegirl1
+* .animegirl2
+* .animegirl3
+* .animegirl4
+* .animegirl5
 
 ━━━━━━━━━━━━━
 
-🏜️ *WALLPAPER COMMANDS* 🏜️  
-* .img  
-* .logo  
-* .ss  
+🏜️ *WALLPAPER COMMANDS* 🏜️
+* .img
+* .logo
+* .ss
 
 ━━━━━━━━━━━━━
 
-🌐 *OTHER COMMANDS* 🌐  
-* .trt  
+🌐 *OTHER COMMANDS* 🌐
+* .trt
 * .joke  
-* .fact  
-* .github  
-* .gpass  
-* .hack  
-* .quote  
-* .srepo  
-* .rank  
-* .timezone  
-* .define  
-* .dailyfact  
-* .minotaur  
+* .fact
+* .github
+* .gpass
+* .hack
+* .quote
+* .srepo
+* .rank
+* .timezone
+* .define
+* .dailyfact
+* .minutor
 
 ━━━━━━━━━━━━━
 
