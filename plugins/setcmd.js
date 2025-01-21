@@ -1,6 +1,7 @@
 // Required modules
 const fs = require("fs");
 const path = require("path");
+const { cmd, commands } = require('../command');
 
 // Bot-specific modules (déjà utilisés dans vos commandes)
 const astro_patch = require("../astro_patch");
