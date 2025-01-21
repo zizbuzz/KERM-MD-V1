@@ -38,7 +38,6 @@ async(conn, mek, m,{from, l, quoted, body, isCmd, umarmd, args, q, isGroup, send
 
 try{
 let madeMenu = `╭━━━━━━━━━━╮
-
     🚀${config.BOT_NAME} 🚀
 ╰━━━━━━━━━━╯
 
@@ -64,13 +63,10 @@ let madeMenu = `╭━━━━━━━━━━╮
 * .song
 * .play
 * .video2
-* .spotify
-* .video4
 * .lyrics
 * .apk
 * .darama
 * .play2
-* .play4
 * .baiscope
 * .ginisisila
 
@@ -262,8 +258,8 @@ let madeMenu = `╭━━━━━━━━━━╮
 * .dailyfact
 * .minutor
 
-━━━━━━━━━━━━━
-
+━━━━━━━━━━━━
+> POWERED BY KERM
 `
 
 await conn.sendMessage(from,{image:{url:config.ALIVE_IMG},caption:madeMenu},{quoted:mek})
