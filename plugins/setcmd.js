@@ -86,3 +86,45 @@ astro_patch.cmd(
     }
   }
 );
+
+
+astro_patch.cmd(
+  {
+    pattern: "delcmd",
+    desc: "To delete a custom command",
+    category: "tools",
+    fromMe: true,
+    filename: __filename,
+  },
+  async (message, query, { Void }) => {
+    try {
+      let commandName = query ? query.split(" ")[0].trim().toLowerCase() : "";
+      let isSticker = false;
+
+      if (message.quoted) {
+        if (message.quoted.mtype === "stickerMessage") {
+          isSticker = true;
+          commandName = "sticker-" + message.quoted.msg.fileSha256;
+        } else if (!query) {
+          return await message.send(
+            "*_Please reply to a Sticker that was set for a command bro_*"
+          );
+        }
+      } else if (!query) {
+        return await message.send(
+          "*_Uhh Dear, provide the name that was set for a command_*\n*Eg: _.delcmd Cmd_Name_*"
+        );
+      }
+
+      if (global.setCmdAlias[commandName]) {
+        await message.send(
+          `*_"${
+            isSticker ? "Given Sticker" : commandName
+          }" deleted successfully for "${
+            global.setCmdAlias[commandName]
+          }" command_*`
+        );
+        delete global.setCmdAlias[commandName];
+        return;
+      } else {
+        return await message.send(
