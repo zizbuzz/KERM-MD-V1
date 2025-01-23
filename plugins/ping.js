@@ -1,11 +1,15 @@
-/*created by Kgtech 🕵
-contact dev1 237656520674 ♻️
-contact dev2 237650564445 ♻️
-© Copy coder alert ⚠
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
+
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
 */
-
-
-
 
 const config = require('../config')
 let fs = require('fs')
@@ -49,7 +53,7 @@ const startTime = Date.now()
         const message = await conn.sendMessage(from, { text: '*_Pinging..._*' })
         const endTime = Date.now()
         const ping = endTime - startTime
-        await conn.sendMessage(from, { text: `*🧞‍♂️Kerm Speed... : ${ping}ms*`}, { quoted: message })
+        await conn.sendMessage(from, { text: `*_🧞‍♂️Kerm Speed... : ${ping}ms_*`}, { quoted: message })
     } catch (e) {
         console.log(e)
         reply(`${e}`)
