@@ -11,18 +11,6 @@ YT: KermHackTools
 Github: Kgtech-cmr
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
 const { cmd, commands } = require("../command");
 
 cmd({
