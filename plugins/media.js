@@ -1,11 +1,15 @@
-/*created by Kgtech 🕵
-contact dev1 237656520674 ♻️
-contact dev2 237650564445 ♻️
-© Copy coder alert ⚠
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
+
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
 */
-
-
-
 
 const { cmd } = require('../command');
 const axios = require('axios');
@@ -169,109 +173,6 @@ cmd({
     } catch (error) {
         console.error("Error shortening URL:", error.message);
         reply("❌ An error occurred while shortening the URL. Please try again later.");
-    }
-});
-cmd({
-    pattern: "define",
-    desc: "Get the definition of a word.",
-    react: "🔎",
-    category: "utility",
-    use: ".define <word>",
-    filename: __filename
-}, async (conn, mek, m, { args, reply }) => {
-    try {
-        // Vérifier si l'utilisateur a donné un mot à définir
-        if (args.length === 0) {
-            return reply("❌ Please provide a word to define.\nExample: `.define apple`");
-        }
-
-        const word = args.join(" ").toLowerCase();
-
-        // Effectuer une requête à l'API pour obtenir la définition du mot
-        const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-
-        // Extraire la définition de la réponse
-        const meanings = response.data[0].meanings;
-        const definition = meanings ? meanings[0].definitions[0].definition : "No definition found.";
-
-        // Envoyer la définition au chat
-        reply(`🔎 Definition of "${word}":\n\n*${definition}*`);
-
-    } catch (error) {
-        console.error("Error fetching definition:", error.message);
-        reply("❌ Sorry, I couldn't fetch the definition. Please try again later.");
-    }
-});
-cmd({
-    pattern: "convert",
-    desc: "Convert currencies with symbols.",
-    react: "💵",
-    category: "utility",
-    use: ".convert <amount> <from_currency> to <to_currency>",
-    filename: __filename
-}, async (conn, mek, m, { reply, args }) => {
-    try {
-        // Fetch the available currencies from the API
-        const response = await axios.get("https://v6.exchangeratesapi.io/latest");
-        const availableCurrencies = Object.keys(response.data.rates);
-
-        // Check if the user has provided the right format
-        if (args.length < 3) {
-            let availableCurrenciesList = availableCurrencies.join(", ");
-            return reply(`❌ Usage: \`.convert <amount> <from_currency> to <to_currency>\`\n\nAvailable currencies: ${availableCurrenciesList}`);
-        }
-
-        const amount = parseFloat(args[0]);
-        const fromCurrency = args[1].toUpperCase();
-        const toCurrency = args[3].toUpperCase();
-
-        // Check if the amount is a valid number
-        if (isNaN(amount)) {
-            return reply("❌ Please provide a valid amount to convert.");
-        }
-
-        // Check if the fromCurrency and toCurrency are available
-        if (!availableCurrencies.includes(fromCurrency) || !availableCurrencies.includes(toCurrency)) {
-            return reply(`❌ Invalid currency. Available currencies are: ${availableCurrencies.join(", ")}`);
-        }
-
-        // Fetch conversion rates for the selected fromCurrency
-        const conversionResponse = await axios.get(`https://v6.exchangeratesapi.io/latest?base=${fromCurrency}`);
-        const exchangeRates = conversionResponse.data.rates;
-
-        // Check if the toCurrency is valid
-        if (!exchangeRates[toCurrency]) {
-            return reply(`❌ Unable to convert to the selected currency. Please check the currency symbol.`);
-        }
-
-        // Calculate the converted amount
-        const convertedAmount = (amount * exchangeRates[toCurrency]).toFixed(2);
-
-        // Define symbols for some popular currencies (including XAF for FCFA)
-        const currencySymbols = {
-            USD: "$",
-            EUR: "€",
-            GBP: "£",
-            JPY: "¥",
-            AUD: "A$",
-            CAD: "C$",
-            INR: "₹",
-            CHF: "CHF",
-            SEK: "kr",
-            CNY: "¥",
-            XAF: "FCFA"  // Adding XAF (FCFA) symbol
-        };
-
-        // Get the symbols for the provided currencies
-        const fromSymbol = currencySymbols[fromCurrency] || fromCurrency;
-        const toSymbol = currencySymbols[toCurrency] || toCurrency;
-
-        // Send the converted result
-        reply(`💰 *${amount} ${fromSymbol}* = *${convertedAmount} ${toSymbol}*`);
-
-    } catch (error) {
-        console.error("Error fetching conversion rates:", error.message);
-        reply("❌ There was an error with the conversion. Please try again later.");
     }
 });
 cmd({
