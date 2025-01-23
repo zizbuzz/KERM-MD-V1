@@ -11,12 +11,6 @@ YT: KermHackTools
 Github: Kgtech-cmr
 */
 
-
-
-
-
-
-
 const config = require('../config')
 const {cmd , commands} = require('../command')
 const { fetchJson } = require('../lib/functions')
