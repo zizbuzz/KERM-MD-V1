@@ -1,11 +1,15 @@
-/*created by Kgtech 🕵
-contact dev1 237656520674 ♻️
-contact dev2 237650564445 ♻️
-© Copy coder alert ⚠
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
+
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
 */
-
-
-
 
 const config = require('../config')
 const { cmd, commands } = require('../command')
@@ -87,7 +91,7 @@ l(e)
 
 cmd({
     pattern: "tagadmin",
-    alais:["tagadmins"],
+    alias: ["staff"],
     react: "🙀",
     desc: "Tags all the admins in the group.",
     category: "group",
@@ -134,7 +138,7 @@ if (!isOwner || !isAdmins) return;
 if (!m.isGroup) return reply(mg.onlygroup);
 if (!isBotAdmins) return reply(mg.needbotadmins);     
             await conn.groupSettingUpdate(m.chat, "announcement")
-           const mass = await conn.sendMessage(m.chat, { text: '*GROUP CHAT MUTED BY KERM_MD-V4* 🔒' }, { quoted: mek });
+           const mass = await conn.sendMessage(m.chat, { text: '*GROUP CHAT MUTED BY KERM-MD-V1* 🔒' }, { quoted: mek });
             return await conn.sendMessage(m.chat, { react: { text: '🔒', key: mass.key } });
 } catch(e) {
 console.log(e);
@@ -159,7 +163,7 @@ if (!isOwner || !isAdmins) return;
 if (!m.isGroup) return reply(mg.onlygroup);
 if (!isBotAdmins) return reply(mg.needbotadmins);     
             await conn.groupSettingUpdate(m.chat, "not_announcement")
-           const mass = await conn.sendMessage(m.chat, { text: '*GROUP CHAT UNMUTED BY KERM_MD-V4* 🔒' }, { quoted: mek });
+           const mass = await conn.sendMessage(m.chat, { text: '*GROUP CHAT UNMUTED BY KERM-MD-V1* 🔒' }, { quoted: mek });
             return await conn.sendMessage(m.chat, { react: { text: '🔒', key: mass.key } });
 } catch(e) {
 console.log(e);
