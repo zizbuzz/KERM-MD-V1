@@ -59,7 +59,6 @@ cmd({
 │ 🎙️ *➤ Auto Voice*: ${statusIcon(config.AUTO_VOICE)}
 │ 🖼️ *➤ Auto Sticker*: ${statusIcon(config.AUTO_STICKER)}
 │ 💬 *➤ Auto Reply*: ${statusIcon(config.AUTO_REPLY)}
-│ 🌅 *➤ Alive Image*: [*View Image*](${config.ALIVE_IMG})
 │ ✉️ *➤ Alive Message*: *${config.ALIVE_MSG}*
 │ 🔗 *➤ Anti Link*: ${statusIcon(config.ANTI_LINK)}
 │ 🚫 *➤ Anti Bad*: ${statusIcon(config.ANTI_BAD)}
