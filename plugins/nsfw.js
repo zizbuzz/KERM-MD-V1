@@ -1,3 +1,16 @@
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
+
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
+*/
+
 const { cmd } = require('../command'); // Assurez-vous que cmd est bien défini dans votre projet
 const axios = require('axios');
 
@@ -13,7 +26,7 @@ async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, 
     try {
         // Liste des options NSFW
         const nsfwList = `
-*[{• KERM MD V4 NSFW🤤🔞•}]*
+*[{• KERM MD V1 NSFW🤤🔞•}]*
 
 1️⃣ *EJACULATION*
 2️⃣ *PENIS*
