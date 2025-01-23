@@ -1,12 +1,15 @@
-/*created by Kgtech 🕵
-contact dev1 237656520674 ♻️
-contact dev2 237650564445 ♻️
-© Copy coder alert ⚠
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
+
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
 */
-
-
-
-
 
 
 const config = require('../config')
@@ -26,11 +29,11 @@ let repo =`
 > *BOT OWNER:*
 *|* *KG TECH🇨🇲*
 
-> *KERM_MD-V4 REPO:*
-*|* *https://github.com/Kgtech-cmr/KERM_MD-V4*
+> *KERM-MD-V1 REPO:*
+*|* https://github.com/Kgtech-cmr/KERM-MD-V1
 
 > *SUPPORT GROUP:*
-*|* *https://whatsapp.com/channel/0029Vafn6hc7DAX3fzsKtn45*
+*|* https://whatsapp.com/channel/0029Vafn6hc7DAX3fzsKtn45
 *╰──────────────●●►*
 
 > *CREATED BY KG TECH*
@@ -47,10 +50,10 @@ await conn.sendMessage(from, { text: repo ,
       serverMessageId: 999
     },
 externalAdReply: { 
-title: 'Kᴇʀᴍ_Mᴅ-V4',
+title: 'Kᴇʀᴍ-Mᴅ-V1',
 body: `${pushname}`,
 mediaType: 1,
-sourceUrl: "https://github.com/Kgtech-cmr/KERM_MD-V4" ,
+sourceUrl: "https://github.com/Kgtech-cmr/KERM-MD-V1" ,
 thumbnailUrl: "https://files.catbox.moe/osriwc.jpg" ,
 renderLargerThumbnail: true,
 showAdAttribution: true
