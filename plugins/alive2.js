@@ -11,12 +11,6 @@ YT: KermHackTools
 Github: Kgtech-cmr
 */
 
-
-
-
-
-
-
 const { cmd } = require("../command");
 const os = require("os");
 const moment = require("moment");
@@ -44,7 +38,7 @@ cmd({
         // Message Alive
         const aliveMessage = `
 🌟 *KERM MD V4 STATUS* 🌟
-
+    Hi 🫵🏽 ${pushname}
 🕒 *Time*: ${currentTime}
 📅 *Date*: ${currentDate}
 ⏳ *Uptime*: ${runtimeHours} hours, ${runtimeMinutes} minutes, ${runtimeSeconds} seconds
