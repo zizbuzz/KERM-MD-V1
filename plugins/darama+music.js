@@ -1,13 +1,15 @@
-/*created by Kgtech 🕵
-contact dev1 237656520674 ♻️
-contact dev2 237650564445 ♻️
-© Copy coder alert ⚠
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
+
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
 */
-
-
-
-
-
 
 const {cmd , commands} = require('../command')
 const fg = require('api-dylux')
@@ -28,7 +30,7 @@ const url = data.url
     
     
 let desc = `
-⫷⦁*KERM_MD-V4 MUSⵊC DOWNLOADⵊNG*⦁⫸
+⫷⦁*KERM-MD-V1 MUSⵊC DOWNLOADⵊNG*⦁⫸
 
 🎵 *MUSⵊC FOUND!* 
 
@@ -40,9 +42,9 @@ let desc = `
 
 🎧 *ENJOY THE MUSIC BROUGHT TO YOU!*
 
-> *KERM_MD-V4 WHATSAPP BOT* 
+> *KERM-MD-V1 WHATSAPP BOT* 
 
-> *© ᴄʀᴇᴀᴛᴇᴅ ʙʏ Kᴇʀᴍ_ᴍᴅ-ᴠ4* 
+> *© ᴄʀᴇᴀᴛᴇᴅ ʙʏ Kᴇʀᴍ-ᴍᴅ-ᴠ1* 
 `
 
 await conn.sendMessage(from,{image:{url: data.thumbnail},caption:desc},{quoted:mek});
@@ -81,7 +83,7 @@ const url = data.url
     
     
 let desc = `
-⫷⦁*•KERM_MD-V4 VⵊDEO DOWNLOADⵊNG*⦁⫸ 
+⫷⦁*•KERM-MD-V1 VⵊDEO DOWNLOADⵊNG*⦁⫸ 
 
 🎥 *VⵊDEO FOUND!* 
 
@@ -93,9 +95,9 @@ let desc = `
 
 🎬 *ENJOY THE VIDEO BROUGHT TO YOU!*
 
-> *KERM_MD-V4 WHATSAPP BOT* 
+> *KERM-MD-V1 WHATSAPP BOT* 
 
-> *© ᴄʀᴇᴀᴛᴇᴅ ʙʏ Kᴇʀᴍ_ᴍᴅ-ᴠ4*
+> *© ᴄʀᴇᴀᴛᴇᴅ ʙʏ Kᴇʀᴍ-ᴍᴅ-ᴠ1*
 `
 
 await conn.sendMessage(from,{image:{url: data.thumbnail},caption:desc},{quoted:mek});
