@@ -201,7 +201,7 @@ cmd({
             },
             'mimetype': "audio/mp3",
             'fileName': _0x20e1e8.title + ".mp3",
-            'caption': "\n> *© Gᴇɴᴇʀᴀᴛᴇᴅ ꜰᴏʀ ʏᴏᴜ Bʏ Kᴇʀᴍ Mᴅ V4 ❤️*\n "
+            'caption': "\n> *© Gᴇɴᴇʀᴀᴛᴇᴅ ꜰᴏʀ ʏᴏᴜ Bʏ Kᴇʀᴍ Mᴅ V1 ❤️*\n "
           }, {
             'quoted': _0x25ddf5
           });
