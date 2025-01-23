@@ -76,12 +76,12 @@ cmd({
     pattern: "repo",
     alias: ["sc", "script", "info"],
     desc: "Fetch information about a GitHub repository.",
-    react: "❄️",
+    react: "🎗️",
     category: "info",
     filename: __filename,
 },
 async (conn, mek, m, { from, reply }) => {
-    const githubRepoURL = 'https://github.com/mrfrank-ofc/SUBZERO';
+    const githubRepoURL = 'https://github.com/Kgtech-cmr/KERM-MD-V1';
 
     try {
         // Extract username and repo name from the URL
@@ -127,7 +127,7 @@ ${readMore}
 
         // Send an image with the formatted info as a caption and context info
         await conn.sendMessage(from, {
-            image: { url: `https://i.ibb.co/jrhPy01/mrfrankofc.jpg` },
+            image: { url: `https://files.catbox.moe/heu4tc.png` },
             caption: formattedInfo,
             contextInfo: { 
                 mentionedJid: [m.sender],
