@@ -143,36 +143,81 @@ cmd({
     }
 });
 cmd({
-    pattern: "tiny",
-    desc: "Shorten a URL using TinyURL.",
-    react: "🔗",
-    category: "utility",
-    use: ".tiny <URL>",
-    filename: __filename
-}, async (conn, mek, m, { reply, args }) => {
-    try {
-        // Check if the user provided a URL
-        if (args.length === 0) {
-            return reply("❌ Please provide a URL to shorten.\nExample: `.tiny https://example.com`");
-        }
+  pattern: 'tinyurl',
+  alias: ['tiny', 'shorten', 'short', 'shorturl'],
+  react: '🪤',
+  desc: 'Shorten a URL using TinyURL or ShortURL.',
+  category: 'main',
+  filename: __filename
+}, async (conn, mek, m, {
+  from,
+  quoted,
+  body,
+  isCmd,
+  command,
+  args,
+  q,
+  isGroup,
+  sender,
+  senderNumber,
+  botNumber2,
+  botNumber,
+  pushname,
+  isMe,
+  isOwner,
+  groupMetadata,
+  groupName,
+  participants,
+  groupAdmins,
+  isBotAdmins,
+  isAdmins,
+  reply
+}) => {
+  try {
+    if (!q) return reply('Please provide a URL to shorten.');
 
-        // Get the URL from the user's message
-        const url = args.join(" ");
+    await reply('> *Subzero Processing...*');
 
-        // Send a request to TinyURL's API to shorten the URL
-        const response = await axios.get(`https://api.tinyurl.com/api-create.php?url=${url}`);
+    let apiUrl = '';
+    if (command === 'tiny' || command === 'tinyurl') {
+      apiUrl = `https://api.davidcyriltech.my.id/tinyurl?url=${encodeURIComponent(q)}`;
+    } else {
+      apiUrl = `https://api.davidcyriltech.my.id/bitly?link=${encodeURIComponent(q)}`;
+    }
 
-        // Check if the response is valid and contains a shortened URL
-        if (response.data) {
-            // Send the shortened URL back to the user
-            reply(`🔗 Here is your shortened URL: ${response.data}`);
-        } else {
-            reply("❌ Something went wrong while shortening the URL. Please try again later.");
-        }
+    await reply('> *Shortening URL...*');
 
-    } catch (error) {
-        console.error("Error shortening URL:", error.message);
-        reply("❌ An error occurred while shortening the URL. Please try again later.");
+    const response = await fetchJson(apiUrl);
+    const result = response.result;
+
+    const caption = ` \`SUBZERO URL SHORTENER\` \n\n\n*Original Link:* ${q}\n\n*Shortened Link:* ${result}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍʀ ғʀᴀɴᴋ`;
+
+   /* await conn.sendMessage(m.chat, { text: caption }, { quoted: m });
+  } catch (error) {
+    console.error(error);
+    reply(`An error occurred: ${error.message}`);
+  }
+});
+*/
+ // Send the status message with an image
+        await conn.sendMessage(from, { 
+            image: { url: `https://i.ibb.co/DR0k2XM/mrfrankofc.jpg` },  // Image URL
+            caption: caption,
+            contextInfo: {
+                mentionedJid: [m.sender],
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: '120363304325601080@newsletter',
+                    newsletterName: '『 𝐒𝐔𝐁𝐙𝐄𝐑𝐎 𝐌𝐃 』',
+                    serverMessageId: 143
+                }
+            }
+        }, { quoted: mek });
+
+    } catch (e) {
+        console.error("Error in shortining URL:", e);
+        reply(`An error occurred: ${e.message}`);
     }
 });
 cmd({
