@@ -142,20 +142,6 @@ cmd({
         reply("❌ An error occurred while calculating your age. Please try again later.");
     }
 });
-const { cmd } = require("../command");
-const fetch = require("node-fetch"); // Assurez-vous que node-fetch est installé
-
-// Définition de la fonction fetchJson
-const fetchJson = async (url, options) => {
-  try {
-    const res = await fetch(url, options);
-    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-    return await res.json();
-  } catch (err) {
-    console.error("Error in fetchJson:", err);
-    throw err;
-  }
-};
 cmd({
     pattern: "timezone",
     desc: "Get the current time in a specific timezone.",
