@@ -152,8 +152,6 @@ async function endGame(conn, from) {
     return conn.reply(from, `🎉 Félicitations ${winner}, vous avez deviné le mot "javascript" ! 🎉`, mek);
 }
 
-const { cmd } = require('../command');
-
 const animals = [
     { description: "Je suis un animal qui aboie et qui est souvent le meilleur ami de l'homme.", answer: "Chien" },
     { description: "Je suis un animal qui miaule et je suis souvent gardé comme animal de compagnie.", answer: "Chat" },
