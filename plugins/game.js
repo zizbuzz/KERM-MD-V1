@@ -14,135 +14,197 @@ Github: Kgtech-cmr
 
 const { cmd } = require("../command");
 
-let activeGames = {}; // Stocke les jeux actifs par groupe
+const participants = [];
+let gameStarted = false;
+let currentPlayerIndex = 0;
+const scores = {};
 
+// Liste de questions simplifiées
+const questions = [
+  { question: "Quel est le plus grand pays du monde ?", answer: "Russie" },
+  { question: "Quelle est la capitale de la France ?", answer: "Paris" },
+  { question: "Combien de continents y a-t-il sur Terre ?", answer: "7" },
+  { question: "Quel est l'animal qui miaule ?", answer: "Chat" },
+  { question: "Dans quelle ville se trouve la Tour Eiffel ?", answer: "Paris" },
+  { question: "Quel est l'animal national de l'Australie ?", answer: "Kangourou" },
+  { question: "Quel est le fruit jaune et courbé ?", answer: "Banane" },
+  { question: "Quel est l'animal qui aboie ?", answer: "Chien" },
+  { question: "Combien de couleurs y a-t-il dans un arc-en-ciel ?", answer: "7" },
+  { question: "Qui a peint la Joconde ?", answer: "Léonard de Vinci" },
+  { question: "Quelle couleur fait le ciel par temps clair ?", answer: "Bleu" },
+  { question: "Combien de jours y a-t-il dans une semaine ?", answer: "7" },
+  { question: "Quel est le plus petit pays du monde ?", answer: "Vatican" },
+  { question: "Quel est l'animal qui saute et vit dans les arbres ?", answer: "Singe" },
+  { question: "Quel est le fruit rouge et rond que l'on mange souvent en été ?", answer: "Tomate" },
+  { question: "Quel est l'animal qui porte une coquille ?", answer: "Escargot" },
+  { question: "Dans quel pays se trouve le Colisée ?", answer: "Italie" },
+  { question: "Quel est l'animal qui a des rayures noires et blanches ?", answer: "Zèbre" },
+  { question: "Combien de doigts avons-nous sur une main ?", answer: "5" },
+  { question: "Quelle couleur est une pomme Granny Smith ?", answer: "Verte" },
+  { question: "Quel est le plus grand mammifère terrestre ?", answer: "Éléphant" },
+  { question: "Quel est l'animal qui pond des œufs et vit dans l'eau ?", answer: "Canard" },
+  { question: "Quel est le nom de l'élément chimique dont le symbole est 'O' ?", answer: "Oxygène" },
+  { question: "Quel est l'objet que l'on utilise pour écrire ?", answer: "Stylo" },
+  { question: "Quel est l'objet qui permet de regarder des films ?", answer: "Télévision" },
+  { question: "Combien de pieds a une araignée ?", answer: "8" },
+  { question: "Quel est le jour de la semaine qui suit le lundi ?", answer: "Mardi" },
+  { question: "Quel est l'animal qui vit dans l'eau et a des nageoires ?", answer: "Poisson" },
+  { question: "Quel est l'instrument de musique avec des touches noires et blanches ?", answer: "Piano" },
+  { question: "Combien de semaines y a-t-il dans une année ?", answer: "52" },
+  { question: "Quel est le fruit qui est souvent associé à un matin énergique ?", answer: "Orange" },
+  { question: "Quel est le nom du célèbre sorcier dans Harry Potter ?", answer: "Harry Potter" },
+  { question: "Quel est le plus grand océan du monde ?", answer: "Pacifique" },
+  { question: "Quel est l'animal qui a une trompe ?", answer: "Éléphant" },
+  { question: "Dans quel pays peut-on voir la Grande Muraille ?", answer: "Chine" },
+  { question: "Combien de mois y a-t-il dans une année ?", answer: "12" },
+  { question: "Quel est le nom du personnage qui roule un tonneau dans Mario ?", answer: "Donkey Kong" },
+  { question: "Quel est l'objet que l'on utilise pour se protéger de la pluie ?", answer: "Parapluie" },
+  { question: "Quelle est la couleur d'une orange ?", answer: "Orange" },
+  { question: "Quel est le fruit qui peut être utilisé pour faire du jus ?", answer: "Orange" },
+  { question: "Quel est l'élément chimique dont le symbole est 'H' ?", answer: "Hydrogène" },
+  { question: "Quel est l'animal qui vit dans l'eau et a une coquille ?", answer: "Tortue" },
+  { question: "Quelle est la capitale de l'Italie ?", answer: "Rome" },
+  { question: "Quel est l'objet que l'on utilise pour téléphoner ?", answer: "Téléphone" },
+  { question: "Quel est l'élément chimique dont le symbole est 'He' ?", answer: "Hélium" },
+  { question: "Quel est le nom de l'animal qui vit dans une ruche ?", answer: "Abeille" },
+  { question: "Dans quel pays se trouve la Statue de la Liberté ?", answer: "États-Unis" },
+  { question: "Quel est l'animal qui vit dans un terrier ?", answer: "Lapin" },
+  { question: "Quel est l'animal qui est le symbole de la sagesse ?", answer: "Chouette" },
+  { question: "Quel est l'élément chimique avec le symbole 'C' ?", answer: "Carbone" },
+  { question: "Quel est l'instrument de musique à cordes ?", answer: "Guitare" },
+  { question: "Quel est l'animal qui vit dans une jungle ?", answer: "Tigre" },
+  { question: "Quel est le nom de l'animal qui est le roi de la jungle ?", answer: "Lion" },
+  { question: "Quel est le plus grand animal terrestre ?", answer: "Éléphant" },
+  { question: "Quel est l'élément chimique avec le symbole 'N' ?", answer: "Azote" },
+  { question: "Quel est l'animal qui vit dans l'eau et est transparent ?", answer: "Méduse" },
+  { question: "Quel est le sport où l'on utilise un ballon rond ?", answer: "Football" },
+  { question: "Quel est l'élément chimique avec le symbole 'Cl' ?", answer: "Chlore" },
+  { question: "Quel est l'animal qui vit dans un étang ?", answer: "Grenouille" },
+  { question: "Quel est l'objet que l'on utilise pour couper ?", answer: "Ciseaux" },
+  { question: "Dans quelle ville se trouve la Statue de la Liberté ?", answer: "New York" },
+  { question: "Quel est l'animal qui pond des œufs ?", answer: "Oiseau" },
+  { question: "Quel est l'instrument de musique à vent ?", answer: "Flûte" },
+  { question: "Quel est le fruit que l'on trouve dans une forêt ?", answer: "Fraise" },
+  { question: "Quel est l'animal qui porte une carapace ?", answer: "Tortue" },
+  { question: "Quel est le fruit que l'on utilise souvent pour faire un smoothie ?", answer: "Banane" },
+  { question: "Quel est le plus grand animal marin ?", answer: "Baleine" },
+  { question: "Quel est l'élément chimique avec le symbole 'Na' ?", answer: "Sodium" },
+  { question: "Dans quelle ville se trouve le Colisée ?", answer: "Rome" },
+  { question: "Quel est l'objet que l'on utilise pour protéger les yeux du soleil ?", answer: "Lunettes" },
+  { question: "Quel est l'élément chimique avec le symbole 'Fe' ?", answer: "Fer" },
+];
+// Commande pour commencer le jeu
 cmd({
   pattern: "wgc",
   react: "🎮",
-  desc: "Activate the Word Game Challenge.",
+  alias: ["game"],
+  desc: "Start the word guessing game.",
   category: "game",
   use: ".wgc",
-  filename: __filename,
-}, async (conn, mek, m, { from, reply, isGroup }) => {
-  if (!isGroup) return reply("❌ This game can only be played in a group.");
-
-  if (activeGames[from]) return reply("❌ A game is already active. Type 'start' to begin.");
-
-  activeGames[from] = { participants: [], isStarted: false, scores: {}, turn: 0 };
-  await reply(
-    "🎮 *Word Game Challenge Activated!*\n\n" +
-      "Users who want to participate should type 'ready' (not a command).\n" +
-      "The group owner can type 'start' to begin the game."
-  );
-});
-
-cmd({
-  pattern: ".*", // Capture tous les messages (ready/start/réponses)
-  filename: __filename,
-}, async (conn, mek, m, { from, sender, body, isOwner, reply }) => {
-  if (!activeGames[from]) return;
-
-  const game = activeGames[from];
-
-  // Ajouter un utilisateur qui écrit "ready"
-  if (body.trim().toLowerCase() === "ready") {
-    if (game.isStarted) return reply("❌ The game has already started. You can't join now.");
-    if (game.participants.includes(sender)) return reply("❌ You are already part of the game.");
-    game.participants.push(sender);
-    game.scores[sender] = 0; // Initialiser le score
-    return conn.sendMessage(from, {
-      text: `✅ @${sender.split("@")[0]} has joined the game!`,
-      mentions: [sender],
-    });
+  filename: __filename
+}, async (conn, mek, m, { from, isGroup, reply, sender }) => {
+  if (gameStarted) {
+    return reply("❌ The game has already started!");
   }
 
-  // Démarrer le jeu quand l'owner écrit "start"
-  if (body.trim().toLowerCase() === "start" && isOwner && !game.isStarted) {
-    if (game.participants.length < 2) return reply("❌ At least 2 participants are required to start the game.");
+  participants.push(sender);
+  scores[sender] = 0;
+  reply(`${sender} is now ready to play!`);
 
-    game.isStarted = true;
-    return startGame(conn, from);
-  }
-});
+  await reply("Please type 'ready' to join the game. The owner will start the game by typing 'start'.");
 
-// Fonction principale pour gérer le jeu
-async function startGame(conn, group) {
-  const game = activeGames[group];
-  if (!game) return;
+  // Game listener for participants to type 'ready'
+  conn.on("message", async (message) => {
+    if (message.body.toLowerCase() === "ready" && !participants.includes(message.sender)) {
+      participants.push(message.sender);
+      scores[message.sender] = 0;
+      reply(`${message.sender} is now ready to play!`);
+    }
 
-  while (game.participants.length > 1) {
-    const currentPlayer = game.participants[game.turn % game.participants.length];
-    const question = generateQuestion(); // Générer une question aléatoire
-    const questionMessage = `🎮 *Question for @${currentPlayer.split("@")[0]}:*\n\n${question.text}`;
-
-    await conn.sendMessage(group, { text: questionMessage, mentions: [currentPlayer] });
-    const correctAnswer = question.answer.toLowerCase();
-
-    const startTime = Date.now();
-    const maxTime = 4000; // Temps limite pour répondre (4 secondes)
-
-    let answeredCorrectly = false;
-
-    // Écouter les réponses du joueur
-    const messageHandler = async (responseMek) => {
-      if (responseMek.key.remoteJid === group && responseMek.sender === currentPlayer) {
-        const userAnswer = responseMek.message.conversation?.trim().toLowerCase();
-        if (userAnswer === correctAnswer) {
-          answeredCorrectly = true;
-          game.scores[currentPlayer]++;
-          conn.off("chat-update", messageHandler);
-        }
+    // Start game when owner types 'start'
+    if (message.body.toLowerCase() === "start" && participants.includes(message.sender)) {
+      if (message.sender !== from) {
+        return reply("❌ Only the owner can start the game.");
       }
-    };
 
-    conn.on("chat-update", messageHandler);
+      gameStarted = true;
+      currentPlayerIndex = 0;
+      await reply("The game has started! Good luck everyone!");
 
-    // Attendre jusqu'à ce que le joueur réponde ou que le temps soit écoulé
-    while (Date.now() - startTime < maxTime && !answeredCorrectly) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Start asking questions
+      askQuestion();
     }
+  });
+});
 
-    conn.off("chat-update", messageHandler);
-
-    if (!answeredCorrectly) {
-      // Éliminer le joueur en cas d'échec
-      game.participants = game.participants.filter((p) => p !== currentPlayer);
-      await conn.sendMessage(group, {
-        text: `❌ @${currentPlayer.split("@")[0]} has been eliminated!`,
-        mentions: [currentPlayer],
-      });
-    } else {
-      // Réponse correcte
-      await conn.sendMessage(group, {
-        text: `✅ @${currentPlayer.split("@")[0]} answered correctly!`,
-        mentions: [currentPlayer],
-      });
-    }
-
-    // Passer au joueur suivant
-    game.turn++;
+// Function to ask a question
+async function askQuestion() {
+  if (participants.length === 0) {
+    return;
   }
 
-  // Fin du jeu
-  const winner = game.participants[0];
-  const scores = Object.entries(game.scores)
-    .map(([participant, score]) => `@${participant.split("@")[0]}: ${score} points`)
-    .join("\n");
-  await conn.sendMessage(group, {
-    text: `🎉 *Game Over!* 🎉\n\n🏆 Winner: @${winner.split("@")[0]}\n\n📊 Scores:\n${scores}`,
-    mentions: [winner, ...Object.keys(game.scores)],
-  });
+  // Get the current player
+  const currentPlayer = participants[currentPlayerIndex];
 
-  delete activeGames[group];
+  // Get a random question
+  const questionIndex = Math.floor(Math.random() * questions.length);
+  const { question, answer } = questions[questionIndex];
+
+  // Ask the question
+  await reply(`@${currentPlayer}, here's your question: ${question}`);
+
+  // Wait for answer
+  const answerTimeout = setTimeout(() => {
+    // If no response within 4 seconds, eliminate the player
+    eliminatePlayer(currentPlayer);
+  }, 4000);
+
+  conn.on("message", async (message) => {
+    if (message.sender === currentPlayer && message.body.toLowerCase() === answer.toLowerCase()) {
+      clearTimeout(answerTimeout);
+      scores[currentPlayer] += 1;
+      reply(`@${currentPlayer} answered correctly!`);
+      currentPlayerIndex = (currentPlayerIndex + 1) % participants.length; // Move to the next player
+      askQuestion(); // Ask the next question
+    } else if (message.sender === currentPlayer) {
+      clearTimeout(answerTimeout);
+      reply(`@${currentPlayer} answered incorrectly! You are eliminated.`);
+      eliminatePlayer(currentPlayer);
+    }
+  });
 }
 
-// Fonction pour générer une question aléatoire
-function generateQuestion() {
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const randomLetter = letters[Math.floor(Math.random() * letters.length)];
-  const wordLength = Math.floor(Math.random() * 5) + 5; // Longueur entre 5 et 10
-  return {
-    text: `Find a word that starts with *${randomLetter}* and contains *${wordLength} letters*.`,
-    answer: `${randomLetter.toLowerCase()}example`, // Réponse fictive
-  };
+// Function to eliminate a player
+function eliminatePlayer(player) {
+  const index = participants.indexOf(player);
+  if (index > -1) {
+    participants.splice(index, 1);
+  }
+
+  // If only one player left, end the game
+  if (participants.length === 1) {
+    endGame();
+  }
+}
+
+// Function to end the game
+function endGame() {
+  gameStarted = false;
+  let winner = participants[0];
+  let scoreMessage = "Game over! Here are the final scores:\n";
+
+  for (let player in scores) {
+    scoreMessage += `${player}: ${scores[player]} points\n`;
+  }
+
+  // Announce the winner
+  if (winner) {
+    scoreMessage += `🎉 Congratulations to @${winner} for winning the game! 🎉`;
+  } else {
+    scoreMessage += "No winner, as all players were eliminated.";
+  }
+
+  reply(scoreMessage);
+  participants.length = 0; // Reset participants
+  scores = {}; // Reset scores
 }
