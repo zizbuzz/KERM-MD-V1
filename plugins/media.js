@@ -176,7 +176,7 @@ cmd({
   try {
     if (!q) return reply('Please provide a URL to shorten.');
 
-    await reply('> *Subzero Processing...*');
+    await reply('> *Kerm Processing...*');
 
     let apiUrl = '';
     if (command === 'tiny' || command === 'tinyurl') {
@@ -190,7 +190,7 @@ cmd({
     const response = await fetchJson(apiUrl);
     const result = response.result;
 
-    const caption = ` \`SUBZERO URL SHORTENER\` \n\n\n*Original Link:* ${q}\n\n*Shortened Link:* ${result}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍʀ ғʀᴀɴᴋ`;
+    const caption = ` \`KERM URL SHORTENER\` \n\n\n*Original Link:* ${q}\n\n*Shortened Link:* ${result}\n\n> 𝖯𝖮𝖶𝖤𝖱𝖤𝖣 𝖡𝖸 𝖪𝖤𝖱𝖬`;
 
    /* await conn.sendMessage(m.chat, { text: caption }, { quoted: m });
   } catch (error) {
@@ -201,7 +201,7 @@ cmd({
 */
  // Send the status message with an image
         await conn.sendMessage(from, { 
-            image: { url: `https://i.ibb.co/DR0k2XM/mrfrankofc.jpg` },  // Image URL
+            image: { url: `https://files.catbox.moe/heu4tc.png` },  // Image URL
             caption: caption,
             contextInfo: {
                 mentionedJid: [m.sender],
@@ -209,7 +209,7 @@ cmd({
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363304325601080@newsletter',
-                    newsletterName: '『 𝐒𝐔𝐁𝐙𝐄𝐑𝐎 𝐌𝐃 』',
+                    newsletterName: '𝐊𝐄𝐑𝐌 𝐌𝐃',
                     serverMessageId: 143
                 }
             }
