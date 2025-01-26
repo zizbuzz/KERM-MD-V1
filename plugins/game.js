@@ -28,38 +28,37 @@ cmd({
   let currentQuestionIndex = 0;
   let playerScores = {};
 
+  // Vérification si le bot est dans un groupe
   if (!isGroup) {
-    return reply("🎮 Le jeu commence bientôt ! 🚀 Pour participer, écris 'ready' dans le chat pour rejoindre la partie ! 📢 Ensuite, l'utilisateur peut taper 'start' pour démarrer le jeu. Que le meilleur gagne ! 🎉");
-  } else {
-    reply("🎮 Le jeu va bientôt commencer ! 🚀 Écris 'ready' pour participer et 'start' pour commencer le jeu !");
+    return reply("🎮 Le jeu commence bientôt ! 🚀 Pour participer, écris 'ready' dans le chat pour rejoindre la partie ! 📢 Ensuite, tapez 'start' pour démarrer le jeu. Que le meilleur gagne ! 🎉");
   }
 
-  // Quand un joueur tape "ready", il rejoint la partie
+  // Lorsque l'utilisateur tape "ready" pour rejoindre le jeu
   cmd({
     pattern: "ready",
     react: "👍",
     desc: "Rejoindre le jeu",
     category: "games",
     filename: __filename
-  }, async (conn, mek, m, { from, sender }) => {
-    if (gameStarted) return; // Ne permet pas de rejoindre si le jeu a déjà commencé
-
+  }, async (conn, mek, m, { from, sender, pushname }) => {
+    if (gameStarted) return reply("❌ Le jeu a déjà commencé !");
+    
     if (participants.includes(sender)) {
-      return reply("❌ Tu as déjà rejoint le jeu !");
+      return reply(`❌ ${pushname}, tu as déjà rejoint le jeu !`);
     }
 
     participants.push(sender);
-    reply(`${sender} a rejoint le jeu ! 🎉`);
+    reply(`${pushname} a rejoint le jeu ! 🎉`);
   });
 
-  // Quand l'utilisateur tape "start", le jeu commence
+  // Démarrage du jeu lorsque l'utilisateur tape "start"
   cmd({
     pattern: "start",
     react: "🚀",
     desc: "Démarrer le jeu",
     category: "games",
     filename: __filename
-  }, async (conn, mek, m, { from, sender }) => {
+  }, async (conn, mek, m, { from, sender, pushname }) => {
     if (gameStarted) return reply("❌ Le jeu a déjà commencé !");
     
     if (participants.length < 2) {
@@ -69,7 +68,7 @@ cmd({
     gameStarted = true;
     await reply("🚀 Le jeu commence maintenant ! 🎉");
 
-    // Liste des questions avec les ajouts
+    // Liste des questions
     const questions = [
       { question: "Quel est le plus grand pays du monde ?", answer: "Russie" },
       { question: "Quelle est la capitale de la France ?", answer: "Paris" },
@@ -82,98 +81,49 @@ cmd({
       { question: "Combien de couleurs y a-t-il dans un arc-en-ciel ?", answer: "7" },
       { question: "Qui a peint la Joconde ?", answer: "Léonard de Vinci" },
       { question: "Quelle couleur fait le ciel par temps clair ?", answer: "Bleu" },
-      { question: "Combien de jours y a-t-il dans une semaine ?", answer: "7" },
-      { question: "Quel est le plus petit pays du monde ?", answer: "Vatican" },
-      { question: "Quel est l'animal qui saute et vit dans les arbres ?", answer: "Singe" },
-      { question: "Quel est le fruit rouge et rond que l'on mange souvent en été ?", answer: "Tomate" },
-      { question: "Quel est l'animal qui porte une coquille ?", answer: "Escargot" },
-      { question: "Dans quel pays se trouve le Colisée ?", answer: "Italie" },
-      { question: "Quel est l'animal qui a des rayures noires et blanches ?", answer: "Zèbre" },
-      { question: "Combien de doigts avons-nous sur une main ?", answer: "5" },
-      { question: "Quelle couleur est une pomme Granny Smith ?", answer: "Verte" },
-      { question: "Quel est le plus grand mammifère terrestre ?", answer: "Éléphant" },
-      { question: "Quel est l'animal qui pond des œufs et vit dans l'eau ?", answer: "Canard" },
-      { question: "Quel est le nom de l'élément chimique dont le symbole est 'O' ?", answer: "Oxygène" },
-      { question: "Quel est l'objet que l'on utilise pour écrire ?", answer: "Stylo" },
-      { question: "Quel est l'objet qui permet de regarder des films ?", answer: "Télévision" },
-      { question: "Combien de pieds a une araignée ?", answer: "8" },
-      { question: "Quel est le jour de la semaine qui suit le lundi ?", answer: "Mardi" },
-      { question: "Quel est l'animal qui vit dans l'eau et a des nageoires ?", answer: "Poisson" },
-      { question: "Quel est l'instrument de musique avec des touches noires et blanches ?", answer: "Piano" },
-      { question: "Combien de semaines y a-t-il dans une année ?", answer: "52" },
-      { question: "Quel est le fruit qui est souvent associé à un matin énergique ?", answer: "Orange" },
-      { question: "Quel est le nom du célèbre sorcier dans Harry Potter ?", answer: "Harry Potter" },
-      { question: "Quel est le plus grand océan du monde ?", answer: "Pacifique" },
-      { question: "Quel est l'animal qui a une trompe ?", answer: "Éléphant" },
-      { question: "Dans quel pays peut-on voir la Grande Muraille ?", answer: "Chine" },
-      { question: "Combien de mois y a-t-il dans une année ?", answer: "12" },
-      { question: "Quel est le nom du personnage qui roule un tonneau dans Mario ?", answer: "Donkey Kong" },
-      { question: "Quel est l'objet que l'on utilise pour se protéger de la pluie ?", answer: "Parapluie" },
-      { question: "Quelle est la couleur d'une orange ?", answer: "Orange" },
-      { question: "Quel est le fruit qui peut être utilisé pour faire du jus ?", answer: "Orange" },
-      { question: "Quel est l'élément chimique dont le symbole est 'H' ?", answer: "Hydrogène" },
-      { question: "Quel est l'animal qui vit dans l'eau et a une coquille ?", answer: "Tortue" },
-      { question: "Quelle est la capitale de l'Italie ?", answer: "Rome" },
-      { question: "Quel est l'objet que l'on utilise pour téléphoner ?", answer: "Téléphone" },
-      { question: "Quel est l'élément chimique dont le symbole est 'He' ?", answer: "Hélium" },
-      { question: "Quel est le nom de l'animal qui vit dans une ruche ?", answer: "Abeille" },
-      { question: "Dans quel pays se trouve la Statue de la Liberté ?", answer: "États-Unis" },
-      { question: "Quel est l'animal qui vit dans un terrier ?", answer: "Lapin" },
-      { question: "Quel est l'animal qui est le symbole de la sagesse ?", answer: "Chouette" },
-      { question: "Quel est l'élément chimique avec le symbole 'C' ?", answer: "Carbone" },
-      { question: "Quel est l'instrument de musique à cordes ?", answer: "Guitare" },
-      { question: "Quel est l'animal qui vit dans une jungle ?", answer: "Tigre" },
-      { question: "Quel est le nom de l'animal qui est le roi de la jungle ?", answer: "Lion" },
-      { question: "Quel est le plus grand animal terrestre ?", answer: "Éléphant" },
-      { question: "Quel est l'élément chimique avec le symbole 'N' ?", answer: "Azote" },
-      { question: "Quel est l'animal qui vit dans l'eau et est transparent ?", answer: "Méduse" },
-      { question: "Quel est le sport où l'on utilise un ballon rond ?", answer: "Football" },
-      { question: "Quel est l'élément chimique avec le symbole 'Cl' ?", answer: "Chlore" },
-      { question: "Quel est l'animal qui vit dans un étang ?", answer: "Grenouille" },
-      { question: "Quel est l'objet que l'on utilise pour couper ?", answer: "Ciseaux" },
-      { question: "Dans quelle ville se trouve la Statue de la Liberté ?", answer: "New York" },
-      { question: "Quel est l'animal qui pond des œufs ?", answer: "Oiseau" },
-      { question: "Quel est l'instrument de musique à vent ?", answer: "Flûte" },
-      { question: "Quel est le fruit que l'on trouve dans une forêt ?", answer: "Fraise" },
-      { question: "Quel est l'animal qui porte une carapace ?", answer: "Tortue" },
-      { question: "Quel est le fruit que l'on utilise souvent pour faire un smoothie ?", answer: "Banane" },
-      { question: "Quel est le plus grand animal marin ?", answer: "Baleine" },
-      { question: "Quel est l'élément chimique avec le symbole 'Na' ?", answer: "Sodium" },
-      { question: "Dans quelle ville se trouve le Colisée ?", answer: "Rome" },
-      { question: "Quel est l'objet que l'on utilise pour protéger les yeux du soleil ?", answer: "Lunettes" },
-      { question: "Quel est l'élément chimique avec le symbole 'Fe' ?", answer: "Fer" }
+      { question: "Combien de jours y a-t-il dans une semaine ?", answer: "7" }
+      // Ajoute d'autres questions selon besoin
     ];
 
-    // Fonction pour poser la question à chaque joueur
-    async function askQuestion(player) {
+    // Fonction pour poser des questions aux participants
+    async function askQuestion(player, pushname) {
+      if (currentQuestionIndex >= questions.length) {
+        return;
+      }
+      
       const question = questions[currentQuestionIndex];
       currentQuestionIndex++;
 
-      await conn.sendMessage(from, `${player}, voici ta question : ${question.question}`);
+      await conn.sendMessage(from, `${pushname}, voici ta question : ${question.question}`);
 
-      // Attente de la réponse du joueur
-      const message = await conn.on("message", async (response) => {
-        if (response.body.toLowerCase() === question.answer.toLowerCase()) {
-          playerScores[player] = (playerScores[player] || 0) + 1;
-          return conn.sendMessage(from, `🎉 ${player} a répondu correctement !`);
-        } else {
-          setTimeout(() => {
-            conn.sendMessage(from, `❌ ${player} a répondu incorrectement. La bonne réponse était : ${question.answer}`);
-          }, 4000); // Attente de 4 secondes avant de donner la mauvaise réponse
+      // Attendre la réponse du joueur
+      conn.on("message", async (response) => {
+        if (response.from === player) {
+          if (response.body.toLowerCase() === question.answer.toLowerCase()) {
+            playerScores[player] = (playerScores[player] || 0) + 1;
+            await conn.sendMessage(from, `${pushname} a répondu correctement ! 🎉`);
+          } else {
+            setTimeout(() => {
+              conn.sendMessage(from, `${pushname} a répondu incorrectement. La bonne réponse était : ${question.answer}`);
+            }, 4000); // Attente de 4 secondes avant d'afficher la mauvaise réponse
+          }
         }
       });
     }
 
-    // Démarrage du jeu pour chaque joueur
-    participants.forEach(async (player) => {
-      await askQuestion(player);
-    });
+    // Demander des questions à chaque participant
+    for (let i = 0; i < participants.length; i++) {
+      const player = participants[i];
+      const playerName = await conn.getName(player);
+      await askQuestion(player, playerName);
+    }
 
-    // Affichage des scores finaux après les questions
+    // Affichage des scores finaux après toutes les questions
     setTimeout(() => {
       let scoreBoard = "📊 Scores finaux : \n";
       participants.forEach(player => {
-        scoreBoard += `${player}: ${playerScores[player] || 0} points\n`;
+        const playerName = conn.getName(player);
+        scoreBoard += `${playerName}: ${playerScores[player] || 0} points\n`;
       });
       reply(scoreBoard);
     }, 10000); // Attendre 10 secondes avant d'afficher les scores
