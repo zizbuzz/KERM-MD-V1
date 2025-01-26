@@ -11,11 +11,16 @@ YT: KermHackTools
 Github: Kgtech-cmr
 */
 
+const { cmd } = require("../command"); // Gestion des commandes
+const fs = require("fs"); // Gestion des fichiers
+const path = require("path"); // Gestion des chemins de fichiers
+const baileys = require("@adiwajshing/baileys"); // Bibliothèque pour WhatsApp bots
+
 cmd({
   pattern: "delete",
   react: "❌",
   alias: ["del"],
-  desc: "Delete messages (bot's or owner's messages).",
+  desc: "Delete the bot's messages or other messages (requires admin for others).",
   category: "group",
   use: '.del',
   filename: __filename
@@ -23,43 +28,41 @@ cmd({
 async (conn, mek, m, { 
   from, 
   quoted, 
+  isAdmins, 
   isBotAdmins, 
   isOwner, 
-  sender, 
-  reply 
+  sender 
 }) => {
   try {
     // Vérifier si un message est cité
     if (!quoted) {
-      return reply("❌ Please reply to a message to delete it.");
+      return await conn.sendMessage(from, { text: "❌ Please reply to a message to delete it." }, { quoted: m });
     }
 
     // Construire la clé pour supprimer le message
     const key = {
-      remoteJid: from, // ID du chat ou du groupe
+      remoteJid: from, // ID du groupe ou du chat
       fromMe: quoted.fromMe, // Vérifie si le message appartient au bot
       id: quoted.id, // ID du message cité
-      participant: quoted.sender || m.sender // Définit le participant (utile en privé)
+      participant: quoted.sender // Expéditeur du message cité
     };
 
-    // Vérifier si le message appartient au bot ou à l'owner
-    const isBotMessage = quoted.fromMe; // Message envoyé par le bot
-    const isOwnerMessage = quoted.sender === sender; // Message envoyé par l'owner
-
-    if (isBotMessage || isOwnerMessage) {
-      // Supprimer le message
-      await conn.sendMessage(from, { delete: key });
-    } else if (m.isGroup) {
-      // Vérifier si le bot est admin pour supprimer les messages des autres dans un groupe
-      if (!isBotAdmins) {
-        return reply("❌ I need admin privileges to delete messages in this group.");
-      }
-      // Supprimer un message d'un autre utilisateur dans un groupe
-      await conn.sendMessage(from, { delete: key });
-    } else {
-      // En privé, ne pas supprimer les messages des autres
-      return reply("❌ I can only delete my own messages or the owner's messages in private chats.");
+    // Supprimer le message si le bot ou l'owner l'a envoyé
+    if (quoted.fromMe || sender === isOwner) {
+      return await conn.sendMessage(from, { delete: key });
     }
+
+    // Vérifier si le bot est administrateur pour supprimer les messages des autres dans un groupe
+    if (m.isGroup) {
+      if (!isBotAdmins) {
+        return await conn.sendMessage(from, { text: "❌ I need admin privileges to delete messages from others." }, { quoted: m });
+      }
+      // Supprimer le message
+      return await conn.sendMessage(from, { delete: key });
+    }
+
+    // Si en privé et le message n'appartient pas au bot
+    return await conn.sendMessage(from, { text: "❌ I can only delete my messages in private chats." }, { quoted: m });
   } catch (e) {
     console.error("Error in delete command:", e);
   }
