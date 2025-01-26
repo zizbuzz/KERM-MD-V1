@@ -454,3 +454,82 @@ cmd({
     _0x552cd6("❎ An error occurred while processing your request.");
   }
 });
+
+let activeGames = {}; // Stocker les jeux en cours pour chaque groupe ou utilisateur
+
+cmd({
+  pattern: "numbergame",
+  react: "🎲",
+  desc: "Start a number guessing game.",
+  category: "game",
+  use: ".numbergame",
+  filename: __filename,
+}, async (conn, mek, m, { from, reply, isGroup, sender }) => {
+  try {
+    if (activeGames[from]) {
+      return reply("❌ A game is already in progress! Use `.endgame` to stop it.");
+    }
+
+    // Générer un chiffre aléatoire entre 1 et 100
+    const targetNumber = Math.floor(Math.random() * 100) + 1;
+    activeGames[from] = { targetNumber, attempts: {} };
+
+    await reply("🎉 *Number Game Started!* 🎉\n\nI have chosen a number between 1 and 100.\nGuess the number by typing it in the chat!");
+  } catch (e) {
+    console.error(e);
+    reply("❌ An error occurred while starting the game.");
+  }
+});
+
+cmd({
+  pattern: "guess",
+  react: "🤔",
+  desc: "Make a guess in the number game.",
+  category: "game",
+  use: ".guess <number>",
+  filename: __filename,
+}, async (conn, mek, m, { from, reply, q, sender }) => {
+  try {
+    const game = activeGames[from];
+    if (!game) return reply("❌ No game is currently in progress. Start one with `.numbergame`.");
+
+    const guessedNumber = parseInt(q);
+    if (isNaN(guessedNumber)) return reply("❌ Please provide a valid number.");
+
+    if (guessedNumber === game.targetNumber) {
+      delete activeGames[from];
+      return await reply(`🎉 *Congratulations!* 🎉\n\nThe correct number was *${guessedNumber}*.\nGame over!`);
+    }
+
+    if (!game.attempts[sender]) game.attempts[sender] = 0;
+    game.attempts[sender]++;
+
+    if (guessedNumber > game.targetNumber) {
+      return reply("📉 *Too high!* Try again.");
+    } else {
+      return reply("📈 *Too low!* Try again.");
+    }
+  } catch (e) {
+    console.error(e);
+    reply("❌ An error occurred while processing your guess.");
+  }
+});
+
+cmd({
+  pattern: "endgame",
+  react: "❌",
+  desc: "End the current number game.",
+  category: "game",
+  use: ".endgame",
+  filename: __filename,
+}, async (conn, mek, m, { from, reply }) => {
+  try {
+    if (!activeGames[from]) return reply("❌ No game is currently in progress.");
+
+    delete activeGames[from];
+    reply("❌ *Game ended.*");
+  } catch (e) {
+    console.error(e);
+    reply("❌ An error occurred while ending the game.");
+  }
+});
