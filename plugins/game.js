@@ -14,6 +14,7 @@ Github: Kgtech-cmr
 
 const { cmd } = require("../command");
 
+
 const participants = [];
 let gameStarted = false;
 let currentPlayerIndex = 0;
@@ -93,11 +94,12 @@ const questions = [
   { question: "Quel est l'objet que l'on utilise pour protéger les yeux du soleil ?", answer: "Lunettes" },
   { question: "Quel est l'élément chimique avec le symbole 'Fe' ?", answer: "Fer" },
 ];
+
 // Commande pour commencer le jeu
 cmd({
   pattern: "wgc",
   react: "🎮",
-  alias: ["game"],
+  alias: ["game", "play"],
   desc: "Start the word guessing game.",
   category: "game",
   use: ".wgc",
@@ -111,30 +113,61 @@ cmd({
   scores[sender] = 0;
   reply(`${sender} is now ready to play!`);
 
-  await reply("Please type 'ready' to join the game. The owner will start the game by typing 'start'.");
+  // Nouveau message d'alerte pour le début du jeu
+  await reply("🎮 Le jeu commence bientôt ! 🚀 Pour participer, écris 'ready' dans le chat pour rejoindre la partie !\n\n📢 L'owner va ensuite taper 'start' pour démarrer le jeu. Que le meilleur gagne ! 🎉");
+});
 
-  // Game listener for participants to type 'ready'
-  conn.on("message", async (message) => {
-    if (message.body.toLowerCase() === "ready" && !participants.includes(message.sender)) {
-      participants.push(message.sender);
-      scores[message.sender] = 0;
-      reply(`${message.sender} is now ready to play!`);
-    }
+// Game listener pour participants qui écrivent "ready"
+cmd({
+  pattern: "ready",
+  react: "✔️",
+  desc: "Join the game by typing 'ready'.",
+  category: "game",
+  use: ".ready",
+  filename: __filename
+}, async (conn, mek, m, { from, reply, sender }) => {
+  if (participants.includes(sender)) {
+    return reply("❌ You are already in the game!");
+  }
 
-    // Start game when owner types 'start'
-    if (message.body.toLowerCase() === "start" && participants.includes(message.sender)) {
-      if (message.sender !== from) {
-        return reply("❌ Only the owner can start the game.");
-      }
+  participants.push(sender);
+  scores[sender] = 0;
+  reply(`${sender} is now ready to play!`);
 
-      gameStarted = true;
-      currentPlayerIndex = 0;
-      await reply("The game has started! Good luck everyone!");
+  if (participants.length > 1) {
+    await reply("🟢 More players are joining. Type 'start' to begin when ready!");
+  } else {
+    await reply("🔴 Be the first to type 'start' to begin the game!");
+  }
+});
 
-      // Start asking questions
-      askQuestion();
-    }
-  });
+// Game listener pour l'owner tapant "start"
+cmd({
+  pattern: "start",
+  react: "🎉",
+  desc: "Start the game.",
+  category: "game",
+  use: ".start",
+  filename: __filename
+}, async (conn, mek, m, { from, reply, sender }) => {
+  if (sender !== from) {
+    return reply("❌ Only the owner can start the game.");
+  }
+
+  if (gameStarted) {
+    return reply("❌ The game has already started!");
+  }
+
+  if (participants.length < 2) {
+    return reply("❌ You need at least 2 players to start the game!");
+  }
+
+  gameStarted = true;
+  currentPlayerIndex = 0;
+  await reply("🎮 Le jeu a commencé ! Bonne chance à tous! 🍀");
+
+  // Start asking questions
+  askQuestion();
 });
 
 // Function to ask a question
