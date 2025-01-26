@@ -91,7 +91,6 @@ async function endGame(conn, from) {
     return conn.reply(from, `🎉 Le jeu est terminé !\n\nLe gagnant est ${winner} avec ${score} points ! 🎉`, mek);
 }
 
-const { cmd } = require('../command');
 
 let wordToGuess = "";
 let guessedLetters = [];
