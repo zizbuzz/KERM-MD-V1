@@ -14,7 +14,6 @@ Github: Kgtech-cmr
 const { cmd } = require("../command"); // Gestion des commandes
 const fs = require("fs"); // Gestion des fichiers
 const path = require("path"); // Gestion des chemins de fichiers
-const baileys = require("@adiwajshing/baileys"); // Bibliothèque pour WhatsApp bots
 
 cmd({
   pattern: "delete",
