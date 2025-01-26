@@ -11,11 +11,20 @@ YT: KermHackTools
 Github: Kgtech-cmr
 */
 
+const { cmd } = require("../command");
+const fetch = require("node-fetch"); // Assurez-vous que node-fetch est installé
 
-const config = require('../config');
-const { cmd, commands } = require('../command');
-const { fetchJson } = require('../lib/functions');
-
+// Définition de la fonction fetchJson
+const fetchJson = async (url, options) => {
+  try {
+    const res = await fetch(url, options);
+    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.error("Error in fetchJson:", err);
+    throw err;
+  }
+};
 
 cmd({
   pattern: 'tinyurl',
@@ -53,23 +62,41 @@ cmd({
 
     await reply('> *Kerm Processing...*');
 
+    // Construire l'URL de l'API selon la commande utilisée
     let apiUrl = '';
     if (command === 'tiny' || command === 'tinyurl') {
-      apiUrl = `https://api.giftedtech.web.id/api/tools/tinyurl?apikey=gifted&url=${encodeURIComponent(q)}`;
+      apiUrl = `https://api.davidcyriltech.my.id/tinyurl?url=${encodeURIComponent(q)}`;
     } else {
-      apiUrl = `https://api.giftedtech.web.id/api/tools/shorturl?apikey=gifted&url=${encodeURIComponent(q)}`;
+      apiUrl = `https://api.davidcyriltech.my.id/bitly?link=${encodeURIComponent(q)}`;
     }
 
     await reply('> *Shortening URL...*');
 
+    // Appel à l'API pour raccourcir l'URL
     const response = await fetchJson(apiUrl);
     const result = response.result;
 
-    const caption = ` \`KERM URL SHORTENER\` \n\n\n*Original Link:* ${q}\n\n*Shortened Link:* ${result}\n\n> KERM MD`;
+    // Construire la légende avec l'URL raccourcie
+    const caption = ` \`KERM URL SHORTENER\` \n\n\n*Original Link:* ${q}\n\n*Shortened Link:* ${result}\n\n> 𝖯𝖮𝖶𝖤𝖱𝖤𝖣 𝖡𝖸 𝖪𝖤𝖱𝖬`;
 
-    await conn.sendMessage(m.chat, { text: caption }, { quoted: m });
-  } catch (error) {
-    console.error(error);
-    reply(`An error occurred: ${error.message}`);
+    // Envoyer le message avec une image
+    await conn.sendMessage(from, { 
+      image: { url: `https://files.catbox.moe/heu4tc.png` }, // Image URL
+      caption: caption,
+      contextInfo: {
+        mentionedJid: [m.sender],
+        forwardingScore: 999,
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: '120363321386877609@newsletter',
+          newsletterName: '𝐊𝐄𝐑𝐌 𝐌𝐃',
+          serverMessageId: 143
+        }
+      }
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Error in shortining URL:", e);
+    reply(`❌ An error occurred: ${e.message}`);
   }
 });
