@@ -61,7 +61,7 @@ cmd({
   }
 });
 
-//==========SUBZERO MISTRA
+//==========KERM MISTRA
 
 cmd({
   pattern: "mistraai",
@@ -109,7 +109,7 @@ cmd({
   }
 });
 
-//====SUBZERO GPT 3
+//====KERM GPT 3
 
 cmd({
   pattern: "gpt3",
@@ -157,7 +157,7 @@ cmd({
   }
 });
 
-//==========SUBZERO GPT 4
+//==========KERM GPT 4
 
 cmd({
   pattern: "gpt4",
@@ -205,7 +205,7 @@ cmd({
   }
 });
 
-//==========SUHZERO LLAMA
+//==========KERM LLAMA
 cmd({
   pattern: "llama3",
   alias: ["llama", "llama2"],
@@ -252,7 +252,7 @@ cmd({
   }
 });
 
-//==========SUBZERO META AI
+//==========KERM META AI
 
 cmd({
   pattern: "metaai",
@@ -300,7 +300,7 @@ cmd({
   }
 });
 
-//==========SUBZERO GPT 4o
+//==========KERM GPT 4o
 
 cmd({
   pattern: "gpt4o",
@@ -348,7 +348,7 @@ cmd({
   }
 });
 
-//==========SUBZERO GEMINI
+//==========KERM GEMINI
 cmd({
   pattern: "gemini",
   alias: ["bard", "googleai"],
@@ -397,7 +397,7 @@ cmd({
 
 
  
-//==========SUBZERO CLAUDE
+//==========KERM CLAUDE
 cmd({
   pattern: "claudeai",
   alias: ["claude", "cloud"],
@@ -445,7 +445,7 @@ cmd({
 });
 
 
-//==========SUBZERO AI
+//==========KERM AI
 cmd({
   pattern: "subzero",
   alias: ["subzeroai", "deeai"],
@@ -492,7 +492,7 @@ cmd({
   }
 });
 
-//==========SUBZERO LORI
+//==========KERM LORI
 
 cmd({
   pattern: "lori",
@@ -541,7 +541,7 @@ cmd({
 });
 
 
- //=========SUHZERO LUDO AI
+ //=========KERM LUDO AI
 cmd({
 pattern: "ludoai",
 alias: ["ludo", "ludi"],
