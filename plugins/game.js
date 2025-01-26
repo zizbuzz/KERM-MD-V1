@@ -15,26 +15,21 @@ Github: Kgtech-cmr
 const { cmd } = require("../command");
 
 
-const participants = [];
-let gameStarted = false;
-let currentPlayerIndex = 0;
-const scores = {};
-
 cmd({
   pattern: "wgc",
   react: "🎮",
-  alias: ["game", "play"],
+  alias: ["game"],
   desc: "Start a game with participants",
   category: "games",
   filename: __filename
-}, async (conn, mek, m, { from, sender, isGroup, isOwner, reply, isCmd }) => {
+}, async (conn, mek, m, { from, sender, isGroup, reply }) => {
   let participants = [];
   let gameStarted = false;
   let currentQuestionIndex = 0;
   let playerScores = {};
 
   if (!isGroup) {
-    return reply("🎮 Le jeu commence bientôt ! 🚀 Pour participer, écris 'ready' dans le chat pour rejoindre la partie ! 📢 L'owner va ensuite taper 'start' pour démarrer le jeu. Que le meilleur gagne ! 🎉");
+    return reply("🎮 Le jeu commence bientôt ! 🚀 Pour participer, écris 'ready' dans le chat pour rejoindre la partie ! 📢 Ensuite, l'utilisateur peut taper 'start' pour démarrer le jeu. Que le meilleur gagne ! 🎉");
   } else {
     reply("🎮 Le jeu va bientôt commencer ! 🚀 Écris 'ready' pour participer et 'start' pour commencer le jeu !");
   }
@@ -57,7 +52,7 @@ cmd({
     reply(`${sender} a rejoint le jeu ! 🎉`);
   });
 
-  // Quand l'owner tape "start", le jeu commence
+  // Quand l'utilisateur tape "start", le jeu commence
   cmd({
     pattern: "start",
     react: "🚀",
@@ -65,10 +60,8 @@ cmd({
     category: "games",
     filename: __filename
   }, async (conn, mek, m, { from, sender }) => {
-    if (sender !== isOwner) {
-      return reply("❌ Seul l'owner peut démarrer le jeu !");
-    }
-
+    if (gameStarted) return reply("❌ Le jeu a déjà commencé !");
+    
     if (participants.length < 2) {
       return reply("❌ Il faut au moins 2 participants pour démarrer le jeu.");
     }
@@ -151,24 +144,27 @@ cmd({
       { question: "Quel est l'élément chimique avec le symbole 'Fe' ?", answer: "Fer" }
     ];
 
-    // Fonction pour poser la question à un joueur
+    // Fonction pour poser la question à chaque joueur
     async function askQuestion(player) {
       const question = questions[currentQuestionIndex];
       currentQuestionIndex++;
+
       await conn.sendMessage(from, `${player}, voici ta question : ${question.question}`);
 
-      // Attendre la réponse de l'utilisateur
-      const message = await conn.on("message", (response) => {
+      // Attente de la réponse du joueur
+      const message = await conn.on("message", async (response) => {
         if (response.body.toLowerCase() === question.answer.toLowerCase()) {
           playerScores[player] = (playerScores[player] || 0) + 1;
           return conn.sendMessage(from, `🎉 ${player} a répondu correctement !`);
         } else {
-          return conn.sendMessage(from, `❌ ${player} a répondu incorrectement. La bonne réponse était : ${question.answer}`);
+          setTimeout(() => {
+            conn.sendMessage(from, `❌ ${player} a répondu incorrectement. La bonne réponse était : ${question.answer}`);
+          }, 4000); // Attente de 4 secondes avant de donner la mauvaise réponse
         }
       });
     }
 
-    // Démarre les questions
+    // Démarrage du jeu pour chaque joueur
     participants.forEach(async (player) => {
       await askQuestion(player);
     });
@@ -180,6 +176,6 @@ cmd({
         scoreBoard += `${player}: ${playerScores[player] || 0} points\n`;
       });
       reply(scoreBoard);
-    }, 10000); // Attendre 10 secondes pour les réponses
+    }, 10000); // Attendre 10 secondes avant d'afficher les scores
   });
 });
