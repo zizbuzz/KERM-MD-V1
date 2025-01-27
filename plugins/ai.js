@@ -111,11 +111,13 @@ cmd({
     try {
         if (!q) return reply("⚠️ Please provide a search query.\n\nExample:\n.aisearch Who is Paul Biya?");
 
-        const query = encodeURIComponent(q);
-        const url = `https://api.dreaded.site/api/aisearch?query=${query}`;
+        // Encode la requête utilisateur pour éviter tout problème dans l'URL
+        const encodedText = encodeURIComponent(q);
+        const url = `https://api.dreaded.site/api/aisearch?query=${encodedText}`;
 
         console.log("Requesting URL:", url);
 
+        // Appel API
         const response = await axios.get(url, {
             headers: {
                 'User-Agent': 'Mozilla/5.0',
@@ -123,15 +125,14 @@ cmd({
             }
         });
 
-        // Débogage : afficher la réponse complète de l'API
         console.log("Response from API:", JSON.stringify(response.data, null, 2));
 
-        // Vérification si `result.prompt` est présent
+        // Vérifie si `result.prompt` existe dans la réponse
         if (!response.data || !response.data.result || !response.data.result.prompt) {
             return reply("❌ The API returned an unexpected format. Please try again later.");
         }
 
-        // Extraire la réponse depuis `result.prompt`
+        // Extraction de la réponse
         const aiResponse = response.data.result.prompt;
 
         if (!aiResponse) {
