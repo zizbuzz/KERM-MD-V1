@@ -15,11 +15,11 @@ Github: Kgtech-cmr
 const axios = require('axios');
 const { cmd } = require('../command');
 
-// Commande pour générer l'image avec l'effet "wanted"
+// Commande pour générer une image avec l'effet "beautiful"
 cmd({
-  pattern: 'wanted',
-  desc: 'Generate a wanted poster for an image',
-  react: '🎨',
+  pattern: 'beautiful',
+  desc: 'Generate a beautiful version of an image',
+  react: '💖',
   category: 'fun',
   filename: __filename,
 }, async (conn, mek, m, { from, reply, quoted, mentionedJidList }) => {
@@ -41,26 +41,26 @@ cmd({
   }
   
   if (!imageUrl) {
-    return reply('⚠️ Please send an image or tag a user to create a wanted poster.');
+    return reply('⚠️ Please send an image or tag a user to create a beautiful version.');
   }
 
   try {
     // URL de l'API avec l'image fournie
-    const apiUrl = `https://api.caliph.biz.id/api/wanted?url=${encodeURIComponent(imageUrl)}&apikey=57a86dc033a600ac`;
+    const apiUrl = `https://api.caliph.biz.id/api/beautiful?url=${encodeURIComponent(imageUrl)}&apikey=57a86dc033a600ac`;
 
     // Récupérer l'image de la réponse de l'API
     const response = await axios.get(apiUrl, { responseType: 'arraybuffer' });
 
-    // Envoyer l'image générée avec l'effet "wanted" dans le groupe ou à l'utilisateur
+    // Envoyer l'image générée avec l'effet "beautiful" dans le groupe ou à l'utilisateur
     await conn.sendMessage(
       from,
       {
-        image: Buffer.from(response.data),
-        caption: '🔫 *Wanted Poster* 🔫',
+        image: Buffer.from(response.data),  // Convertir la réponse en buffer
+        caption: '💖 *Beautiful Version* 💖',  // Message de caption
       }
     );
   } catch (error) {
-    console.error('Error generating wanted poster:', error);
-    return reply('⚠️ An error occurred while generating the wanted poster.');
+    console.error('Error generating beautiful image:', error);
+    return reply('⚠️ An error occurred while generating the beautiful image.');
   }
 });
