@@ -27,27 +27,31 @@ cmd({
         if (!q) return reply("⚠️ Please provide a query for ChatGPT.\n\nExample:\n.gpt What is AI?");
 
         // Utilisation de `${text}` dans le endpoint API
-        const text = q;  // Ici on définit le texte comme étant `q`, qui est la requête de l'utilisateur
-        const url = `https://api.dreaded.site/api/chatgpt?text=${text}`;
+        const text = q;  // Texte de la requête de l'utilisateur
+        const encodedText = encodeURIComponent(text);  // S'assurer que le texte est encodé correctement
+
+        const url = `https://api.dreaded.site/api/chatgpt?text=${encodedText}`;
 
         console.log('Requesting URL:', url);  // Afficher l'URL pour vérifier
 
-        // Appel à l'API
-        const response = await axios.get(url);
+        // Appel à l'API avec headers personnalisés (ajoute des headers si nécessaire)
+        const response = await axios.get(url, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0',  // Ajouter un User-Agent pour simuler une requête valide
+                'Accept': 'application/json',  // Spécifier que l'on attend une réponse JSON
+            }
+        });
 
-        // Débogage : Afficher la réponse complète de l'API pour mieux comprendre
+        // Déboguer et afficher la réponse complète
         console.log('Full API Response:', response.data);
-
-        // Afficher les clés de la réponse API pour comprendre sa structure
-        console.log('Response Keys:', Object.keys(response.data));
 
         // Vérification de la structure de la réponse
         if (!response || !response.data) {
             return reply("❌ No response received from the GPT API. Please try again later.");
         }
 
-        // Utilisation de `prompt` si disponible
-        const gptResponse = response.data.prompt || response.data.response; // Essayer avec `prompt` et `response`
+        // Essayer avec `prompt` ou `response`
+        const gptResponse = response.data.prompt || response.data.response || JSON.stringify(response.data);
 
         if (!gptResponse) {
             return reply("❌ The API returned an unexpected format. Please try again later.");
