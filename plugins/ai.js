@@ -101,49 +101,58 @@ Please report this issue or try again later.
     }
 });
 cmd({
-    pattern: "aisearch",
-    desc: "Search for information using the AI Search API.",
+    pattern: "gemini",
+    desc: "Interact with Gemini AI using the Dreaded API.",
     category: "ai",
-    react: "🔍",
+    react: "🌟",
     use: "<your query>",
     filename: __filename,
 }, async (conn, mek, m, { from, args, q, reply }) => {
     try {
-        if (!q) return reply("⚠️ Please provide a search query.\n\nExample:\n.aisearch Who is Paul Biya?");
+        // Vérification de l'entrée utilisateur
+        if (!q) return reply("⚠️ Please provide a query for Gemini AI.\n\nExample:\n.gemini What is AI?");
 
-        const encodedText = encodeURIComponent(q);
-        const url = `https://api.dreaded.site/api/aisearch?query=${encodedText}`;
+        // Encodage de la requête utilisateur
+        const text = q; 
+        const encodedText = encodeURIComponent(text);
 
-        console.log("Requesting URL:", url);
+        // Utilisation du bon endpoint
+        const url = `https://api.dreaded.site/api/gemini-text?text=${encodedText}`;
 
+        console.log("Requesting URL:", url); // Afficher l'URL pour débogage
+
+        // Appel à l'API
         const response = await axios.get(url, {
             headers: {
                 'User-Agent': 'Mozilla/5.0',
                 'Accept': 'application/json',
-            }
+            },
         });
 
-        console.log("API Full Response:", JSON.stringify(response.data, null, 2)); // Debug complet
-
-        // Vérification si `result.prompt` existe
-        if (!response.data || !response.data.result || !response.data.result.prompt) {
-            console.error("Unexpected API Response Format:", JSON.stringify(response.data, null, 2)); // Affiche les détails
+        // Vérification de la structure de la réponse
+        console.log("Full API Response:", response.data); // Debug complet
+        if (!response || !response.data || !response.data.result || !response.data.result.prompt) {
             return reply("❌ The API returned an unexpected format. Please try again later.");
         }
 
-        // Extraire la réponse
-        const aiResponse = response.data.result.prompt;
+        // Extraire la réponse depuis `result.prompt`
+        const geminiResponse = response.data.result.prompt;
 
-        if (!aiResponse) {
-            return reply("❌ No valid answer found for your query. Try rephrasing it.");
+        // Vérification si une réponse est présente
+        if (!geminiResponse) {
+            return reply("❌ No valid response found for your query. Try rephrasing it.");
         }
 
-        const ALIVE_IMG = 'https://i.imgur.com/R4ebueM.jpeg';
-        const formattedResponse = `🔍 *AI Search Result:*\n\n${aiResponse}`;
+        // Image AI à envoyer
+        const ALIVE_IMG = 'https://i.imgur.com/R4ebueM.jpeg'; // URL de l'image à afficher
 
+        // Légende formatée
+        const formattedInfo = `🌟 *Gemini Response:*\n\n${geminiResponse}`;
+
+        // Envoyer le message avec une image et une légende
         await conn.sendMessage(from, {
             image: { url: ALIVE_IMG },
-            caption: formattedResponse,
+            caption: formattedInfo,
             contextInfo: {
                 mentionedJid: [m.sender],
                 forwardingScore: 999,
@@ -151,20 +160,24 @@ cmd({
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363321386877609@newsletter',
                     newsletterName: '𝐊𝐄𝐑𝐌 𝐌𝐃',
-                    serverMessageId: 143
-                }
-            }
+                    serverMessageId: 143,
+                },
+            },
         }, { quoted: mek });
 
     } catch (error) {
-        console.error("Error in AI Search command:", error);
+        console.error("Error in Gemini command:", error);
 
+        // Afficher les détails de l'erreur dans la console pour aider à déboguer
         if (error.response) {
             console.log("Error Response Data:", error.response.data);
+        } else {
+            console.log("Error Details:", error.message);
         }
 
+        // Répondre avec les détails de l'erreur
         const errorMessage = `
-❌ An error occurred while processing the AI Search command.
+❌ An error occurred while processing the Gemini command.
 🛠 *Error Details*:
 ${error.message}
 
