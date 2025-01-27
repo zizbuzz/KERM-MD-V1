@@ -109,16 +109,13 @@ cmd({
     filename: __filename,
 }, async (conn, mek, m, { from, args, q, reply }) => {
     try {
-        // Vérification de l'entrée utilisateur
-        if (!q) return reply("⚠️ Please provide a search query.\n\nExample:\n.aisearch Who is Paul Biya?");
+        if (!q) return reply("⚠️ Please provide a search query.\n\nExample:\n.aisearch Ho to cook a cake ?");
 
-        // Encodage du texte pour éviter les problèmes d'URL
         const query = encodeURIComponent(q);
         const url = `https://api.dreaded.site/api/aisearch?query=${query}`;
 
-        console.log("Requesting URL:", url); // Debugging
+        console.log("Requesting URL:", url);
 
-        // Appel à l'API avec des headers si nécessaire
         const response = await axios.get(url, {
             headers: {
                 'User-Agent': 'Mozilla/5.0',
@@ -126,32 +123,28 @@ cmd({
             }
         });
 
-        // Déboguer et afficher la réponse complète
         console.log("Full API Response:", response.data);
 
-        // Vérification de la structure de la réponse
-        if (!response || !response.data || !response.data.result) {
-            return reply("❌ No response received from the AI Search API. Please try again later.");
-        }
-
-        // Extraire uniquement la réponse nécessaire (le champ `answer`)
-        const aiResponse = response.data.result.answer;
-
-        if (!aiResponse) {
+        // Vérifie si le champ `result.prompt` est présent
+        if (!response.data || !response.data.result || !response.data.result.prompt) {
             return reply("❌ The API returned an unexpected format. Please try again later.");
         }
 
-        // Image AI à envoyer
-        const ALIVE_IMG = 'https://i.imgur.com/R4ebueM.jpeg'; // Remplacez par l'URL de votre image AI
+        // Extraction correcte du texte de réponse depuis `result.prompt`
+        const aiResponse = response.data.result.prompt;
 
-        // Formatage de la réponse
+        // Vérifie si la réponse est vide
+        if (!aiResponse) {
+            return reply("❌ No valid answer found for your query. Try rephrasing it.");
+        }
+
+        const ALIVE_IMG = 'https://i.imgur.com/R4ebueM.jpeg'; // URL de l'image
         const formattedResponse = `🔍 *AI Search Result:*\n\n${aiResponse}`;
 
-        // Envoyer le message avec image et légende
         await conn.sendMessage(from, {
-            image: { url: ALIVE_IMG }, // Assurez-vous que l'URL est valide
+            image: { url: ALIVE_IMG },
             caption: formattedResponse,
-            contextInfo: { 
+            contextInfo: {
                 mentionedJid: [m.sender],
                 forwardingScore: 999,
                 isForwarded: true,
@@ -166,14 +159,10 @@ cmd({
     } catch (error) {
         console.error("Error in AI Search command:", error);
 
-        // Affichage du message d'erreur dans la console
         if (error.response) {
             console.log("Error Response Data:", error.response.data);
-        } else {
-            console.log("Error Details:", error.message);
         }
 
-        // Répondre avec un message d'erreur
         const errorMessage = `
 ❌ An error occurred while processing the AI Search command.
 🛠 *Error Details*:
