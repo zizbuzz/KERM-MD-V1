@@ -23,22 +23,19 @@ cmd({
     filename: __filename,
 }, async (conn, mek, m, { from, args, q, reply }) => {
     try {
-        // Message de bienvenue
-        await reply("Hi, I am Kerm AI. Please provide a text to interact with ChatGPT.\nExample: .gpt Who is Paul Biya?");
-
         // Vérification de l'entrée utilisateur
         if (!q) return reply("⚠️ Please provide a query for ChatGPT.\n\nExample:\n.gpt What is AI?");
 
-        // Utilisation du bon endpoint API avec le texte
-        const url = `https://api.dreaded.site/api/chatgpt?text=${encodeURIComponent(q)}`;
+        // Utilisation du bon endpoint API avec le texte (sans encodeURIComponent)
+        const url = `https://api.dreaded.site/api/chatgpt?text=${q}`;
         const response = await axios.get(url);
 
-        // Débogage : afficher la réponse de l'API pour comprendre la structure
-        console.log('API Response:', response.data);
+        // Afficher la réponse complète de l'API pour déboguer
+        console.log('Full API Response:', response.data);
 
         // Vérifie si l'API a bien répondu
         if (!response.data || !response.data.response) {
-            return reply("❌ No response from the GPT API. Please try again later.");
+            return reply("❌ No valid response from the GPT API. Please try again later.");
         }
 
         // Retourne la réponse de l'API
@@ -67,7 +64,7 @@ cmd({
         }, { quoted: mek });
 
     } catch (error) {
-        console.error("Error in gpt command: ", error);
+        console.error("Error in GPT command:", error);
 
         // Répondre avec des détails de l'erreur
         const errorMessage = `
