@@ -113,13 +113,12 @@ cmd({
         if (!q) return reply("⚠️ Please provide a query for Gemini AI.\n\nExample:\n.gemini What is AI?");
 
         // Encodage de la requête utilisateur
-        const text = q; 
+        const text = q;  
         const encodedText = encodeURIComponent(text);
 
         // Utilisation du bon endpoint
         const url = `https://api.dreaded.site/api/gemini-text?text=${encodedText}`;
-
-        console.log("Requesting URL:", url); // Afficher l'URL pour débogage
+        console.log("Requesting URL:", url); // Debug de l'URL
 
         // Appel à l'API
         const response = await axios.get(url, {
@@ -129,19 +128,16 @@ cmd({
             },
         });
 
+        // Debug complet de la réponse
+        console.log("Full API Response:", response.data);
+
         // Vérification de la structure de la réponse
-        console.log("Full API Response:", response.data); // Debug complet
-        if (!response || !response.data || !response.data.result) {
+        if (!response || !response.data || !response.data.result || !response.data.result.prompt) {
             return reply("❌ The API returned an unexpected format. Please try again later.");
         }
 
         // Extraire la réponse depuis `result.prompt`
         const geminiResponse = response.data.result.prompt;
-
-        // Vérification si une réponse est présente
-        if (!geminiResponse) {
-            return reply("❌ No valid response found for your query. Try rephrasing it.");
-        }
 
         // Image AI à envoyer
         const ALIVE_IMG = 'https://i.imgur.com/R4ebueM.jpeg'; // URL de l'image à afficher
@@ -168,11 +164,9 @@ cmd({
     } catch (error) {
         console.error("Error in Gemini command:", error);
 
-        // Afficher les détails de l'erreur dans la console pour aider à déboguer
+        // Afficher les détails de l'erreur pour le debug
         if (error.response) {
             console.log("Error Response Data:", error.response.data);
-        } else {
-            console.log("Error Details:", error.message);
         }
 
         // Répondre avec les détails de l'erreur
