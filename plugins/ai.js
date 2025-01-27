@@ -131,7 +131,7 @@ cmd({
 
         // Vérification de la structure de la réponse
         console.log("Full API Response:", response.data); // Debug complet
-        if (!response || !response.data || !response.data.result || !response.data.result.prompt) {
+        if (!response || !response.data || !response.data.result) {
             return reply("❌ The API returned an unexpected format. Please try again later.");
         }
 
