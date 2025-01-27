@@ -38,13 +38,17 @@ cmd({
         // Débogage : Afficher la réponse complète de l'API pour mieux comprendre
         console.log('Full API Response:', response.data);
 
-        // Vérifie si l'API a bien répondu avec la clé 'response'
-        if (!response.data || !response.data.response) {
-            return reply("❌ No valid response from the GPT API. Please try again later.");
+        // Vérification de la structure de la réponse
+        if (!response || !response.data) {
+            return reply("❌ No response received from the GPT API. Please try again later.");
         }
 
-        // Retourne la réponse de l'API
-        const gptResponse = response.data.response;
+        // Utilisation de `prompt` comme clé dans la réponse de l'API
+        const gptResponse = response.data.prompt;
+
+        if (!gptResponse) {
+            return reply("❌ The API returned an unexpected format. Please try again later.");
+        }
 
         // Image AI à envoyer
         const ALIVE_IMG = 'https://i.imgur.com/R4ebueM.jpeg'; // Remplacez par l'URL de votre image AI
@@ -72,7 +76,11 @@ cmd({
         console.error("Error in GPT command:", error);
 
         // Affichage du message d'erreur dans la console pour plus de détails
-        console.log("Error Details:", error.response ? error.response.data : error.message);
+        if (error.response) {
+            console.log("Error Response Data:", error.response.data);
+        } else {
+            console.log("Error Details:", error.message);
+        }
 
         // Répondre avec des détails de l'erreur
         const errorMessage = `
