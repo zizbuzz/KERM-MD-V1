@@ -109,7 +109,7 @@ cmd({
     filename: __filename,
 }, async (conn, mek, m, { from, args, q, reply }) => {
     try {
-        if (!q) return reply("⚠️ Please provide a search query.\n\nExample:\n.aisearch Ho to cook a cake ?");
+        if (!q) return reply("⚠️ Please provide a search query.\n\nExample:\n.aisearch Who is Paul Biya?");
 
         const query = encodeURIComponent(q);
         const url = `https://api.dreaded.site/api/aisearch?query=${query}`;
@@ -123,22 +123,22 @@ cmd({
             }
         });
 
-        console.log("Full API Response:", response.data);
+        // Débogage : afficher la réponse complète de l'API
+        console.log("Response from API:", JSON.stringify(response.data, null, 2));
 
-        // Vérifie si le champ `result.prompt` est présent
+        // Vérification si `result.prompt` est présent
         if (!response.data || !response.data.result || !response.data.result.prompt) {
             return reply("❌ The API returned an unexpected format. Please try again later.");
         }
 
-        // Extraction correcte du texte de réponse depuis `result.prompt`
+        // Extraire la réponse depuis `result.prompt`
         const aiResponse = response.data.result.prompt;
 
-        // Vérifie si la réponse est vide
         if (!aiResponse) {
             return reply("❌ No valid answer found for your query. Try rephrasing it.");
         }
 
-        const ALIVE_IMG = 'https://i.imgur.com/R4ebueM.jpeg'; // URL de l'image
+        const ALIVE_IMG = 'https://i.imgur.com/R4ebueM.jpeg';
         const formattedResponse = `🔍 *AI Search Result:*\n\n${aiResponse}`;
 
         await conn.sendMessage(from, {
