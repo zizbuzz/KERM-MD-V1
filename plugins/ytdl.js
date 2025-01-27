@@ -568,7 +568,7 @@ cmd({
       return reply("*Please provide a song name or keywords to search for.*");
     }
 
-    reply("*_Kerm downloading your song...🔍_*");
+    reply("*_Kerm downloading your song, please wait...🔍_*");
 
     const searchResults = await yts(searchQuery);
     if (!searchResults.videos || searchResults.videos.length === 0) {
