@@ -11,6 +11,7 @@ YT: KermHackTools
 Github: Kgtech-cmr
 */
 
+
 const { cmd } = require("../command");
 const os = require("os");
 const moment = require("moment");
@@ -24,7 +25,7 @@ cmd({
     category: "info",
     react: "💡",
     filename: __filename
-}, async (conn, mek, m, { pushName, reply }) => {
+}, async (conn, mek, m, { pushName, reply, from }) => {
     try {
         // Heure actuelle et date
         const currentTime = moment().format("HH:mm:ss");
@@ -40,7 +41,7 @@ cmd({
         const aliveMessage = `
 🌟 *KERM MD V1 STATUS* 🌟
 
- Hi 🫵🏽 *${pushName || "User"}*,  
+Hi 🫵🏽 *${pushName || "User"}*,  
 🤖 *Bot is Alive and Active!*
 
 🕒 *Time*: ${currentTime}  
@@ -48,10 +49,23 @@ cmd({
 ⏳ *Uptime*: ${runtimeHours} hours, ${runtimeMinutes} minutes, ${runtimeSeconds} seconds  
 
 🎉 *Enjoy the Service!*  
-        `;
+        `.trim();
 
-        // Envoyer le message
-        await reply(aliveMessage.trim());
+        // Ajout de l'envoi personnalisé
+        await conn.sendMessage(from, {
+            caption: aliveMessage,
+            contextInfo: { 
+                mentionedJid: [m.sender], // Mention de l'expéditeur
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: '120363321386877609@newsletter',
+                    newsletterName: '𝐊𝐄𝐑𝐌 𝐌𝐃',
+                    serverMessageId: 143
+                }
+            }
+        }, { quoted: mek });
+
     } catch (error) {
         console.error("Error in alive command:", error);
         reply("❌ An error occurred while processing the alive command.");
