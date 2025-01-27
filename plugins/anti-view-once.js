@@ -74,10 +74,6 @@ async (conn, mek, m, { from, reply }) => {
 });
 */
 
-const axios = require('axios');
-const config = require('../config');
-const { cmd, commands } = require('../command');
-
 cmd({
     pattern: "vv",
     react : "👀",
