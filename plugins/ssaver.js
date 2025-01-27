@@ -1,5 +1,5 @@
-//nteej
 const { smd } = require("../lib");
+const config = require('../config')
 
 smd(
   {
