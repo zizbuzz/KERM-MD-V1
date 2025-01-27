@@ -16,7 +16,6 @@ const { cmd } = require("../command");
 
 cmd({
     pattern: "gpt",
-    alias: ["ai"],
     desc: "Interact with ChatGPT using the Dreaded API.",
     category: "ai",
     react: "🤖",
@@ -30,9 +29,12 @@ cmd({
         // Vérification de l'entrée utilisateur
         if (!q) return reply("⚠️ Please provide a query for ChatGPT.\n\nExample:\n.gpt What is AI?");
 
-        // Appel à l'API
+        // Utilisation du bon endpoint API avec le texte
         const url = `https://api.dreaded.site/api/chatgpt?text=${encodeURIComponent(q)}`;
         const response = await axios.get(url);
+
+        // Débogage : afficher la réponse de l'API pour comprendre la structure
+        console.log('API Response:', response.data);
 
         // Vérifie si l'API a bien répondu
         if (!response.data || !response.data.response) {
