@@ -16,6 +16,7 @@ const { cmd } = require("../command");
 
 cmd({
     pattern: "gpt",
+    alias: ["ai"],
     desc: "Interact with ChatGPT using the Dreaded API.",
     category: "ai",
     react: "🤖",
