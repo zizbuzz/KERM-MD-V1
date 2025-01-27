@@ -16,6 +16,7 @@ const { cmd } = require("../command");
 const moment = require("moment");
 
 let botStartTime = Date.now(); // Enregistrement de l'heure de démarrage du bot
+const ALIVE_IMG = "https://i.ibb.co/zrvpnRX/mrfrankofc.jpg"; // Assurez-vous que cette URL est valide
 
 cmd({
     pattern: "alive",
@@ -46,8 +47,14 @@ Hi 🫵🏽 ${pushname}
 🎉 *Enjoy the Service!*
         `.trim();
 
-        // Envoyer le message avec le bloc contextInfo
+        // Vérifier si l'image est définie
+        if (!ALIVE_IMG || !ALIVE_IMG.startsWith("http")) {
+            throw new Error("Invalid ALIVE_IMG URL. Please set a valid image URL.");
+        }
+
+        // Envoyer le message avec image et légende
         await conn.sendMessage(from, {
+            image: { url: ALIVE_IMG }, // Assurez-vous que l'URL est valide
             caption: formattedInfo,
             contextInfo: { 
                 mentionedJid: [m.sender],
