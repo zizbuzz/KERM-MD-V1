@@ -74,10 +74,15 @@ async (conn, mek, m, { from, reply }) => {
 });
 */
 
+const axios = require('axios');
+const config = require('../config');
+const { cmd, commands } = require('../command');
+
 cmd({
     pattern: "vv",
-    alias: ['viewonce', '👀'],
-    desc: "Fetch and resend a ViewOnce message content (image/video).",
+    react : "👀",
+    alias: ['retrive', "viewonce"],
+    desc: "Fetch and resend a ViewOnce message content (image/video/voice).",
     category: "misc",
     use: '<query>',
     filename: __filename
@@ -121,10 +126,10 @@ async (conn, mek, m, { from, reply }) => {
             let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.audioMessage);
             return conn.sendMessage(from, { audio: { url: anu } }, { quoted: mek });
         } else {
-            return reply("This is not a ViewOnce message.");
+            return reply("> *This is not a ViewOnce message.*");
         }
     } catch (e) {
         console.log("Error:", e);
-        reply("ℹ⚠️ An error occurred while fetching the ViewOnce message.");
+        reply("An error occurred while fetching the ViewOnce message.");
     }
 });
