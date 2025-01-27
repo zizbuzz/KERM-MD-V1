@@ -26,14 +26,19 @@ cmd({
         // Vérification de l'entrée utilisateur
         if (!q) return reply("⚠️ Please provide a query for ChatGPT.\n\nExample:\n.gpt What is AI?");
 
-        // Utilisation du bon endpoint API avec le texte (sans encodeURIComponent)
-        const url = `https://api.dreaded.site/api/chatgpt?text=${q}`;
+        // Utilisation de `${text}` dans le endpoint API
+        const text = q;  // Ici on définit le texte comme étant `q`, qui est la requête de l'utilisateur
+        const url = `https://api.dreaded.site/api/chatgpt?text=${text}`;
+
+        console.log('Requesting URL:', url);  // Afficher l'URL pour vérifier
+
+        // Appel à l'API
         const response = await axios.get(url);
 
-        // Afficher la réponse complète de l'API pour déboguer
+        // Débogage : Afficher la réponse complète de l'API pour mieux comprendre
         console.log('Full API Response:', response.data);
 
-        // Vérifie si l'API a bien répondu
+        // Vérifie si l'API a bien répondu avec la clé 'response'
         if (!response.data || !response.data.response) {
             return reply("❌ No valid response from the GPT API. Please try again later.");
         }
@@ -65,6 +70,9 @@ cmd({
 
     } catch (error) {
         console.error("Error in GPT command:", error);
+
+        // Affichage du message d'erreur dans la console pour plus de détails
+        console.log("Error Details:", error.response ? error.response.data : error.message);
 
         // Répondre avec des détails de l'erreur
         const errorMessage = `
