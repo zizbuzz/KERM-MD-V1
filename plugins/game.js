@@ -44,6 +44,7 @@ async (conn, mek, m, { from, reply, isGroup, quotedMsg, mentionedJidList }) => {
         const apiUrl = `https://api.caliph.biz.id/api/beautiful?url=${encodeURIComponent(imageUrl)}&apikey=57a86dc033a600ac`;
         const response = await axios.get(apiUrl);
 
+        // Check the API response status
         if (response.data.status === "success") {
             // Prepare the formatted information to be sent
             const formattedInfo = "Here is your beautiful image! 🌸";
@@ -64,11 +65,14 @@ async (conn, mek, m, { from, reply, isGroup, quotedMsg, mentionedJidList }) => {
                 }
             }, { quoted: mek });
         } else {
-            reply("Sorry, there was an error processing the image.");
+            // If the API response does not indicate success, show the error message from the API
+            console.error("API error response:", response.data);
+            reply("Sorry, there was an error processing the image. The API response was not successful.");
         }
 
     } catch (e) {
-        console.error(e);
+        // Log the actual error for debugging
+        console.error("Error occurred:", e);
         reply("An error occurred while processing the request. Please try again later.");
     }
 });
