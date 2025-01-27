@@ -46,12 +46,12 @@ cmd({
         console.log('Full API Response:', response.data);
 
         // Vérification de la structure de la réponse
-        if (!response || !response.data) {
+        if (!response || !response.data || !response.data.result) {
             return reply("❌ No response received from the GPT API. Please try again later.");
         }
 
-        // Essayer avec `prompt` ou `response`
-        const gptResponse = response.data.prompt || response.data.response || JSON.stringify(response.data);
+        // Extraire uniquement le texte de la réponse (le prompt)
+        const gptResponse = response.data.result.prompt;
 
         if (!gptResponse) {
             return reply("❌ The API returned an unexpected format. Please try again later.");
