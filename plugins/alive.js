@@ -13,11 +13,9 @@ Github: Kgtech-cmr
 
 
 const { cmd } = require("../command");
-const os = require("os");
 const moment = require("moment");
 
-// Enregistrement de l'heure de démarrage du bot
-let botStartTime = Date.now();
+let botStartTime = Date.now(); // Enregistrement de l'heure de démarrage du bot
 
 cmd({
     pattern: "alive",
@@ -25,37 +23,34 @@ cmd({
     category: "info",
     react: "💡",
     filename: __filename
-}, async (conn, mek, m, { pushName, reply, from }) => {
+}, async (conn, mek, m, { reply, from }) => {
     try {
-        // Heure actuelle et date
+        const pushname = m.pushName || "User"; // Nom de l'utilisateur ou valeur par défaut
         const currentTime = moment().format("HH:mm:ss");
         const currentDate = moment().format("dddd, MMMM Do YYYY");
 
-        // Calcul du temps de fonctionnement (Uptime)
         const runtimeMilliseconds = Date.now() - botStartTime;
         const runtimeSeconds = Math.floor((runtimeMilliseconds / 1000) % 60);
         const runtimeMinutes = Math.floor((runtimeMilliseconds / (1000 * 60)) % 60);
         const runtimeHours = Math.floor(runtimeMilliseconds / (1000 * 60 * 60));
 
-        // Création du message Alive
-        const aliveMessage = `
+        const formattedInfo = `
 🌟 *KERM MD V1 STATUS* 🌟
+Hi 🫵🏽 ${pushname}
+🕒 *Time*: ${currentTime}
+📅 *Date*: ${currentDate}
+⏳ *Uptime*: ${runtimeHours} hours, ${runtimeMinutes} minutes, ${runtimeSeconds} seconds
 
-Hi 🫵🏽 *${pushName || "User"}*,  
-🤖 *Bot is Alive and Active!*
+🤖 *Status*: *Kerm is Alive and Ready!*
 
-🕒 *Time*: ${currentTime}  
-📅 *Date*: ${currentDate}  
-⏳ *Uptime*: ${runtimeHours} hours, ${runtimeMinutes} minutes, ${runtimeSeconds} seconds  
-
-🎉 *Enjoy the Service!*  
+🎉 *Enjoy the Service!*
         `.trim();
 
-        // Ajout de l'envoi personnalisé
+        // Envoyer le message avec le bloc contextInfo
         await conn.sendMessage(from, {
-            caption: aliveMessage,
+            caption: formattedInfo,
             contextInfo: { 
-                mentionedJid: [m.sender], // Mention de l'expéditeur
+                mentionedJid: [m.sender],
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
@@ -67,7 +62,16 @@ Hi 🫵🏽 *${pushName || "User"}*,
         }, { quoted: mek });
 
     } catch (error) {
-        console.error("Error in alive command:", error);
-        reply("❌ An error occurred while processing the alive command.");
+        console.error("Error in alive command: ", error);
+        
+        // Répondre avec des détails de l'erreur
+        const errorMessage = `
+❌ An error occurred while processing the alive command.
+🛠 *Error Details*:
+${error.message}
+
+Please report this issue or try again later.
+        `.trim();
+        return reply(errorMessage);
     }
 });
