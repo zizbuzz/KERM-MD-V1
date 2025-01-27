@@ -15,7 +15,8 @@ const { cmd } = require("../command");
 const os = require("os");
 const moment = require("moment");
 
-let botStartTime = Date.now(); // Enregistrement de l'heure de démarrage du bot
+// Enregistrement de l'heure de démarrage du bot
+let botStartTime = Date.now();
 
 cmd({
     pattern: "alive",
@@ -23,35 +24,36 @@ cmd({
     category: "info",
     react: "💡",
     filename: __filename
-}, async (conn, mek, m, { reply }) => {
+}, async (conn, mek, m, { pushName, reply }) => {
     try {
-        // Heure actuelle
+        // Heure actuelle et date
         const currentTime = moment().format("HH:mm:ss");
         const currentDate = moment().format("dddd, MMMM Do YYYY");
 
-        // Runtime
+        // Calcul du temps de fonctionnement (Uptime)
         const runtimeMilliseconds = Date.now() - botStartTime;
         const runtimeSeconds = Math.floor((runtimeMilliseconds / 1000) % 60);
         const runtimeMinutes = Math.floor((runtimeMilliseconds / (1000 * 60)) % 60);
         const runtimeHours = Math.floor(runtimeMilliseconds / (1000 * 60 * 60));
 
-        // Message Alive
+        // Création du message Alive
         const aliveMessage = `
-🌟 *KERM MD V4 STATUS* 🌟
-    Hi 🫵🏽 ${pushname}
-🕒 *Time*: ${currentTime}
-📅 *Date*: ${currentDate}
-⏳ *Uptime*: ${runtimeHours} hours, ${runtimeMinutes} minutes, ${runtimeSeconds} seconds
+🌟 *KERM MD V1 STATUS* 🌟
 
-🤖 *Status*: *Kerm is Alive and Ready!*
+ Hi 🫵🏽 *${pushName || "User"}*,  
+🤖 *Bot is Alive and Active!*
 
-🎉 *Enjoy the Service!*
+🕒 *Time*: ${currentTime}  
+📅 *Date*: ${currentDate}  
+⏳ *Uptime*: ${runtimeHours} hours, ${runtimeMinutes} minutes, ${runtimeSeconds} seconds  
+
+🎉 *Enjoy the Service!*  
         `;
 
         // Envoyer le message
         await reply(aliveMessage.trim());
     } catch (error) {
-        console.error(error);
+        console.error("Error in alive command:", error);
         reply("❌ An error occurred while processing the alive command.");
     }
 });
