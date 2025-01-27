@@ -38,13 +38,16 @@ cmd({
         // Débogage : Afficher la réponse complète de l'API pour mieux comprendre
         console.log('Full API Response:', response.data);
 
+        // Afficher les clés de la réponse API pour comprendre sa structure
+        console.log('Response Keys:', Object.keys(response.data));
+
         // Vérification de la structure de la réponse
         if (!response || !response.data) {
             return reply("❌ No response received from the GPT API. Please try again later.");
         }
 
-        // Utilisation de `prompt` comme clé dans la réponse de l'API
-        const gptResponse = response.data.prompt;
+        // Utilisation de `prompt` si disponible
+        const gptResponse = response.data.prompt || response.data.response; // Essayer avec `prompt` et `response`
 
         if (!gptResponse) {
             return reply("❌ The API returned an unexpected format. Please try again later.");
