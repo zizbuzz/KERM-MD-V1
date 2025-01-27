@@ -100,3 +100,87 @@ Please report this issue or try again later.
         return reply(errorMessage);
     }
 });
+cmd({
+    pattern: "aisearch",
+    desc: "Search for information using the AI Search API.",
+    category: "ai",
+    react: "🔍",
+    use: "<your query>",
+    filename: __filename,
+}, async (conn, mek, m, { from, args, q, reply }) => {
+    try {
+        // Vérification de l'entrée utilisateur
+        if (!q) return reply("⚠️ Please provide a search query.\n\nExample:\n.aisearch Who is Paul Biya?");
+
+        // Encodage du texte pour éviter les problèmes d'URL
+        const query = encodeURIComponent(q);
+        const url = `https://api.dreaded.site/api/aisearch?query=${query}`;
+
+        console.log("Requesting URL:", url); // Debugging
+
+        // Appel à l'API avec des headers si nécessaire
+        const response = await axios.get(url, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0',
+                'Accept': 'application/json',
+            }
+        });
+
+        // Déboguer et afficher la réponse complète
+        console.log("Full API Response:", response.data);
+
+        // Vérification de la structure de la réponse
+        if (!response || !response.data || !response.data.result) {
+            return reply("❌ No response received from the AI Search API. Please try again later.");
+        }
+
+        // Extraire uniquement la réponse nécessaire (le champ `answer`)
+        const aiResponse = response.data.result.answer;
+
+        if (!aiResponse) {
+            return reply("❌ The API returned an unexpected format. Please try again later.");
+        }
+
+        // Image AI à envoyer
+        const ALIVE_IMG = 'https://i.imgur.com/R4ebueM.jpeg'; // Remplacez par l'URL de votre image AI
+
+        // Formatage de la réponse
+        const formattedResponse = `🔍 *AI Search Result:*\n\n${aiResponse}`;
+
+        // Envoyer le message avec image et légende
+        await conn.sendMessage(from, {
+            image: { url: ALIVE_IMG }, // Assurez-vous que l'URL est valide
+            caption: formattedResponse,
+            contextInfo: { 
+                mentionedJid: [m.sender],
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: '120363321386877609@newsletter',
+                    newsletterName: '𝐊𝐄𝐑𝐌 𝐌𝐃',
+                    serverMessageId: 143
+                }
+            }
+        }, { quoted: mek });
+
+    } catch (error) {
+        console.error("Error in AI Search command:", error);
+
+        // Affichage du message d'erreur dans la console
+        if (error.response) {
+            console.log("Error Response Data:", error.response.data);
+        } else {
+            console.log("Error Details:", error.message);
+        }
+
+        // Répondre avec un message d'erreur
+        const errorMessage = `
+❌ An error occurred while processing the AI Search command.
+🛠 *Error Details*:
+${error.message}
+
+Please try again later or contact support.
+        `.trim();
+        return reply(errorMessage);
+    }
+});
