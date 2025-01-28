@@ -85,6 +85,7 @@ cmd({
 },
 async (conn, mek, m, { from, reply }) => {
     try {
+        console.log("Starting ViewOnce message retrieval...");
         const quotedMessage = m.msg.contextInfo.quotedMessage; // Get quoted message
         console.log("Quoted Message: ", quotedMessage);
 
@@ -94,41 +95,52 @@ async (conn, mek, m, { from, reply }) => {
             if (quot.message.imageMessage) {
                 let cap = quot.message.imageMessage.caption;
                 let anu = await conn.downloadAndSaveMediaMessage(quot.message.imageMessage);
+                console.log("Image Message Downloaded: ", anu);
                 return conn.sendMessage(from, { image: { url: anu }, caption: cap }, { quoted: mek });
             }
             if (quot.message.videoMessage) {
                 let cap = quot.message.videoMessage.caption;
                 let anu = await conn.downloadAndSaveMediaMessage(quot.message.videoMessage);
+                console.log("Video Message Downloaded: ", anu);
                 return conn.sendMessage(from, { video: { url: anu }, caption: cap }, { quoted: mek });
             }
             if (quot.message.audioMessage) {
                 let anu = await conn.downloadAndSaveMediaMessage(quot.message.audioMessage);
+                console.log("Audio Message Downloaded: ", anu);
                 return conn.sendMessage(from, { audio: { url: anu } }, { quoted: mek });
             }
         }
 
         // If there is no quoted message or it's not a ViewOnce message
-        if (!m.quoted) return reply("Please reply to a ViewOnce message.");
+        if (!m.quoted) {
+            console.log("No quoted message found.");
+            return reply("Please reply to a ViewOnce message.");
+        }
+
         if (m.quoted.mtype === "viewOnceMessage") {
             console.log("Quoted ViewOnce Message: ", m.quoted);
             if (m.quoted.message.imageMessage) {
                 let cap = m.quoted.message.imageMessage.caption;
                 let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.imageMessage);
+                console.log("Image Message Downloaded: ", anu);
                 return conn.sendMessage(from, { image: { url: anu }, caption: cap }, { quoted: mek });
             }
             else if (m.quoted.message.videoMessage) {
                 let cap = m.quoted.message.videoMessage.caption;
                 let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.videoMessage);
+                console.log("Video Message Downloaded: ", anu);
                 return conn.sendMessage(from, { video: { url: anu }, caption: cap }, { quoted: mek });
             }
         } else if (m.quoted.message.audioMessage) {
             let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.audioMessage);
+            console.log("Audio Message Downloaded: ", anu);
             return conn.sendMessage(from, { audio: { url: anu } }, { quoted: mek });
         } else {
+            console.log("Not a ViewOnce message.");
             return reply("> *This is not a ViewOnce message.*");
         }
     } catch (e) {
-        console.log("Error:", e);
+        console.error("Error:", e);
         reply("An error occurred while fetching the ViewOnce message.");
     }
 });
