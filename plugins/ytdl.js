@@ -557,7 +557,7 @@ cmd({
 cmd({
     pattern: "song",
     desc: "To download songs.",
-    react: '💿',
+    react: '☃️',
     category: "download",
     filename: __filename
 }, async (conn, mek, msg, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
@@ -599,10 +599,9 @@ Please wait while your song is being downloaded...
         const { download_url } = response.data.result;
 
         await conn.sendMessage(from, {
-            document: { url: download_url },
+            audio: { url: download_url },
             mimetype: 'audio/mp3',
-            fileName: `${videoTitle}.mp3`,
-            caption: `Generated for you by KERM-MD-V1`,
+            ptt: false,
             contextInfo: {
                 externalAdReply: {
                     title: videoTitle,
