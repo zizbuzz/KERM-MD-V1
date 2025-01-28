@@ -92,21 +92,21 @@ async (conn, mek, m, { from, q, reply, quoted }) => {
     try {
         const args = q.split(' ');
         if (args.length < 2 && !quoted) {
-            return reply("❗ Please provide a language code and text or reply to a message. Usage: .trt [language code] [text]\nEg: .trt fr Hello");
+            return reply("❗ Please provide a language code and text or reply to a message. Usage: .trt [target language code] [text]\nEg: .trt fr Hello");
         }
 
         const targetLang = args[0];
         let textToTranslate = args.slice(1).join(' ');
 
         if (quoted && !textToTranslate) {
-            textToTranslate = quoted.message.conversation || quoted.message.extendedTextMessage?.text || '';
+            textToTranslate = quoted.message.conversation || quoted.message.extendedTextMessage?.text || quoted.message.imageMessage?.caption || '';
         }
 
         if (!textToTranslate) {
             return reply("❗ Please provide text to translate.");
         }
 
-        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|${targetLang}`;
+        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=auto|${targetLang}`;
 
         const response = await axios.get(url);
         const translation = response.data.responseData.translatedText;
@@ -121,21 +121,30 @@ async (conn, mek, m, { from, q, reply, quoted }) => {
 //____________________________TTS___________________________
 cmd({
     pattern: "tts",
-    desc: "download songs",
-    category: "download",
+    desc: "Convert text to speech in specified language",
+    category: "other",
     react: "👧",
     filename: __filename
 },
-async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (conn, mek, m, { from, quoted, q, reply }) => {
     try {
-        if (!q) return reply("Need some text.");
-        const url = googleTTS.getAudioUrl(q, {
-            lang: 'hi-IN',
+        const args = q.split(' ');
+        if (args.length < 2) {
+            return reply("❗ Please provide a language code and text. Usage: .tts [language code] [text]\nEg: .tts en Hello");
+        }
+
+        const lang = args[0];
+        const text = args.slice(1).join(' ');
+
+        const url = googleTTS.getAudioUrl(text, {
+            lang: lang,
             slow: false,
             host: 'https://translate.google.com',
         });
+
         await conn.sendMessage(from, { audio: { url: url }, mimetype: 'audio/mpeg', ptt: true }, { quoted: mek });
-    } catch (a) {
-        reply(`${a}`);
+    } catch (e) {
+        console.log(e);
+        return reply("⚠️ An error occurred while converting your text to speech. Please try again later🤕");
     }
 });
