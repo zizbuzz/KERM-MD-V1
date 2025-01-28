@@ -45,8 +45,8 @@ Please wait while your song is being downloaded...
             `
         }, { quoted: mek });
 
-        conn.ev.on("messages.upsert", async (chatUpdate) => {
-            const response = chatUpdate.messages[0];
+        // Function to handle user response
+        const handleResponse = async (response) => {
             const responseBody = response.message.conversation || response.message.extendedTextMessage?.text;
 
             if (response.key.remoteJid === from && response.message) {
@@ -61,6 +61,10 @@ Please wait while your song is being downloaded...
                         return reply(`❌ Failed to fetch audio for "${videoTitle}".`);
                     }
                     const { download_url } = apiResponse.data.result;
+
+                    if (!download_url) {
+                        return reply(`❌ Download URL is invalid for "${videoTitle}".`);
+                    }
 
                     if (formatChoice === '1') {
                         await conn.sendMessage(from, {
@@ -78,10 +82,7 @@ Please wait while your song is being downloaded...
                                 }
                             }
                         }, { quoted: mek });
-                        reply(`✅ *${videoTitle}* has been downloaded successfully as an audio file!`, {
-                            image: { url: videoThumbnail },
-                            caption: `${videoTitle} has been downloaded successfully as an audio file!`
-                        });
+                        reply(`✅ *${videoTitle}* has been downloaded successfully as an audio file!`);
                     } else if (formatChoice === '2') {
                         await conn.sendMessage(from, {
                             document: { url: download_url },
@@ -99,16 +100,18 @@ Please wait while your song is being downloaded...
                                 }
                             }
                         }, { quoted: mek });
-                        reply(`✅ *${videoTitle}* has been downloaded successfully as a document!`, {
-                            image: { url: videoThumbnail },
-                            caption: `${videoTitle} has been downloaded successfully as a document!`
-                        });
+                        reply(`✅ *${videoTitle}* has been downloaded successfully as a document!`);
                     }
+                    // Remove event listener after processing the response
+                    conn.ev.off("messages.upsert", handleResponse);
                 } else {
                     reply("Invalid choice. Please reply with '1' for audio format or '2' for document format.");
                 }
             }
-        });
+        };
+
+        // Add event listener for user response
+        conn.ev.on("messages.upsert", handleResponse);
     } catch (error) {
         console.error(error);
         reply("❌ An error occurred while processing your request.");
