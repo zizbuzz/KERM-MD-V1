@@ -51,46 +51,59 @@ Please wait while your song is being downloaded...
 
             if (response.key.remoteJid === from && response.message) {
                 const formatChoice = responseBody.trim();
-                const apiUrl = `https://api.davidcyriltech.my.id/download/ytmp3?url=${videoUrl}`;
-                const apiResponse = await axios.get(apiUrl);
-                if (!apiResponse.data.success) {
-                    return reply(`❌ Failed to fetch audio for "${videoTitle}".`);
-                }
-                const { download_url } = apiResponse.data.result;
 
-                if (formatChoice === '1') {
-                    await conn.sendMessage(from, {
-                        audio: { url: download_url },
-                        mimetype: 'audio/mp3',
-                        ptt: false,
-                        contextInfo: {
-                            externalAdReply: {
-                                title: videoTitle,
-                                body: videoGenre,
-                                mediaType: 1,
-                                mediaUrl: videoUrl,
-                                thumbnailUrl: videoThumbnail,
-                                showAdAttribution: true
+                if (formatChoice === '1' || formatChoice === '2') {
+                    reply(`Please wait, the format you have chosen is being downloaded...`);
+
+                    const apiUrl = `https://api.davidcyriltech.my.id/download/ytmp3?url=${videoUrl}`;
+                    const apiResponse = await axios.get(apiUrl);
+                    if (!apiResponse.data.success) {
+                        return reply(`❌ Failed to fetch audio for "${videoTitle}".`);
+                    }
+                    const { download_url } = apiResponse.data.result;
+
+                    if (formatChoice === '1') {
+                        await conn.sendMessage(from, {
+                            audio: { url: download_url },
+                            mimetype: 'audio/mp3',
+                            ptt: false,
+                            contextInfo: {
+                                externalAdReply: {
+                                    title: videoTitle,
+                                    body: videoGenre,
+                                    mediaType: 1,
+                                    mediaUrl: videoUrl,
+                                    thumbnailUrl: videoThumbnail,
+                                    showAdAttribution: true
+                                }
                             }
-                        }
-                    }, { quoted: mek });
-                } else if (formatChoice === '2') {
-                    await conn.sendMessage(from, {
-                        document: { url: download_url },
-                        mimetype: 'audio/mp3',
-                        fileName: `${videoTitle}.mp3`,
-                        caption: `Generated for you by KERM-MD-V1`,
-                        contextInfo: {
-                            externalAdReply: {
-                                title: videoTitle,
-                                body: videoGenre,
-                                mediaType: 1,
-                                mediaUrl: videoUrl,
-                                thumbnailUrl: videoThumbnail,
-                                showAdAttribution: true
+                        }, { quoted: mek });
+                        reply(`✅ *${videoTitle}* has been downloaded successfully as an audio file!`, {
+                            image: { url: videoThumbnail },
+                            caption: `${videoTitle} has been downloaded successfully as an audio file!`
+                        });
+                    } else if (formatChoice === '2') {
+                        await conn.sendMessage(from, {
+                            document: { url: download_url },
+                            mimetype: 'audio/mp3',
+                            fileName: `${videoTitle}.mp3`,
+                            caption: `Generated for you by KERM-MD-V1`,
+                            contextInfo: {
+                                externalAdReply: {
+                                    title: videoTitle,
+                                    body: videoGenre,
+                                    mediaType: 1,
+                                    mediaUrl: videoUrl,
+                                    thumbnailUrl: videoThumbnail,
+                                    showAdAttribution: true
+                                }
                             }
-                        }
-                    }, { quoted: mek });
+                        }, { quoted: mek });
+                        reply(`✅ *${videoTitle}* has been downloaded successfully as a document!`, {
+                            image: { url: videoThumbnail },
+                            caption: `${videoTitle} has been downloaded successfully as a document!`
+                        });
+                    }
                 } else {
                     reply("Invalid choice. Please reply with '1' for audio format or '2' for document format.");
                 }
