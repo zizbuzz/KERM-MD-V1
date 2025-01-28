@@ -86,9 +86,11 @@ cmd({
 async (conn, mek, m, { from, reply }) => {
     try {
         const quotedMessage = m.msg.contextInfo.quotedMessage; // Get quoted message
+        console.log("Quoted Message: ", quotedMessage);
 
         if (quotedMessage && quotedMessage.viewOnceMessageV2) {
             const quot = quotedMessage.viewOnceMessageV2;
+            console.log("ViewOnce Message: ", quot);
             if (quot.message.imageMessage) {
                 let cap = quot.message.imageMessage.caption;
                 let anu = await conn.downloadAndSaveMediaMessage(quot.message.imageMessage);
@@ -108,6 +110,7 @@ async (conn, mek, m, { from, reply }) => {
         // If there is no quoted message or it's not a ViewOnce message
         if (!m.quoted) return reply("Please reply to a ViewOnce message.");
         if (m.quoted.mtype === "viewOnceMessage") {
+            console.log("Quoted ViewOnce Message: ", m.quoted);
             if (m.quoted.message.imageMessage) {
                 let cap = m.quoted.message.imageMessage.caption;
                 let anu = await conn.downloadAndSaveMediaMessage(m.quoted.message.imageMessage);
