@@ -614,7 +614,11 @@ Please wait while your song is being downloaded...
             }
         }, { quoted: mek });
 
-        reply(`✅ *${videoTitle}* has been downloaded successfully!`);
+        await conn.sendMessage(from, {
+            image: { url: videoThumbnail },
+            caption: `✅ *${videoTitle}* has been downloaded successfully!`
+        }, { quoted: mek });
+
     } catch (error) {
         console.error(error);
         reply("❌ An error occurred while processing your request.");
