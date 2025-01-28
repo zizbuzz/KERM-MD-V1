@@ -46,7 +46,8 @@ Please wait while your song is being downloaded...
         }, { quoted: mek });
 
         // Function to handle user response
-        const handleResponse = async (response) => {
+        const handleResponse = async (chatUpdate) => {
+            const response = chatUpdate.messages[0];
             const responseBody = response.message.conversation || response.message.extendedTextMessage?.text;
 
             if (response.key.remoteJid === from && response.message) {
@@ -82,7 +83,10 @@ Please wait while your song is being downloaded...
                                 }
                             }
                         }, { quoted: mek });
-                        reply(`✅ *${videoTitle}* has been downloaded successfully as an audio file!`);
+                        reply({
+                            image: { url: videoThumbnail },
+                            caption: `✅ *${videoTitle}* has been downloaded successfully as an audio file!`
+                        });
                     } else if (formatChoice === '2') {
                         await conn.sendMessage(from, {
                             document: { url: download_url },
@@ -100,7 +104,10 @@ Please wait while your song is being downloaded...
                                 }
                             }
                         }, { quoted: mek });
-                        reply(`✅ *${videoTitle}* has been downloaded successfully as a document!`);
+                        reply({
+                            image: { url: videoThumbnail },
+                            caption: `✅ *${videoTitle}* has been downloaded successfully as a document!`
+                        });
                     }
                     // Remove event listener after processing the response
                     conn.ev.off("messages.upsert", handleResponse);
