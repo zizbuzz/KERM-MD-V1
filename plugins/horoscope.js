@@ -1,22 +1,6 @@
 const axios = require("axios");
 const { cmd } = require("../command");
 
-// Dictionnaire de traduction des signes du zodiaque (Français -> Anglais)
-const zodiacTranslation = {
-    "bélier": "aries",
-    "taureau": "taurus",
-    "gémeaux": "gemini",
-    "cancer": "cancer",
-    "lion": "leo",
-    "vierge": "virgo",
-    "balance": "libra",
-    "scorpion": "scorpio",
-    "sagittaire": "sagittarius",
-    "capricorne": "capricorn",
-    "verseau": "aquarius",
-    "poissons": "pisces"
-};
-
 cmd({
     pattern: "horoscope",
     desc: "Get the daily horoscope for a specific zodiac sign.",
@@ -25,41 +9,58 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { from, q, reply }) => {
     try {
-        // Vérification si un signe est fourni
+        // Check if a zodiac sign is provided
         if (!q) {
             return reply("⚠️ Please provide a zodiac sign. Example: `.horoscope aries`");
         }
 
-        let zodiacSign = q.trim().toLowerCase();
+        // Zodiac signs translations from French to English
+        const zodiacTranslation = {
+            "bélier": "aries",
+            "taureau": "taurus",
+            "gémeaux": "gemini",
+            "cancer": "cancer",
+            "lion": "leo",
+            "vierge": "virgo",
+            "balance": "libra",
+            "scorpion": "scorpio",
+            "sagittaire": "sagittarius",
+            "capricorne": "capricorn",
+            "verseau": "aquarius",
+            "poissons": "pisces"
+        };
 
-        // Vérification si le signe est en français et le traduire
-        if (zodiacTranslation[zodiacSign]) {
-            zodiacSign = zodiacTranslation[zodiacSign];
-        }
+        const zodiacSign = q.trim().toLowerCase();
+        
+        // Translate French sign to English if needed
+        const translatedSign = zodiacTranslation[zodiacSign];
 
-        // Liste des signes valides
+        // List of valid zodiac signs
         const validSigns = [
             "aries", "taurus", "gemini", "cancer", "leo", "virgo",
             "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"
         ];
 
-        // Vérification si le signe fourni est valide
-        if (!validSigns.includes(zodiacSign)) {
+        // Check if the provided zodiac sign is valid (either in English or French)
+        if (!validSigns.includes(zodiacSign) && !validSigns.includes(translatedSign)) {
             return reply("⚠️ Invalid zodiac sign. Please provide one of the following:\n" + validSigns.join(", "));
         }
 
-        // Requête à l'API publique
-        const apiUrl = `https://ohmanda.com/api/horoscope/${zodiacSign}`;
+        // If the sign was in French, use the translated English version
+        const finalZodiacSign = translatedSign || zodiacSign;
+
+        // Request to the API with the correct zodiac sign
+        const apiUrl = `https://ohmanda.com/api/horoscope/${finalZodiacSign}`;
         const response = await axios.get(apiUrl);
 
         if (response.status === 200 && response.data) {
             const horoscope = response.data.horoscope;
 
-            // Création du message de réponse
+            // Format the response message with horoscope
             const horoscopeMessage = `
-🔮 *Daily Horoscope* 🔮
+🔮 *Daily Horoscope* (in ${translatedSign ? 'French' : 'English'}) 🔮
     
-⭐ *Sign*: ${zodiacSign.toUpperCase()}
+⭐ *Sign*: ${finalZodiacSign.toUpperCase()}
 📅 *Date*: ${response.data.date}
 
 ✨ *Prediction*:
@@ -67,9 +68,10 @@ ${horoscope}
 
 🌟 *Have a great day!*
             `;
-            // Envoi du message avec l'horoscope et l'image
+
+            // Send the image with horoscope
             await conn.sendMessage(from, {
-                image: { url: `https://i.ibb.co/Lz1qq6Jt/mrfrankofc.jpg` }, // URL de l'image (remplacez avec l'image souhaitée)
+                image: { url: `https://i.ibb.co/Lz1qq6Jt/mrfrankofc.jpg` },
                 caption: horoscopeMessage,
                 contextInfo: { 
                     mentionedJid: [m.sender],
