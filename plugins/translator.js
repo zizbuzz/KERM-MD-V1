@@ -106,10 +106,15 @@ async (conn, mek, m, { from, q, reply, quoted }) => {
             return reply("❗ Please provide text to translate.");
         }
 
-        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=auto|${targetLang}`;
+        // Detect the source language
+        const detectLangUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=|${targetLang}`;
+        const detectLangResponse = await axios.get(detectLangUrl);
+        const sourceLang = detectLangResponse.data.responseData.match.lang || 'en';
 
-        const response = await axios.get(url);
-        const translation = response.data.responseData.translatedText;
+        // Translate the text
+        const translateUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=${sourceLang}|${targetLang}`;
+        const translateResponse = await axios.get(translateUrl);
+        const translation = translateResponse.data.responseData.translatedText;
 
         return reply(translation);
     } catch (e) {
