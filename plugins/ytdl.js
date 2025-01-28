@@ -557,7 +557,7 @@ cmd({
 cmd({
     pattern: "song",
     desc: "To download songs.",
-    react: '☃️',
+    react: '💿',
     category: "download",
     filename: __filename
 }, async (conn, mek, msg, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
@@ -572,7 +572,8 @@ cmd({
         const videoTitle = video.title;
         const videoDate = video.ago;
         const videoGenre = video.genre || "Unknown";
-        
+        const videoThumbnail = video.thumbnail;
+
         const responseMessage = `
 🎶 *KERM Song Downloader* 🎶
 
@@ -584,7 +585,10 @@ cmd({
 Please wait while your song is being downloaded...
         `;
 
-        await reply(responseMessage);
+        await conn.sendMessage(from, {
+            image: { url: videoThumbnail },
+            caption: responseMessage
+        }, { quoted: mek });
 
         const apiUrl = `https://api.davidcyriltech.my.id/download/ytmp3?url=${videoUrl}`;
         const response = await axios.get(apiUrl);
@@ -595,16 +599,17 @@ Please wait while your song is being downloaded...
         const { download_url } = response.data.result;
 
         await conn.sendMessage(from, {
-            audio: { url: download_url },
-            mimetype: 'audio/mp4',
-            ptt: false,
+            document: { url: download_url },
+            mimetype: 'audio/mp3',
+            fileName: `${videoTitle}.mp3`,
+            caption: `Generated for you by KERM-MD-V1`,
             contextInfo: {
                 externalAdReply: {
                     title: videoTitle,
-                    body: video.genre,
+                    body: videoGenre,
                     mediaType: 1,
                     mediaUrl: videoUrl,
-                    thumbnailUrl: video.thumbnail,
+                    thumbnailUrl: videoThumbnail,
                     showAdAttribution: true
                 }
             }
