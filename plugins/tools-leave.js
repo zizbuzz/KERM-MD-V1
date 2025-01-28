@@ -1,7 +1,7 @@
 const { cmd } = require("../command");
 
 cmd({
-    pattern: "kick",
+    pattern: "fkick",
     desc: "Remove a member from the group.",
     category: "group",
     react: "🔨",
