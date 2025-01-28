@@ -1,6 +1,5 @@
 const { cmd, commands } = require("../command");
 const yts = require("yt-search");
-const { fetchJson } = require("../lib/functions");
 const axios = require('axios');
 
 function convertYouTubeLink(url) {
@@ -28,7 +27,7 @@ cmd({
         const videoDate = video.ago;
         const videoGenre = video.genre || "Unknown";
         const videoThumbnail = video.thumbnail;
-        
+
         await conn.sendMessage(from, {
             image: { url: videoThumbnail },
             caption: `
@@ -41,8 +40,8 @@ cmd({
 
 Please wait while your song is being downloaded...
             
-*Reply with '1' for audio format* (voice note)
-*Reply with '2' for document format*
+*Reply with '1' for audio format* (standard MP3)
+*Reply with '2' for document format* (MP3 as document)
             `
         }, { quoted: mek });
 
@@ -62,7 +61,7 @@ Please wait while your song is being downloaded...
                 if (formatChoice === '1') {
                     await conn.sendMessage(from, {
                         audio: { url: download_url },
-                        mimetype: 'audio/mp4',
+                        mimetype: 'audio/mp3',
                         ptt: false,
                         contextInfo: {
                             externalAdReply: {
