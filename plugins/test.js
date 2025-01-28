@@ -29,7 +29,9 @@ cmd({
         const videoGenre = video.genre || "Unknown";
         const videoThumbnail = video.thumbnail;
         
-        const responseMessage = `
+        await conn.sendMessage(from, {
+            image: { url: videoThumbnail },
+            caption: `
 🎶 *KERM Song Downloader* 🎶
 
 *Title:* ${videoTitle}
@@ -38,12 +40,11 @@ cmd({
 *Genre:* ${videoGenre}
 
 Please wait while your song is being downloaded...
-        
+            
 *Reply with '1' for audio format* (voice note)
 *Reply with '2' for document format*
-        `;
-
-        await reply(responseMessage);
+            `
+        }, { quoted: mek });
 
         conn.ev.on("messages.upsert", async (chatUpdate) => {
             const response = chatUpdate.messages[0];
