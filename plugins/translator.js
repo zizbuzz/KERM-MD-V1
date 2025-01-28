@@ -16,7 +16,7 @@ const config = require('../config')
 const {cmd , commands} = require('../command')
 const googleTTS = require('google-tts-api')
 
-/*
+
 cmd({
     pattern: "trt",
     alias: ["translate"],
@@ -53,73 +53,6 @@ async (conn, mek, m, { from, q, reply }) => {
     } catch (e) {
         console.log(e);
         return reply("⚠️ An error occurred data while translating the your text. Please try again later🤕");
-    }
-});
-
-//____________________________TTS___________________________
-cmd({
-    pattern: "tts",
-    desc: "download songs",
-    category: "download",
-    react: "👧",
-    filename: __filename
-},
-async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
-try{
-if(!q) return reply("Need some text.")
-    const url = googleTTS.getAudioUrl(q, {
-  lang: 'hi-IN',
-  slow: false,
-  host: 'https://translate.google.com',
-})
-await conn.sendMessage(from, { audio: { url: url }, mimetype: 'audio/mpeg', ptt: true }, { quoted: mek })
-    }catch(a){
-reply(`${a}`)
-}
-})
-*/
-
-
-cmd({
-    pattern: "trt",
-    alias: ["translate"],
-    desc: "🌍 Translate text between languages",
-    react: "⚡",
-    category: "other",
-    filename: __filename
-},
-async (conn, mek, m, { from, q, reply, quoted }) => {
-    try {
-        const args = q.split(' ');
-        if (args.length < 2 && !quoted) {
-            return reply("❗ Please provide a language code and text or reply to a message. Usage: .trt [target language code] [text]\nEg: .trt fr Hello");
-        }
-
-        const targetLang = args[0];
-        let textToTranslate = args.slice(1).join(' ');
-
-        if (quoted && !textToTranslate) {
-            textToTranslate = quoted.message.conversation || quoted.message.extendedTextMessage?.text || quoted.message.imageMessage?.caption || '';
-        }
-
-        if (!textToTranslate) {
-            return reply("❗ Please provide text to translate.");
-        }
-
-        // Detect the source language
-        const detectLangUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=|${targetLang}`;
-        const detectLangResponse = await axios.get(detectLangUrl);
-        const sourceLang = detectLangResponse.data.responseData.match.lang || 'en';
-
-        // Translate the text
-        const translateUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=${sourceLang}|${targetLang}`;
-        const translateResponse = await axios.get(translateUrl);
-        const translation = translateResponse.data.responseData.translatedText;
-
-        return reply(translation);
-    } catch (e) {
-        console.log(e);
-        return reply("⚠️ An error occurred while translating your text. Please try again later🤕");
     }
 });
 
