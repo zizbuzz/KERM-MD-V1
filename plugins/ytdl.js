@@ -555,48 +555,64 @@ cmd({
 });
 // temporary songs downloader
 cmd({
-  pattern: "song",
-  react: '🎵',
-  desc: "Download audio from YouTube by searching for keywords (using API 2).",
-  category: "music",
-  use: ".play1 <song name or keywords>",
-  filename: __filename
-}, async (conn, mek, msg, { from, args, reply }) => {
-  try {
-    const searchQuery = args.join(" ");
-    if (!searchQuery) {
-      return reply("*Please provide a song name or keywords to search for.*");
+    pattern: "song",
+    desc: "To download songs.",
+    react: '☃️',
+    category: "download",
+    filename: __filename
+}, async (conn, mek, msg, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+    try {
+        if (!q) {
+            return reply("Please give me a URL or title.");
+        }
+        q = convertYouTubeLink(q);
+        const searchResults = await yts(q);
+        const video = searchResults.videos[0];
+        const videoUrl = video.url;
+        const videoTitle = video.title;
+        const videoDate = video.ago;
+        const videoGenre = video.genre || "Unknown";
+        
+        const responseMessage = `
+🎶 *KERM Song Downloader* 🎶
+
+*Title:* ${videoTitle}
+*Link:* ${videoUrl}
+*Date:* ${videoDate}
+*Genre:* ${videoGenre}
+
+Please wait while your song is being downloaded...
+        `;
+
+        await reply(responseMessage);
+
+        const apiUrl = `https://api.davidcyriltech.my.id/download/ytmp3?url=${videoUrl}`;
+        const response = await axios.get(apiUrl);
+        if (!response.data.success) {
+            return reply(`❌ Failed to fetch audio for "${videoTitle}".`);
+        }
+
+        const { download_url } = response.data.result;
+
+        await conn.sendMessage(from, {
+            audio: { url: download_url },
+            mimetype: 'audio/mp4',
+            ptt: false,
+            contextInfo: {
+                externalAdReply: {
+                    title: videoTitle,
+                    body: video.genre,
+                    mediaType: 1,
+                    mediaUrl: videoUrl,
+                    thumbnailUrl: video.thumbnail,
+                    showAdAttribution: true
+                }
+            }
+        }, { quoted: mek });
+
+        reply(`✅ *${videoTitle}* has been downloaded successfully!`);
+    } catch (error) {
+        console.error(error);
+        reply("❌ An error occurred while processing your request.");
     }
-
-    reply("*_Kerm downloading your song, please wait...🔍_*");
-
-    const searchResults = await yts(searchQuery);
-    if (!searchResults.videos || searchResults.videos.length === 0) {
-      return reply(`❌ No results found for "${searchQuery}".`);
-    }
-
-    const firstResult = searchResults.videos[0];
-    const videoUrl = firstResult.url;
-
-    // Call the API to download the audio
-    const apiUrl = `https://api.davidcyriltech.my.id/download/ytmp3?url=${videoUrl}`;
-    const response = await axios.get(apiUrl);
-    if (!response.data.success) {
-      return reply(`❌ Failed to fetch audio for "${searchQuery}".`);
-    }
-
-    const { title, download_url } = response.data.result;
-
-    // Send the audio file
-    await conn.sendMessage(from, {
-      audio: { url: download_url },
-      mimetype: 'audio/mp4',
-      ptt: false
-    }, { quoted: mek });
-
-    reply(`✅ *${title}* has been downloaded successfully!`);
-  } catch (error) {
-    console.error(error);
-    reply("❌ An error occurred while processing your request.");
-  }
 });
