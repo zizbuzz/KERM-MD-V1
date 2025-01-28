@@ -66,7 +66,6 @@ cmd({
 
 cmd({
     pattern: "lyrics",
-    alias: ["lyric"],
     desc: "Get lyrics of a song",
     category: "music",
     react: "🎵",
@@ -74,21 +73,23 @@ cmd({
 }, async (conn, mek, m, { from, q, reply, buttonsMessage }) => {
     try {
         if (!q) return reply("❗ Please provide the name of the artist and the song title. Usage: .lyrics [artist] [song title]");
-       
+
         // Split the query to get the artist and song title
         const [artist, ...songParts] = q.split(' ');
         const songTitle = songParts.join(' ');
-        
+
         if (!artist || !songTitle) {
             return reply("❗ Please provide both the artist and the song title. Usage: .lyrics [artist] [song title]");
         }
-        
-        const response = await axios.get(`https://api.lyrics.ovh/v1/${artist}/${songTitle}`);
-        const lyrics = response.data.lyrics;
 
-        if (!lyrics) {
+        // Fetch lyrics
+        const response = await axios.get(`https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(songTitle)}`);
+
+        if (!response.data || !response.data.lyrics) {
             return reply("❗ Lyrics not found for the song.");
         }
+
+        const lyrics = response.data.lyrics;
 
         // Create buttons
         const buttons = [
@@ -113,6 +114,10 @@ cmd({
         });
     } catch (error) {
         console.error(error);
-        reply("⚠️ An error occurred while fetching the lyrics. Please try again later🤕");
+        if (error.response && error.response.status === 404) {
+            reply("❗ Lyrics not found for the song. Please check the artist name and song title.");
+        } else {
+            reply("⚠️ An error occurred while fetching the lyrics. Please try again later🤕");
+        }
     }
 });
