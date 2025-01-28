@@ -2,6 +2,11 @@
 
 
 
+
+const axios = require('axios');
+const { cmd } = require('../command');
+
+/*
 cmd({
     pattern: "lyrics",
     alias: ["lyric"],
@@ -55,5 +60,59 @@ cmd({
         } else {
             reply("❌ An error occurred while fetching the lyrics. Please try again later.");
         }
+    }
+});
+*/
+
+cmd({
+    pattern: "lyrics",
+    alias: ["lyric"],
+    desc: "Get lyrics of a song",
+    category: "music",
+    react: "🎵",
+    filename: __filename
+}, async (conn, mek, m, { from, q, reply, buttonsMessage }) => {
+    try {
+        if (!q) return reply("❗ Please provide the name of the artist and the song title. Usage: .lyrics [artist] [song title]");
+       
+        // Split the query to get the artist and song title
+        const [artist, ...songParts] = q.split(' ');
+        const songTitle = songParts.join(' ');
+        
+        if (!artist || !songTitle) {
+            return reply("❗ Please provide both the artist and the song title. Usage: .lyrics [artist] [song title]");
+        }
+        
+        const response = await axios.get(`https://api.lyrics.ovh/v1/${artist}/${songTitle}`);
+        const lyrics = response.data.lyrics;
+
+        if (!lyrics) {
+            return reply("❗ Lyrics not found for the song.");
+        }
+
+        // Create buttons
+        const buttons = [
+            { buttonId: 'copy_lyrics', buttonText: { displayText: 'Copy' }, type: 1 }
+        ];
+
+        // Send message with lyrics and buttons
+        const buttonMessage = {
+            text: lyrics,
+            footer: 'Lyrics provided by lyrics.ovh',
+            buttons: buttons,
+            headerType: 1
+        };
+
+        await conn.sendMessage(from, buttonMessage, { quoted: mek });
+
+        // Handle button response
+        conn.on('button_response', async (buttonResponse) => {
+            if (buttonResponse.buttonId === 'copy_lyrics') {
+                await conn.sendMessage(from, { text: '📋 Lyrics copied to clipboard!' }, { quoted: mek });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        reply("⚠️ An error occurred while fetching the lyrics. Please try again later🤕");
     }
 });
