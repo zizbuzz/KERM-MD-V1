@@ -61,6 +61,51 @@ const port = process.env.PORT || 9090;
 
 //=============================================
 
+const TempMail = require('temp-mail.io');
+
+let currentEmail = null;
+
+// Function to generate a temporary email
+function generateTempMail() {
+    const tempMail = new TempMail();
+    tempMail.create().then(email => {
+        currentEmail = email;
+        console.log(`Your temporary email is: ${email.address}`);
+    }).catch(err => {
+        console.error('Error creating temporary email:', err);
+    });
+}
+
+// Function to check received messages
+function checkTempMail() {
+    if (!currentEmail) {
+        console.log('No temporary email generated. Please generate a temporary email first using the tempmail command.');
+        return;
+    }
+
+    currentEmail.fetchMessages().then(messages => {
+        if (messages.length === 0) {
+            console.log('No messages received.');
+        } else {
+            messages.forEach((message, index) => {
+                console.log(`Message ${index + 1}:`);
+                console.log(`From: ${message.sender}`);
+                console.log(`Subject: ${message.subject}`);
+                console.log(`Content: ${message.text}`);
+                console.log('-------------------------');
+            });
+        }
+    }).catch(err => {
+        console.error('Error checking messages:', err);
+    });
+}
+
+// Example usage of the commands
+generateTempMail(); // Call this function to generate a temporary email
+// checkTempMail(); // Call this function to check received messages (after some time)
+
+//=============================================
+
 async function connectToWA() {
 console.log("CONNECTING KERM_MD-V1🧬...");
 const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/auth_info_baileys/')
