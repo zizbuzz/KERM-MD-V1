@@ -112,7 +112,7 @@ let up = `*╭──────────────●●►*
 *YOUR BOT ACTIVE NOW ENJOY♥️🪄*\n\n*PREFIX: ${prefix}*
 
 *╰──────────────●●►*`;
-conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/yw2ty2.jpeg` }, caption: up })
+conn.sendMessage(conn.user.id, { image: { url: `https://i.ibb.co/pvkWfBPw/mrfrankofc.jpg` }, caption: up })
 
 }
 })
