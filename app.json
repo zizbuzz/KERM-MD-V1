@@ -16,13 +16,13 @@
     "ALIVE_IMG": {
       "description": "paste your image url if you don't have you can use this public url.",
       "required": true,
-      "value": "https://files.catbox.moe/osriwc.jpg"
+      "value": "https://files.catbox.moe/yw2ty2.jpeg"
     }, 
     
     "ALIVE_MSG": {
       "description": "paste your alive message hear.",
       "required": true,
-      "value": "HI DEAR IM ONLINE.!!♻️"
+      "value": "_Hi bro am alive now🥷🏽🤝🏾._"
     },
     
     "PREFIX": {
