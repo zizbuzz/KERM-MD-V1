@@ -19,76 +19,6 @@ let stopKickall = false; // Variable to stop the execution of the kickall comman
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 cmd({
-    pattern: "kicklist",
-    desc: "Kicks members from a provided list.",
-    react: "🧨",
-    category: "group",
-    filename: __filename,
-}, async (conn, mek, m, {
-    from,
-    isGroup,
-    isAdmins,
-    isBotAdmins,
-    reply
-}) => {
-    try {
-        // Check if the command is used in a group
-        if (!isGroup) return reply(`❌ This command can only be used in groups.`);
-
-        // Check if the user is an admin
-        if (!isAdmins) return reply(`❌ Only group admins can use this command.`);
-
-        // Check if the bot has admin privileges
-        if (!isBotAdmins) return reply(`❌ I need admin privileges to remove group members.`);
-
-        // Extract text from the quoted message or reply
-        const quotedText = mek.message.extendedTextMessage?.text || quoted?.text;
-        if (!quotedText) return reply(`❌ Please reply to a message containing the list of members to remove.`);
-
-        // Extract phone numbers from the quoted message
-        const phoneNumbers = quotedText.match(/\d{6,}/g); // Adjust regex to match phone numbers
-        if (!phoneNumbers || phoneNumbers.length === 0) {
-            return reply(`❌ No valid phone numbers found in the provided list.`);
-        }
-
-        // Filter out duplicate or invalid numbers
-        const uniqueNumbers = [...new Set(phoneNumbers)];
-
-        // Notify about the process
-        reply(`⚠️ Removing ${uniqueNumbers.length} members from the group...`);
-
-        // Remove members from the group
-        for (let number of uniqueNumbers) {
-            const jid = `${number}@s.whatsapp.net`;
-            try {
-                await conn.groupParticipantsUpdate(from, [jid], "remove");
-            } catch (err) {
-                console.error(`⚠️ Failed to remove ${jid}:`, err);
-            }
-        }
-
-        // Confirm completion
-        reply(`✅ All listed members have been removed from the group.`);
-    } catch (e) {
-        console.error('Error while executing kicklist:', e);
-        reply('❌ An error occurred while executing the command.');
-    }
-});
-
-// Command to stop kickall execution
-cmd({
-    pattern: "restart",
-    desc: "Stops the kickall command.",
-    react: "⏹️",
-    category: "group",
-    filename: __filename,
-}, async (conn, mek, m, { reply }) => {
-    stopKickall = true; // Set the stop flag to true
-    reply(`✅ *Kickall operation has been canceled.*`);
-});
-
-/*
-cmd({
     pattern: "kickall",
     desc: "Kicks all non-admin members from the group.",
     react: "🧨",
@@ -157,4 +87,15 @@ cmd({
         reply('❌ An error occurred while executing the command.');
     }
 });
-*/
+
+// Command to stop kickall execution
+cmd({
+    pattern: "restart",
+    desc: "Stops the kickall command.",
+    react: "⏹️",
+    category: "group",
+    filename: __filename,
+}, async (conn, mek, m, { reply }) => {
+    stopKickall = true; // Set the stop flag to true
+    reply(`✅ *Kickall operation has been canceled.*`);
+});
