@@ -1,4 +1,5 @@
 const { getConfigVars, setConfigVar, deleteConfigVar } = require('./heroku');
+const {cmd , commands} = require('../command')
 
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
