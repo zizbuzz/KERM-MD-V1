@@ -15,8 +15,8 @@ let pluginListCache = [];
 
 // Command to list all plugins
 cmd({
-    pattern: "plugins", // Command trigger
-    alias: ["pluginslist", "listplugs", "plugin"], // Aliases
+    pattern: "listplugins", // Command trigger
+    alias: ["pluginslist", "listplugs", "listplugin"], // Aliases
     use: '.listplugins', // Example usage
     react: "📂", // Emoji reaction
     desc: "List all available plugins in the bot's repository.", // Description
@@ -38,7 +38,7 @@ async (conn, mek, m, { from, reply }) => {
         pluginListCache = plugins;
 
         // Construct a list of plugins
-        let pluginList = "📂 *SUBZERO BOT Plugins:*\n\n";
+        let pluginList = "📂 *KERM MD V1 Plugins:*\n\n";
         plugins.forEach((plugin, index) => {
             pluginList += `${index + 1}. ${plugin.name}\n> `; // Add plugin name to the list
         });
@@ -72,7 +72,7 @@ async (conn, mek, m, { from, reply, args, senderNumber }) => {
         // If the user is replying to a message, check if it's a number
         if (m.quoted && m.quoted.key.fromMe) {
             const quotedText = m.quoted.text;
-            if (/📂 \*SUBZERO BOT Plugins:\*/i.test(quotedText)) {
+            if (/📂 \*KERM MD V1 Plugins:\*/i.test(quotedText)) {
                 // Extract the number from the reply
                 const fileNumber = parseInt(pluginName);
                 if (!isNaN(fileNumber) && fileNumber > 0 && fileNumber <= pluginListCache.length) {
