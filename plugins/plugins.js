@@ -106,7 +106,7 @@ async (conn, mek, m, { from, reply, args, senderNumber }) => {
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: '120363304325601080@newsletter',
+                    newsletterJid: '120363321386877609@newsletter',
                     newsletterName: '❄️『 𝐒𝐔𝐁𝐙𝐄𝐑𝐎 𝐌𝐃 』❄️ ',
                     serverMessageId: 143
                 }
