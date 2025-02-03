@@ -99,7 +99,7 @@ async (conn, mek, m, { from, reply, args, senderNumber }) => {
 
         // Status message with image and caption
         const statusMessage = {
-            image: { url: `https://i.postimg.cc/yNf7rQFw/prn.jpg` }, // Replace with your image URL
+            image: { url: `https://i.ibb.co/5x444Mnp/mrfrankofc.jpg` }, // Replace with your image URL
             caption: `*Successfully downloaded ${pluginName} ✅*`,
             contextInfo: {
                 mentionedJid: [senderNumber],
@@ -107,7 +107,7 @@ async (conn, mek, m, { from, reply, args, senderNumber }) => {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363321386877609@newsletter',
-                    newsletterName: '❄️『 𝐒𝐔𝐁𝐙𝐄𝐑𝐎 𝐌𝐃 』❄️ ',
+                    newsletterName: '𝐊𝐄𝐑𝐌 𝐌𝐃',
                     serverMessageId: 143
                 }
             }
