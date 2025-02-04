@@ -29,7 +29,7 @@ cmd({
     let gameCreator = "@" + m.sender.split("@")[0];
 
     // Message d'annonce du jeu
-    let gameMessage = `🔴 *Squid Game: Red Light, 🟢Green Light*\n\n🎭 *Front Man*: (${gameCreator})\n`;
+    let gameMessage = `🔴 *Squid Game: Red Light,🟢Green Light*\n\n🎭 *Front Man*: (${gameCreator})\n`;
     gameMessage += groupMembers.map(m => "@" + m.id.split("@")[0]).join("\n") + "\n\n";
     gameMessage += "Tous les autres membres du groupe sont ajoutés comme joueurs ! Le jeu commence dans 50 secondes.";
 
@@ -38,7 +38,7 @@ cmd({
     await delay(50000); // Attente de 50s avant de sélectionner les joueurs
 
     // Sélectionner 50 joueurs aléatoires
-    let players = groupMembers.sort(() => 0.5 - Math.random()).slice(0, 50);
+    let players = groupMembers.sort(() => 0.5 - Math.random()).slice(0, 5);
 
     let playersList = players.map((p, i) => `${i + 1}. @${p.id.split("@")[0]}`).join("\n");
 
