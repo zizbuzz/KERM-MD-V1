@@ -14,6 +14,13 @@ Github: Kgtech-cmr
 const { cmd } = require("../command");
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+// Récupérer la connexion (assure-toi que ta connexion est stockée globalement)
+const conn = global.conn;
+
+if (!conn) {
+  console.error("La connexion (conn) n'est pas définie. Veuillez vérifier l'initialisation du bot.");
+}
+
 // Objet global pour stocker l'état actif du Squid Game pour chaque groupe
 // Pour chaque groupe, on stocke un objet { active: true, kicked: [] }
 const activeSquidGame = {};
@@ -81,7 +88,7 @@ conn.on('chat-update', async (chatUpdate) => {
     const isSenderAdmin = groupMeta.participants.some(p => p.id === sender && (p.admin === "admin" || p.admin === "superadmin"));
     if (isSenderAdmin) return; // Ne pas expulser les admins
 
-    // Expulser le membre qui a envoyé un message pendant le Squid Game
+    // Expulser le membre qui a envoyé un message pendant Squid Game
     await conn.groupParticipantsUpdate(groupId, [sender], "remove")
       .catch(err => console.error(`⚠️ Échec de l'expulsion de ${sender}:`, err));
     
