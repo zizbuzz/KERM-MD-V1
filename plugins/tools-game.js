@@ -196,7 +196,7 @@ cmd({
 
     // Vérifier si les deux dés affichent 1 et ajouter "Million"
     if (dice1 === 1 && dice2 === 1) {
-      resultMessage += "\n💰 *Million*";
+      resultMessage = `🎲: *${dice1}* 🎲: *${dice2}*\n💰 *Million* pour ${userTag}`;
     }
 
     // Envoyer le résultat avec la mention
