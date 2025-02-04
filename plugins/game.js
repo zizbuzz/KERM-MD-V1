@@ -14,13 +14,6 @@ Github: Kgtech-cmr
 const { cmd } = require("../command");
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-// Récupérer la connexion (assure-toi que ta connexion est stockée globalement)
-const conn = global.conn;
-
-if (!conn) {
-  console.error("La connexion (conn) n'est pas définie. Veuillez vérifier l'initialisation du bot.");
-}
-
 // Objet global pour stocker l'état actif du Squid Game pour chaque groupe
 // Pour chaque groupe, on stocke un objet { active: true, kicked: [] }
 const activeSquidGame = {};
@@ -31,7 +24,7 @@ cmd({
   desc: "Lance Squid Game : pendant 2,5 minutes, ne parlez PAS sinon vous serez expulsé !",
   category: "group",
   filename: __filename
-}, async (conn, mek, m, { from, isAdmin, isOwner, reply }) => {
+}, async (client, mek, m, { from, isAdmin, isOwner, reply }) => {
   try {
     // Vérifier que seuls les admins ou le propriétaire peuvent lancer la commande
     if (!isAdmin && !isOwner) {
@@ -41,8 +34,8 @@ cmd({
     // Activer le mode Squid Game pour ce groupe avec un tableau pour les expulsés
     activeSquidGame[from] = { active: true, kicked: [] };
 
-    // Envoyer un message initial avec l'icône rouge pour signaler l'interdiction de parler
-    await conn.sendMessage(from, {
+    // Envoyer un message initial indiquant l'interdiction de parler
+    await client.sendMessage(from, {
       text: "🔴 *Squid Game* : Ne parlez PAS pendant 2,5 minutes sinon vous serez expulsé !"
     }, { quoted: mek });
 
@@ -59,7 +52,7 @@ cmd({
     if (kickedList && kickedList.length > 0) {
       finalMessage += `\n\n💥 *Expulsions* : ${kickedList.map(id => `<@${id.split("@")[0]}>`).join(", ")}`;
     }
-    await conn.sendMessage(from, { text: finalMessage }, { quoted: mek });
+    await client.sendMessage(from, { text: finalMessage }, { quoted: mek });
 
   } catch (error) {
     console.error("Error in squidgame command:", error);
@@ -68,7 +61,7 @@ cmd({
 });
 
 // Écouteur d'événement pour surveiller les messages dans le groupe pendant Squid Game
-conn.on('chat-update', async (chatUpdate) => {
+client.on('chat-update', async (chatUpdate) => {
   try {
     if (!chatUpdate.hasNewMessage) return;
     const m = chatUpdate.messages.all()[0];
@@ -81,22 +74,22 @@ conn.on('chat-update', async (chatUpdate) => {
     // Obtenir l'ID de l'expéditeur du message
     const sender = m.key.participant || m.key.remoteJid;
     // Ignorer le bot lui-même
-    if (sender === conn.user.jid) return;
+    if (sender === client.user.jid) return;
 
-    // Vérifier si l'expéditeur est admin dans le groupe
-    const groupMeta = await conn.groupMetadata(groupId);
+    // Récupérer les métadonnées du groupe pour vérifier si l'expéditeur est admin
+    const groupMeta = await client.groupMetadata(groupId);
     const isSenderAdmin = groupMeta.participants.some(p => p.id === sender && (p.admin === "admin" || p.admin === "superadmin"));
     if (isSenderAdmin) return; // Ne pas expulser les admins
 
     // Expulser le membre qui a envoyé un message pendant Squid Game
-    await conn.groupParticipantsUpdate(groupId, [sender], "remove")
+    await client.groupParticipantsUpdate(groupId, [sender], "remove")
       .catch(err => console.error(`⚠️ Échec de l'expulsion de ${sender}:`, err));
     
     // Ajouter l'ID expulsé dans la liste du Squid Game pour ce groupe
     activeSquidGame[groupId].kicked.push(sender);
     
     // Envoyer un message d'information dans le groupe
-    await conn.sendMessage(groupId, {
+    await client.sendMessage(groupId, {
       text: `❌ <@${sender.split("@")[0]}> a été expulsé pour avoir parlé pendant Squid Game !`
     }, { quoted: m, mentions: [sender] });
 
