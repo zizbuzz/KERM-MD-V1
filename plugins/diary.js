@@ -1,17 +1,3 @@
-/*
-_  ______   _____ _____ _____ _   _
-| |/ / ___| |_   _| ____/___ | | | |
-| ' / |  _    | | |  _|| |   | |_| |
-| . \ |_| |   | | | |__| |___|  _  |
-|_|\_\____|   |_| |_____\____|_| |_|
-
-ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
-CONTACT ME HERE +237656520674
-YT: KermHackTools
-Github: Kgtech-cmr
-*/
-
-
 const { cmd } = require("../command");
 const fs = require('fs');
 const path = require('path');
@@ -23,14 +9,8 @@ const saveDiaries = () => {
     fs.writeFileSync(diaryFile, JSON.stringify(diaries, null, 2));
 };
 
-// URL de l'image (remplace par une URL valide)
+// URL of the image (replace with a valid URL)
 const ALIVE_IMG = "https://i.ibb.co/dJ55TvZg/lordkerm.jpg"; 
-
-// Define the owner's username
-const OWNER_USERNAME = "Kgtech-cmr"; // Replace with the actual owner's username
-
-// Check if the message sender is the owner
-const isOwner = (sender) => sender === OWNER_USERNAME;
 
 cmd({
     pattern: "diary",
@@ -39,11 +19,6 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q, from }) => {
     const userId = m.sender;
-
-    // Owner check
-    if (!isOwner(userId)) {
-        return reply("❌ You are not authorized to use this command.");
-    }
 
     if (!diaries[userId]) {
         if (!q) {
@@ -71,7 +46,7 @@ cmd({
         formattedInfo += `📅 *${entry.date}* 🕒 *${entry.time}*\n📝 ${entry.text}\n\n`;
     });
 
-    // Envoi de l'image avec la liste des entrées
+    // Send image with the list of entries
     await conn.sendMessage(from, {
         image: { url: ALIVE_IMG },
         caption: formattedInfo,
@@ -96,11 +71,6 @@ cmd({
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
 
-    // Owner check
-    if (!isOwner(userId)) {
-        return reply("❌ You are not authorized to use this command.");
-    }
-
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary yet. Create one using `.diary yourpassword`.");
     }
@@ -109,8 +79,8 @@ cmd({
     }
 
     const now = new Date();
-    const date = now.toLocaleDateString('fr-FR'); // Format date (France)
-    const time = now.toLocaleTimeString('fr-FR', { hour12: false }); // Format 24h
+    const date = now.toLocaleDateString('fr-FR'); // Date format (France)
+    const time = now.toLocaleTimeString('fr-FR', { hour12: false }); // 24h format
 
     diaries[userId].entries.push({ date, time, text: q.trim() });
     saveDiaries();
@@ -125,11 +95,6 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
-
-    // Owner check
-    if (!isOwner(userId)) {
-        return reply("❌ You are not authorized to use this command.");
-    }
 
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary to reset.");
@@ -149,8 +114,8 @@ cmd({
     reply("✅ Your diary has been successfully reset!");
 });
 
-const generateCode = () => Math.floor(100000 + Math.random() * 900000).toString(); // Code 6 chiffres
-let resetRequests = {}; // Stocke les codes de vérification temporaires
+const generateCode = () => Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit code
+let resetRequests = {}; // Store temporary verification codes
 
 cmd({
     pattern: "resetpassword",
@@ -160,21 +125,16 @@ cmd({
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
 
-    // Owner check
-    if (!isOwner(userId)) {
-        return reply("❌ You are not authorized to use this command.");
-    }
-
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary. Create one using `.diary yourpassword`.");
     }
 
-    // Vérifier si l'utilisateur a déjà demandé un code
+    // Check if the user has already requested a code
     if (!q) {
         const resetCode = generateCode();
         resetRequests[userId] = resetCode;
 
-        await conn.sendMessage(userId, { text: `🔐 Your password reset code: *${resetCode}* \n\nEnter this code with '.resetpassword *code* newpassword' to confirm.` });
+        await conn.sendMessage(userId, { text: `🔐 Your password reset code: *${resetCode}* \n\nEnter this code with '.resetpassword code newpassword' to confirm.` });
         return reply("📩 A reset code has been sent to your private chat. Use it to reset your password.");
     }
 
@@ -188,7 +148,7 @@ cmd({
         return reply("❌ Invalid or expired code! Request a new one with `.resetpassword`.");
     }
 
-    // Mettre à jour le mot de passe
+    // Update the password
     diaries[userId].password = newPassword.trim();
     saveDiaries();
     delete resetRequests[userId];
