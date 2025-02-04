@@ -136,7 +136,7 @@ cmd({
         const resetCode = generateCode();
         resetRequests[userId] = resetCode;
 
-        await conn.sendMessage(userId, { text: `🔐 Your password reset code: *${resetCode}* \n\nEnter this code with `.resetpassword code newpassword` to confirm.` });
+        await conn.sendMessage(userId, { text: `🔐 Your password reset code: *${resetCode}* \n\nEnter this code with '.resetpassword code newpassword' to confirm.` });
         return reply("📩 A reset code has been sent to your private chat. Use it to reset your password.");
     }
 
