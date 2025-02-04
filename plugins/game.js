@@ -11,6 +11,7 @@ YT: KermHackTools
 Github: Kgtech-cmr
 */
 
+const { delay } = require("@whiskeysockets/baileys");
 const { cmd } = require("../command");
 
 cmd({
