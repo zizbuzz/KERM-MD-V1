@@ -174,30 +174,37 @@ cmd({
 });
 cmd({
   'pattern': "roll",
-  'desc': "Roll two dice (1-12).",
+  'desc': "Roll two dice (1-6) and get their sum.",
   'category': 'fun',
   'filename': __filename
-}, async (_0x52291b, _0x3b2718, _0x263aad, {
-  reply: _0x2f786c
+}, async (conn, mek, m, {
+  reply
 }) => {
   try {
-    // Générer deux nombres aléatoires entre 1 et 12
+    // Générer deux nombres aléatoires entre 1 et 6
     const dice1 = Math.floor(Math.random() * 6) + 1;
     const dice2 = Math.floor(Math.random() * 6) + 1;
+    
+    // Calculer la somme des deux dés
+    const sum = dice1 + dice2;
+    
+    // Obtenir l'identifiant de l'utilisateur qui a lancé la commande
+    const userTag = "@" + m.sender.split("@")[0];
 
     // Construire le message du résultat
-    let resultMessage = `🎲: *${dice1}* 🎲: *${dice2}*`;
+    let resultMessage = `🎲: *${dice1}* 🎲: *${dice2}*\n *${sum}* pour ${userTag}`;
 
-    // Vérifier si les deux dés affichent 1
+    // Vérifier si les deux dés affichent 1 et ajouter "Million"
     if (dice1 === 1 && dice2 === 1) {
       resultMessage += "\n💰 *Million*";
     }
 
-    // Envoyer le résultat
-    _0x2f786c(resultMessage);
-  } catch (_0xfc9684) {
-    console.error("Error in .roll command:", _0xfc9684);
-    _0x2f786c("❌ An error occurred while rolling the dice.");
+    // Envoyer le résultat avec la mention
+    await conn.sendMessage(m.chat, { text: resultMessage, mentions: [m.sender] }, { quoted: mek });
+
+  } catch (error) {
+    console.error("Error in .roll command:", error);
+    reply("❌ An error occurred while rolling the dice.");
   }
 });
 cmd({
