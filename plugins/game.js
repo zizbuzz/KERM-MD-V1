@@ -21,6 +21,7 @@ cmd({
   filename: __filename
 }, async (conn, mek, m, { isAdmin, isOwner, participants, reply }) => {
   try {
+    if (!m.isGroup) return reply("❌ Cette commande ne peut être utilisée que dans les groupes.");
     if (!isAdmin && !isOwner) return reply("❌ Seuls les admins peuvent utiliser cette commande.");
 
     let groupMembers = participants.filter(p => !p.admin); // Exclure les admins
