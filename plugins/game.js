@@ -24,7 +24,7 @@ cmd({
     if (!isAdmin && !isOwner) return reply("❌ Seuls les admins peuvent utiliser cette commande.");
 
     let groupMembers = participants.filter(p => !p.admin); // Exclure les admins
-    if (groupMembers.length < 50) return reply("⚠️ Il faut au moins 50 membres non-admins pour jouer.");
+    if (groupMembers.length < 5) return reply("⚠️ Il faut au moins 50 membres non-admins pour jouer.");
 
     let gameCreator = "@" + m.sender.split("@")[0];
 
