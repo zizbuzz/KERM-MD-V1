@@ -1,3 +1,15 @@
+/*
+_  ______   _____ _____ _____ _   _
+| |/ / ___| |_   _| ____/___ | | | |
+| ' / |  _    | | |  _|| |   | |_| |
+| . \ |_| |   | | | |__| |___|  _  |
+|_|\_\____|   |_| |_____\____|_| |_|
+
+ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
+CONTACT ME HERE +237656520674
+YT: KermHackTools
+Github: Kgtech-cmr
+*/
 
 
 const { cmd } = require("../command");
@@ -14,6 +26,12 @@ const saveDiaries = () => {
 // URL de l'image (remplace par une URL valide)
 const ALIVE_IMG = "https://i.ibb.co/dJ55TvZg/lordkerm.jpg"; 
 
+// Define the owner's username
+const OWNER_USERNAME = "Kgtech-cmr"; // Replace with the actual owner's username
+
+// Check if the message sender is the owner
+const isOwner = (sender) => sender === OWNER_USERNAME;
+
 cmd({
     pattern: "diary",
     desc: "Open or create a secret diary",
@@ -21,6 +39,11 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q, from }) => {
     const userId = m.sender;
+
+    // Owner check
+    if (!isOwner(userId)) {
+        return reply("❌ You are not authorized to use this command.");
+    }
 
     if (!diaries[userId]) {
         if (!q) {
@@ -65,7 +88,6 @@ cmd({
     }, { quoted: mek });
 });
 
-// Commande pour ajouter une entrée au journal
 cmd({
     pattern: "setdiary",
     desc: "Write a new diary entry",
@@ -73,6 +95,12 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
+
+    // Owner check
+    if (!isOwner(userId)) {
+        return reply("❌ You are not authorized to use this command.");
+    }
+
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary yet. Create one using `.diary yourpassword`.");
     }
@@ -90,7 +118,6 @@ cmd({
     reply("✅ Your entry has been added to your diary!");
 });
 
-// Commande pour réinitialiser le journal
 cmd({
     pattern: "resetdiary",
     desc: "Reset your diary (delete all entries)",
@@ -98,6 +125,11 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
+
+    // Owner check
+    if (!isOwner(userId)) {
+        return reply("❌ You are not authorized to use this command.");
+    }
 
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary to reset.");
@@ -116,6 +148,7 @@ cmd({
 
     reply("✅ Your diary has been successfully reset!");
 });
+
 const generateCode = () => Math.floor(100000 + Math.random() * 900000).toString(); // Code 6 chiffres
 let resetRequests = {}; // Stocke les codes de vérification temporaires
 
@@ -127,6 +160,11 @@ cmd({
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
 
+    // Owner check
+    if (!isOwner(userId)) {
+        return reply("❌ You are not authorized to use this command.");
+    }
+
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary. Create one using `.diary yourpassword`.");
     }
@@ -136,7 +174,7 @@ cmd({
         const resetCode = generateCode();
         resetRequests[userId] = resetCode;
 
-        await conn.sendMessage(userId, { text: `🔐 Your password reset code: *${resetCode}* \n\nEnter this code with '.resetpassword code newpassword' to confirm.` });
+        await conn.sendMessage(userId, { text: `🔐 Your password reset code: *${resetCode}* \n\nEnter this code with '.resetpassword *code* newpassword' to confirm.` });
         return reply("📩 A reset code has been sent to your private chat. Use it to reset your password.");
     }
 
