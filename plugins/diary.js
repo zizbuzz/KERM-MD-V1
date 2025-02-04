@@ -15,7 +15,7 @@ const { cmd } = require("../command");
 const fs = require('fs');
 const path = require('path');
 
-const diaryFile = path.join(__dirname, 'diary.json');
+const diaryFile = path.join(__dirname, "../my_data/diary.json");
 let diaries = fs.existsSync(diaryFile) ? JSON.parse(fs.readFileSync(diaryFile, 'utf8')) : {};
 
 const saveDiaries = () => {
