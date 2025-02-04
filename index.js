@@ -60,14 +60,9 @@ const app = express();
 const port = process.env.PORT || 9090;
 
 //=============SQUIDGAME=======================
-
-  return conn; // On retourne `conn` pour l'utiliser ailleurs
-}
-
 startBot().then(conn => {
   global.conn = conn; // On rend `conn` global pour l'utiliser dans d'autres fichiers
 });
-
 //=============================================
 
 async function connectToWA() {
