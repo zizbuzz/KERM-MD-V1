@@ -182,8 +182,8 @@ cmd({
 }) => {
   try {
     // Générer deux nombres aléatoires entre 1 et 12
-    const dice1 = Math.floor(Math.random() * 12) + 1;
-    const dice2 = Math.floor(Math.random() * 12) + 1;
+    const dice1 = Math.floor(Math.random() * 6) + 1;
+    const dice2 = Math.floor(Math.random() * 6) + 1;
 
     // Construire le message du résultat
     let resultMessage = `🎲: *${dice1}* 🎲: *${dice2}*`;
