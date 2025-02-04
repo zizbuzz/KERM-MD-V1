@@ -1,16 +1,15 @@
-const { cmd } = require("../command");
 const fs = require('fs');
 const path = require('path');
 
-const diaryFile = path.join(__dirname, "../my_data/diary.json");
+const diaryFile = path.join(__dirname, 'diary.json');
 let diaries = fs.existsSync(diaryFile) ? JSON.parse(fs.readFileSync(diaryFile, 'utf8')) : {};
 
 const saveDiaries = () => {
     fs.writeFileSync(diaryFile, JSON.stringify(diaries, null, 2));
 };
 
-// URL of the image (replace with a valid URL)
-const ALIVE_IMG = "https://i.ibb.co/dJ55TvZg/lordkerm.jpg"; 
+// URL de l'image (remplace par une URL valide)
+const ALIVE_IMG = "https://your-image-url.com/diary.jpg"; 
 
 cmd({
     pattern: "diary",
@@ -19,10 +18,6 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q, from }) => {
     const userId = m.sender;
-
-    if (m.isGroup) {
-        return reply("❌ This command is reserved for the owner and can only be used in private chat.");
-    }
 
     if (!diaries[userId]) {
         if (!q) {
@@ -50,7 +45,7 @@ cmd({
         formattedInfo += `📅 *${entry.date}* 🕒 *${entry.time}*\n📝 ${entry.text}\n\n`;
     });
 
-    // Send image with the list of entries
+    // Envoi de l'image avec la liste des entrées
     await conn.sendMessage(from, {
         image: { url: ALIVE_IMG },
         caption: formattedInfo,
@@ -60,13 +55,14 @@ cmd({
             isForwarded: true,
             forwardedNewsletterMessageInfo: {
                 newsletterJid: '120363321386877609@newsletter',
-                newsletterName: '𝐊𝐄𝐑𝐌 𝐃𝐈𝐀𝐑𝐘',
+                newsletterName: '𝐊𝐄𝐑𝐌 𝐀𝐈',
                 serverMessageId: 143
             }
         }
     }, { quoted: mek });
 });
 
+// Commande pour ajouter une entrée au journal
 cmd({
     pattern: "setdiary",
     desc: "Write a new diary entry",
@@ -74,11 +70,6 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
-
-    if (m.isGroup) {
-        return reply("❌ This command is reserved for the owner and can only be used in private chat.");
-    }
-
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary yet. Create one using `.diary yourpassword`.");
     }
@@ -87,8 +78,8 @@ cmd({
     }
 
     const now = new Date();
-    const date = now.toLocaleDateString('fr-FR'); // Date format (France)
-    const time = now.toLocaleTimeString('fr-FR', { hour12: false }); // 24h format
+    const date = now.toLocaleDateString('fr-FR'); // Format date (France)
+    const time = now.toLocaleTimeString('fr-FR', { hour12: false }); // Format 24h
 
     diaries[userId].entries.push({ date, time, text: q.trim() });
     saveDiaries();
@@ -96,6 +87,7 @@ cmd({
     reply("✅ Your entry has been added to your diary!");
 });
 
+// Commande pour réinitialiser le journal
 cmd({
     pattern: "resetdiary",
     desc: "Reset your diary (delete all entries)",
@@ -103,10 +95,6 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
-
-    if (m.isGroup) {
-        return reply("❌ This command is reserved for the owner and can only be used in private chat.");
-    }
 
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary to reset.");
@@ -125,9 +113,8 @@ cmd({
 
     reply("✅ Your diary has been successfully reset!");
 });
-
-const generateCode = () => Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit code
-let resetRequests = {}; // Store temporary verification codes
+const generateCode = () => Math.floor(100000 + Math.random() * 900000).toString(); // Code 6 chiffres
+let resetRequests = {}; // Stocke les codes de vérification temporaires
 
 cmd({
     pattern: "resetpassword",
@@ -137,20 +124,16 @@ cmd({
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
 
-    if (m.isGroup) {
-        return reply("❌ This command is reserved for the owner and can only be used in private chat.");
-    }
-
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary. Create one using `.diary yourpassword`.");
     }
 
-    // Check if the user has already requested a code
+    // Vérifier si l'utilisateur a déjà demandé un code
     if (!q) {
         const resetCode = generateCode();
         resetRequests[userId] = resetCode;
 
-        await conn.sendMessage(userId, { text: `🔐 Your password reset code: *${resetCode}* \n\nEnter this code with '.resetpassword code newpassword' to confirm.` });
+        await conn.sendMessage(userId, { text: `🔐 Your password reset code: *${resetCode}* \n\nEnter this code with `.resetpassword code newpassword` to confirm.` });
         return reply("📩 A reset code has been sent to your private chat. Use it to reset your password.");
     }
 
@@ -164,7 +147,7 @@ cmd({
         return reply("❌ Invalid or expired code! Request a new one with `.resetpassword`.");
     }
 
-    // Update the password
+    // Mettre à jour le mot de passe
     diaries[userId].password = newPassword.trim();
     saveDiaries();
     delete resetRequests[userId];
