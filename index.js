@@ -59,6 +59,27 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 9090;
 
+//=============SQUIDGAME=======================
+
+const { default: makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys");
+
+async function startBot() {
+  const { state, saveCreds } = await useMultiFileAuthState("./auth_info");
+
+  const conn = makeWASocket({
+    auth: state,
+    printQRInTerminal: true
+  });
+
+  conn.ev.on("creds.update", saveCreds);
+
+  return conn; // On retourne `conn` pour l'utiliser ailleurs
+}
+
+startBot().then(conn => {
+  global.conn = conn; // On rend `conn` global pour l'utiliser dans d'autres fichiers
+});
+
 //=============================================
 
 async function connectToWA() {
