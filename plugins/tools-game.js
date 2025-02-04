@@ -174,15 +174,27 @@ cmd({
 });
 cmd({
   'pattern': "roll",
-  'desc': "Roll a dice (1-6).",
+  'desc': "Roll two dice (1-12).",
   'category': 'fun',
   'filename': __filename
 }, async (_0x52291b, _0x3b2718, _0x263aad, {
   reply: _0x2f786c
 }) => {
   try {
-    const _0xc66607 = Math.floor(Math.random() * 0x6) + 0x1;
-    _0x2f786c("🎲 You rolled: *" + _0xc66607 + '*');
+    // Générer deux nombres aléatoires entre 1 et 12
+    const dice1 = Math.floor(Math.random() * 12) + 1;
+    const dice2 = Math.floor(Math.random() * 12) + 1;
+
+    // Construire le message du résultat
+    let resultMessage = `🎲: *${dice1}* 🎲: *${dice2}*`;
+
+    // Vérifier si les deux dés affichent 1
+    if (dice1 === 1 && dice2 === 1) {
+      resultMessage += "\n💰 *Million*";
+    }
+
+    // Envoyer le résultat
+    _0x2f786c(resultMessage);
   } catch (_0xfc9684) {
     console.error("Error in .roll command:", _0xfc9684);
     _0x2f786c("❌ An error occurred while rolling the dice.");
