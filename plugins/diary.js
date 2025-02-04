@@ -11,26 +11,33 @@ YT: KermHackTools
 Github: Kgtech-cmr
 */
 
+const fs = require("fs");
+const path = require("path");
 const { cmd } = require("../command");
-const fs = require('fs');
-const path = require('path');
 
 const diaryFile = path.join(__dirname, "../my_data/diary.json");
 let diaries = fs.existsSync(diaryFile) ? JSON.parse(fs.readFileSync(diaryFile, 'utf8')) : {};
 
+// Function to save diaries to file
 const saveDiaries = () => {
     fs.writeFileSync(diaryFile, JSON.stringify(diaries, null, 2));
 };
 
-// URL de l'image (remplace par une URL valide)
+// URL of the image (replace with a valid URL)
 const ALIVE_IMG = "https://i.ibb.co/4Zq1jCNP/lordkerm.jpg"; 
 
+// ---------------------
+// .diary command (open or create diary)
+// ---------------------
 cmd({
     pattern: "diary",
-    desc: "Open or create a secret diary",
+    desc: "Open or create a secret diary (Owner only).",
     category: "private",
     filename: __filename
-}, async (conn, mek, m, { reply, q, from }) => {
+}, async (conn, mek, m, { reply, q, from, isOwner, sender }) => {
+    // Check if the user is the owner
+    if (!isOwner) return reply("❌ Only the bot owner can use this command.");
+
     const userId = m.sender;
 
     if (!diaries[userId]) {
@@ -55,11 +62,11 @@ cmd({
     }
 
     let formattedInfo = `📖 *Your Diary Entries:*\n\n`;
-    diaries[userId].entries.forEach((entry, index) => {
+    diaries[userId].entries.forEach((entry) => {
         formattedInfo += `📅 *${entry.date}* 🕒 *${entry.time}*\n📝 ${entry.text}\n\n`;
     });
 
-    // Envoi de l'image avec la liste des entrées
+    // Send the image with the diary entries
     await conn.sendMessage(from, {
         image: { url: ALIVE_IMG },
         caption: formattedInfo,
@@ -76,38 +83,44 @@ cmd({
     }, { quoted: mek });
 });
 
-// Commande pour ajouter une entrée au journal
+// ---------------------
+// .setdiary command (add a new diary entry)
+// ---------------------
 cmd({
     pattern: "setdiary",
-    desc: "Write a new diary entry",
+    desc: "Write a new diary entry (Owner only).",
     category: "private",
     filename: __filename
-}, async (conn, mek, m, { reply, q }) => {
+}, async (conn, mek, m, { reply, q, isOwner, sender }) => {
+    if (!isOwner) return reply("❌ Only the bot owner can use this command.");
     const userId = m.sender;
     if (!diaries[userId]) {
-        return reply("❌ You don't have a diary yet. Create one using `.diary yourpassword`.");
+        return reply("❌ You don't have a diary. Create one using `.diary yourpassword`.");
     }
     if (!q) {
         return reply("✍️ Please provide the text you want to add to your diary.");
     }
 
     const now = new Date();
-    const date = now.toLocaleDateString('fr-FR'); // Format date (France)
-    const time = now.toLocaleTimeString('fr-FR', { hour12: false }); // Format 24h
+    const date = now.toLocaleDateString('fr-FR'); // Date format (France)
+    const time = now.toLocaleTimeString('fr-FR', { hour12: false }); // 24h format
 
     diaries[userId].entries.push({ date, time, text: q.trim() });
     saveDiaries();
 
-    reply("✅ Your entry has been added to your diary!");
+    reply("✅ Your diary entry has been saved!");
 });
 
-// Commande pour réinitialiser le journal
+// ---------------------
+// .resetdiary command (delete all diary entries)
+// ---------------------
 cmd({
     pattern: "resetdiary",
-    desc: "Reset your diary (delete all entries)",
+    desc: "Reset your diary (delete all entries) (Owner only).",
     category: "private",
     filename: __filename
-}, async (conn, mek, m, { reply, q }) => {
+}, async (conn, mek, m, { reply, q, isOwner, sender }) => {
+    if (!isOwner) return reply("❌ Only the bot owner can use this command.");
     const userId = m.sender;
 
     if (!diaries[userId]) {
@@ -127,27 +140,35 @@ cmd({
 
     reply("✅ Your diary has been successfully reset!");
 });
-const generateCode = () => Math.floor(100000 + Math.random() * 900000).toString(); // Code 6 chiffres
-let resetRequests = {}; // Stocke les codes de vérification temporaires
+
+// ---------------------
+// .resetpassword command (reset diary password; Owner only)
+// ---------------------
+const generateCode = () => Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit code
+let resetRequests = {};
 
 cmd({
     pattern: "resetpassword",
-    desc: "Reset your diary password",
+    desc: "Reset your diary password (Owner only).",
     category: "private",
     filename: __filename
-}, async (conn, mek, m, { reply, q }) => {
+}, async (conn, mek, m, { reply, q, isOwner, sender }) => {
+    if (!isOwner) return reply("❌ Only the bot owner can use this command.");
     const userId = m.sender;
 
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary. Create one using `.diary yourpassword`.");
     }
 
-    // Vérifier si l'utilisateur a déjà demandé un code
+    // If no argument is provided, send a reset code
     if (!q) {
         const resetCode = generateCode();
-        resetRequests[userId] = resetCode;
-
-        await conn.sendMessage(userId, { text: `🔐 Your password reset code: *${resetCode}* \n\nEnter this code with `.resetpassword code newpassword` to confirm.` });
+        // Store the reset code with an expiration time of 5 minutes
+        resetRequests[userId] = { code: resetCode, expires: Date.now() + 5 * 60 * 1000 };
+        
+        await conn.sendMessage(userId, { 
+            text: `🔐 Your password reset code: *${resetCode}*\n\nThis code expires after 5 minutes.\nEnter this code with \`.resetpassword code newpassword\` to confirm.` 
+        });
         return reply("📩 A reset code has been sent to your private chat. Use it to reset your password.");
     }
 
@@ -157,11 +178,10 @@ cmd({
     }
 
     const [code, newPassword] = args;
-    if (!resetRequests[userId] || resetRequests[userId] !== code) {
+    if (!resetRequests[userId] || resetRequests[userId].code !== code || Date.now() > resetRequests[userId].expires) {
         return reply("❌ Invalid or expired code! Request a new one with `.resetpassword`.");
     }
 
-    // Mettre à jour le mot de passe
     diaries[userId].password = newPassword.trim();
     saveDiaries();
     delete resetRequests[userId];
