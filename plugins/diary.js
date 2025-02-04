@@ -167,7 +167,7 @@ cmd({
         resetRequests[userId] = { code: resetCode, expires: Date.now() + 5 * 60 * 1000 };
         
         await conn.sendMessage(userId, { 
-            text: `🔐 Your password reset code: *${resetCode}*\n\nThis code expires after 5 minutes.\nEnter this code with \`.resetpassword code newpassword\` to confirm.` 
+            text: `🔐 Your password reset code: *${resetCode}*\n\nThis code expires after 5 minutes.\nEnter this code with \'.resetpassword *code* newpassword\' to confirm.` 
         });
         return reply("📩 A reset code has been sent to your private chat. Use it to reset your password.");
     }
