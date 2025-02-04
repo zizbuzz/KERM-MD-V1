@@ -20,6 +20,10 @@ cmd({
 }, async (conn, mek, m, { reply, q, from }) => {
     const userId = m.sender;
 
+    if (m.isGroup) {
+        return reply("❌ This command is reserved for the owner and can only be used in private chat.");
+    }
+
     if (!diaries[userId]) {
         if (!q) {
             return reply("📖 You don't have a diary yet. To create one, use:\n\n`.diary yourpassword`");
@@ -71,6 +75,10 @@ cmd({
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
 
+    if (m.isGroup) {
+        return reply("❌ This command is reserved for the owner and can only be used in private chat.");
+    }
+
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary yet. Create one using `.diary yourpassword`.");
     }
@@ -95,6 +103,10 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
+
+    if (m.isGroup) {
+        return reply("❌ This command is reserved for the owner and can only be used in private chat.");
+    }
 
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary to reset.");
@@ -124,6 +136,10 @@ cmd({
     filename: __filename
 }, async (conn, mek, m, { reply, q }) => {
     const userId = m.sender;
+
+    if (m.isGroup) {
+        return reply("❌ This command is reserved for the owner and can only be used in private chat.");
+    }
 
     if (!diaries[userId]) {
         return reply("❌ You don't have a diary. Create one using `.diary yourpassword`.");
