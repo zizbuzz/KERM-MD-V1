@@ -12,88 +12,108 @@ Github: Kgtech-cmr
 */
 
 const { cmd } = require("../command");
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-// Objet global pour stocker l'état actif du Squid Game pour chaque groupe
-// Pour chaque groupe, on stocke un objet { active: true, kicked: [] }
-const activeSquidGame = {};
-
-// Commande Squidgame (seulement par admin ou owner)
 cmd({
   pattern: "squidgame",
-  desc: "Lance Squid Game : pendant 2,5 minutes, ne parlez PAS sinon vous serez expulsé !",
-  category: "group",
+  desc: "Lancer le jeu Squid Game dans un groupe",
+  category: "fun",
   filename: __filename
-}, async (client, mek, m, { from, isAdmin, isOwner, reply }) => {
+}, async (conn, mek, m, { isAdmin, isOwner, participants, reply }) => {
   try {
-    // Vérifier que seuls les admins ou le propriétaire peuvent lancer la commande
-    if (!isAdmin && !isOwner) {
-      return reply("❌ Seuls les admins ou le propriétaire peuvent lancer Squid Game.");
+    if (!isAdmin && !isOwner) return reply("❌ Seuls les admins peuvent utiliser cette commande.");
+
+    let groupMembers = participants.filter(p => !p.admin); // Exclure les admins
+    if (groupMembers.length < 50) return reply("⚠️ Il faut au moins 50 membres non-admins pour jouer.");
+
+    let gameCreator = "@" + m.sender.split("@")[0];
+
+    // Message d'annonce du jeu
+    let gameMessage = `🔴 *Squid Game: Red Light, 🟢Green Light*\n\n🎭 *Front Man*: (${gameCreator})\n`;
+    gameMessage += groupMembers.map(m => "@" + m.id.split("@")[0]).join("\n") + "\n\n";
+    gameMessage += "Tous les autres membres du groupe sont ajoutés comme joueurs ! Le jeu commence dans 50 secondes.";
+
+    await conn.sendMessage(m.chat, { text: gameMessage, mentions: groupMembers.map(m => m.id) });
+
+    await delay(50000); // Attente de 50s avant de sélectionner les joueurs
+
+    // Sélectionner 50 joueurs aléatoires
+    let players = groupMembers.sort(() => 0.5 - Math.random()).slice(0, 50);
+
+    let playersList = players.map((p, i) => `${i + 1}. @${p.id.split("@")[0]}`).join("\n");
+
+    await conn.sendMessage(m.chat, {
+      text: `🎮 *Liste des joueurs:*\n${playersList}\n\n🔔 Le jeu commence maintenant !`,
+      mentions: players.map(p => p.id)
+    });
+
+    await delay(3000);
+
+    // Explication des règles
+    let rulesMessage = `📜 *Règles du Squid Game:*\n\n`
+      + `1️⃣ Pendant 🟥 *Red Light*, les joueurs qui envoient un message seront *éliminés* et *expulsés* du groupe.\n\n`
+      + `2️⃣ Pendant 🟩 *Green Light*, les joueurs doivent envoyer un message. Ceux qui restent silencieux seront éliminés.\n\n`
+      + `3️⃣ Le jeu se termine lorsqu'il ne reste plus qu'un seul joueur.\n\n`
+      + `🏆 Survis pour devenir le *gagnant* !`;
+
+    await conn.sendMessage(m.chat, { text: rulesMessage });
+
+    await delay(5000);
+
+    let remainingPlayers = [...players];
+    while (remainingPlayers.length > 1) {
+      let isGreenLight = Math.random() > 0.5;
+      let lightMessage = isGreenLight ? "🟩 *Green Light*" : "🟥 *Red Light*";
+      await conn.sendMessage(m.chat, { text: `🔔 ${lightMessage}` });
+
+      await delay(5000); // Délai de 5s entre chaque phase
+
+      let playersToKick = [];
+      let spokenPlayers = new Set(); // Stocke ceux qui ont parlé
+
+      conn.ev.on("messages.upsert", (msg) => {
+        let sender = msg.messages[0].key.remoteJid;
+        if (remainingPlayers.find(p => p.id === sender)) spokenPlayers.add(sender);
+      });
+
+      if (isGreenLight) {
+        // Vérifier qui ne parle pas
+        for (let player of remainingPlayers) {
+          if (!spokenPlayers.has(player.id)) {
+            playersToKick.push(player);
+          }
+        }
+      } else {
+        // Vérifier qui parle
+        for (let player of remainingPlayers) {
+          if (spokenPlayers.has(player.id)) {
+            playersToKick.push(player);
+          }
+        }
+      }
+
+      for (let player of playersToKick) {
+        await conn.groupParticipantsUpdate(m.chat, [player.id], "remove");
+        let eliminationMessage = isGreenLight
+          ? `❌ @${player.id.split("@")[0]} est resté silencieux pendant 🟩 *Green Light* et a été éliminé et expulsé du groupe.`
+          : `❌ @${player.id.split("@")[0]} a écrit pendant 🟥 *Red Light* et a été éliminé et expulsé du groupe.`;
+
+        await conn.sendMessage(m.chat, {
+          text: eliminationMessage,
+          mentions: [player.id]
+        });
+      }
+
+      remainingPlayers = remainingPlayers.filter(p => !playersToKick.includes(p));
     }
 
-    // Activer le mode Squid Game pour ce groupe avec un tableau pour les expulsés
-    activeSquidGame[from] = { active: true, kicked: [] };
-
-    // Envoyer un message initial indiquant l'interdiction de parler
-    await client.sendMessage(from, {
-      text: "🔴 *Squid Game* : Ne parlez PAS pendant 2,5 minutes sinon vous serez expulsé !"
-    }, { quoted: mek });
-
-    // Attendre 2,5 minutes (150 000 ms)
-    await delay(150000);
-
-    // Récupérer la liste des expulsés pour ce groupe
-    const kickedList = activeSquidGame[from].kicked;
-    // Désactiver le mode Squid Game pour ce groupe
-    delete activeSquidGame[from];
-
-    // Construire le message final avec l'icône verte et le récapitulatif des expulsions (s'il y en a)
-    let finalMessage = "🟢 *Squid Game Terminé* : Vous pouvez maintenant parler !";
-    if (kickedList && kickedList.length > 0) {
-      finalMessage += `\n\n💥 *Expulsions* : ${kickedList.map(id => `<@${id.split("@")[0]}>`).join(", ")}`;
+    if (remainingPlayers.length === 1) {
+      await conn.sendMessage(m.chat, {
+        text: `🏆 *Félicitations @${remainingPlayers[0].id.split("@")[0]} !*\nTu as survécu et remporté le Squid Game ! 🎉`,
+        mentions: [remainingPlayers[0].id]
+      });
     }
-    await client.sendMessage(from, { text: finalMessage }, { quoted: mek });
-
   } catch (error) {
-    console.error("Error in squidgame command:", error);
-    reply("❌ Une erreur est survenue lors du lancement de Squid Game.");
-  }
-});
-
-// Écouteur d'événement pour surveiller les messages dans le groupe pendant Squid Game
-client.on('chat-update', async (chatUpdate) => {
-  try {
-    if (!chatUpdate.hasNewMessage) return;
-    const m = chatUpdate.messages.all()[0];
-    if (!m.message) return;
-    
-    const groupId = m.key.remoteJid;
-    // Vérifier que Squid Game est actif dans ce groupe
-    if (!activeSquidGame[groupId] || !activeSquidGame[groupId].active) return;
-
-    // Obtenir l'ID de l'expéditeur du message
-    const sender = m.key.participant || m.key.remoteJid;
-    // Ignorer le bot lui-même
-    if (sender === client.user.jid) return;
-
-    // Récupérer les métadonnées du groupe pour vérifier si l'expéditeur est admin
-    const groupMeta = await client.groupMetadata(groupId);
-    const isSenderAdmin = groupMeta.participants.some(p => p.id === sender && (p.admin === "admin" || p.admin === "superadmin"));
-    if (isSenderAdmin) return; // Ne pas expulser les admins
-
-    // Expulser le membre qui a envoyé un message pendant Squid Game
-    await client.groupParticipantsUpdate(groupId, [sender], "remove")
-      .catch(err => console.error(`⚠️ Échec de l'expulsion de ${sender}:`, err));
-    
-    // Ajouter l'ID expulsé dans la liste du Squid Game pour ce groupe
-    activeSquidGame[groupId].kicked.push(sender);
-    
-    // Envoyer un message d'information dans le groupe
-    await client.sendMessage(groupId, {
-      text: `❌ <@${sender.split("@")[0]}> a été expulsé pour avoir parlé pendant Squid Game !`
-    }, { quoted: m, mentions: [sender] });
-
-  } catch (err) {
-    console.error("Error in Squid Game message handler:", err);
+    console.error("Erreur dans la commande .squidgame:", error);
+    reply("❌ Une erreur s'est produite lors du lancement du Squid Game.");
   }
 });
