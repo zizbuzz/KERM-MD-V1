@@ -61,18 +61,6 @@ const port = process.env.PORT || 9090;
 
 //=============SQUIDGAME=======================
 
-const { default: useMultiFileAuthState } = require("@whiskeysockets/baileys");
-
-async function startBot() {
-  const { state, saveCreds } = await useMultiFileAuthState("./auth_info");
-
-  const conn = makeWASocket({
-    auth: state,
-    printQRInTerminal: true
-  });
-
-  conn.ev.on("creds.update", saveCreds);
-
   return conn; // On retourne `conn` pour l'utiliser ailleurs
 }
 
