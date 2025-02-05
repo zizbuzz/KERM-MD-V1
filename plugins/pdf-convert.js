@@ -9,14 +9,10 @@ cmd({
   desc: "Convert images to PDF",
   category: "tools",
   filename: __filename
-}, async (mek, m, { reply, text, isMedia, quoted, mime, sender, isOwner }) => {
+}, async (mek, m, { reply, text, isMedia, quoted, mime, sender }) => {
   try {
-    if (!isOwner) {
-      return reply("❌ *Only the bot owner can use this command.*");
-    }
-
     const user = sender;
-
+    
     if (!text) {
       return reply('_Reply to any image, get help using ".pdf help" command_');
     }
