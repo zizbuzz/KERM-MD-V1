@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const PDFDocument = require('pdfkit');
+const { cmd } = require('../command');
 
 const pdfStorage = {}; // Temporary storage for images per user
 
