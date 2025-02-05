@@ -39,7 +39,6 @@ const { fromBuffer } = require('file-type')
 const bodyparser = require('body-parser')
 const { tmpdir } = require('os')
 const Crypto = require('crypto')
-const PDFDocument = require('pdfkit')
 const path = require('path')
 const prefix = config.PREFIX
 
