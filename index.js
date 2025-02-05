@@ -39,6 +39,7 @@ const { fromBuffer } = require('file-type')
 const bodyparser = require('body-parser')
 const { tmpdir } = require('os')
 const Crypto = require('crypto')
+const PDFDocument = require('pdfkit')
 const path = require('path')
 const prefix = config.PREFIX
 
@@ -127,7 +128,6 @@ if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_READ_STAT
 await conn.readMessages([mek.key])
 }
 const m = sms(conn, mek)
-const PDFDocument = require('pdfkit')
 const type = getContentType(mek.message)
 const content = JSON.stringify(mek.message)
 const from = mek.key.remoteJid
