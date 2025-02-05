@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Load the not-found configuration file (contains sticker and voice note paths)
-const notFoundConfig = require('./.notfound.json');
+const notFoundConfig = require('../my_data/notfound.json');
 
 /**
  * Sends an unknown command response: a sticker and a voice note.
