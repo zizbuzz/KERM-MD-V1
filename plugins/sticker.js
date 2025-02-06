@@ -122,34 +122,33 @@ cmd({
     react: "🎭",
     filename: __filename,
     use: ".take [packname]"
-}, async (conn, mek, m, { from, quoted, sender, args, reply, isQuotedSticker }) => {
+}, async (conn, mek, m, { from, args, reply, sender }) => {
     try {
-        // Check if the user replied to a sticker
-        if (!isQuotedSticker) {
-            return reply("⚠️ Reply to a sticker using `.take` to modify it.");
+        // Check if the message is a reply containing a sticker
+        const quotedSticker = m.quoted && m.quoted.message && m.quoted.message.stickerMessage;
+        if (!quotedSticker) {
+            return reply("⚠️ Please reply to a sticker using `.take` to modify it.");
         }
 
-        // Download the sticker
-        const media = await conn.downloadMediaMessage(quoted);
+        // Download the sticker from the quoted message
+        const media = await conn.downloadAndSaveMediaMessage(m.quoted);
         if (!media) return reply("❌ Failed to download the sticker.");
 
-        // Define the packname (either provided by the user or use the sender's username)
+        // Define the packname: use provided argument or default to "@username"
         const packname = args.length > 0 ? args.join(" ") : `@${sender.split("@")[0]}`;
         const author = "KERM MD"; // Default author name
 
-        // Create a temporary file name
+        // Create a temporary file name for the sticker
         const fileName = `./temp_${Date.now()}.webp`;
-
-        // Save the sticker as a temporary file
         writeFileSync(fileName, media);
 
-        // Generate a new sticker with the custom packname
+        // Generate a new sticker with the custom packname using the stickerMetadata function
         const stickerBuffer = await stickerMetadata(fileName, { packname, author });
 
-        // Send the modified sticker
+        // Send the modified sticker back to the chat, quoting the original message
         await conn.sendMessage(from, { sticker: stickerBuffer }, { quoted: mek });
 
-        // Delete the temporary file after sending the sticker
+        // Delete the temporary file
         unlinkSync(fileName);
     } catch (error) {
         console.error("Error in .take command:", error);
