@@ -119,3 +119,97 @@ cmd({
     reply("❌ Une erreur s'est produite lors du lancement du Squid Game.");
   }
 });
+
+cmd({
+    pattern: "konami",
+    desc: "Simule un match entre deux clubs et affiche le résultat final.",
+    category: "game",
+    react: "⚽",
+    filename: __filename,
+    use: ".konami"
+}, async (conn, mek, m, { from, sender, reply }) => {
+    try {
+        // Liste étendue des clubs avec leurs emojis
+        const clubs = [
+            { name: "FC Barcelone", emoji: "🔵🔴" },
+            { name: "Real Madrid", emoji: "⚪️🔵" },
+            { name: "Manchester United", emoji: "🔴" },
+            { name: "Liverpool", emoji: "🔴" },
+            { name: "Bayern Munich", emoji: "🔴⚪️" },
+            { name: "Juventus", emoji: "⚫️⚪️" },
+            { name: "Paris Saint-Germain", emoji: "🔵🔴" },
+            { name: "Arsenal", emoji: "🔴" },
+            { name: "AC Milan", emoji: "🔴⚫️" },
+            { name: "Inter Milan", emoji: "🔵🔴" },
+            { name: "Chelsea", emoji: "🔵" },
+            { name: "Borussia Dortmund", emoji: "🟡⚫️" },
+            { name: "Tottenham", emoji: "⚪️🔴" },
+            { name: "Atletico Madrid", emoji: "🔴⚪️" },
+            { name: "Ajax", emoji: "🔴⚪️" },
+            { name: "Porto", emoji: "🔵" },
+            { name: "Benfica", emoji: "🟥" },
+            { name: "Lyon", emoji: "🔵" },
+            { name: "Marseille", emoji: "🔵⚪️" },
+            { name: "AS Monaco", emoji: "🔵🔴" },
+            { name: "Sporting CP", emoji: "🟢" },
+            { name: "Everton", emoji: "🔵" },
+            { name: "West Ham United", emoji: "🔴" },
+            { name: "AS Roma", emoji: "🟥" },
+            { name: "Fiorentina", emoji: "🟣" },
+            { name: "Napoli", emoji: "🔵" },
+            { name: "Celtic", emoji: "🟢" },
+            { name: "Rangers", emoji: "🔴" },
+            { name: "Feyenoord", emoji: "🟡🔴" },
+            { name: "PSV Eindhoven", emoji: "🔴" },
+            { name: "Real Sociedad", emoji: "🔵⚪️" },
+            { name: "Sevilla", emoji: "🔴" },
+            { name: "Villarreal", emoji: "🔶" },
+            { name: "Valencia", emoji: "🟡" },
+            { name: "Leicester City", emoji: "🔵" },
+            { name: "Newcastle United", emoji: "⚫️⚪️" },
+            { name: "Aston Villa", emoji: "🔴" },
+            { name: "Southampton", emoji: "🔴" },
+            { name: "Crystal Palace", emoji: "🔴" },
+            { name: "Wolverhampton", emoji: "🟠" },
+            { name: "Borussia Mönchengladbach", emoji: "🟢" },
+            { name: "Schalke 04", emoji: "🔴" },
+            { name: "Sporting Braga", emoji: "🔵" },
+            { name: "Zenit Saint-Pétersbourg", emoji: "🔵" },
+            { name: "FC Shakhtar Donetsk", emoji: "🟡" }
+            // Vous pouvez ajouter d'autres clubs si besoin
+        ];
+
+        // Sélection aléatoire de deux clubs différents
+        const club1 = clubs[Math.floor(Math.random() * clubs.length)];
+        let club2 = clubs[Math.floor(Math.random() * clubs.length)];
+        while (club2.name === club1.name) {
+            club2 = clubs[Math.floor(Math.random() * clubs.length)];
+        }
+
+        // Message d'annonce du match
+        const startMessage = `⚽ *Annonce du Match*\n\nLe match entre *${club1.name} ${club1.emoji}* et *${club2.name} ${club2.emoji}* va commencer dans 3 secondes !`;
+        await reply(startMessage, { mentions: [sender] });
+
+        // Attendre 3 secondes avant de simuler le match
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        // Générer aléatoirement les scores entre 0 et 50
+        const score1 = Math.floor(Math.random() * 51);
+        const score2 = Math.floor(Math.random() * 51);
+
+        let resultMessage;
+        // Si le score est exactement 1-1, afficher "million"
+        if (score1 === 1 && score2 === 1) {
+            resultMessage = `🔥 *Million* 🔥\n\n@${sender.split("@")[0]}, le match s'est terminé sur 1-1, ce qui est considéré comme un résultat *Million*!`;
+        } else {
+            const total = score1 + score2;
+            resultMessage = `⚽ *Résultat du Match*\n\n*${club1.name} ${club1.emoji}* ${score1} - ${score2} *${club2.name} ${club2.emoji}*\n\nTotal : ${total} points pour @${sender.split("@")[0]}.`;
+        }
+
+        // Envoyer le résultat final en mentionnant l'utilisateur qui a lancé la commande
+        await reply(resultMessage, { mentions: [sender] });
+    } catch (error) {
+        console.error("Error in konami command:", error);
+        reply("❌ Une erreur est survenue lors de l'exécution de la commande konami.");
+    }
+});
