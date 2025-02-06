@@ -15,7 +15,8 @@ const config = require('../config');
 const { Sticker, StickerTypes } = require('wa-sticker-formatter');
 const { cmd } = require('../command');
 const { getRandom } = require('../lib/functions');
-/*
+
+
 cmd(
     {
         pattern: 'take',
@@ -49,7 +50,6 @@ cmd(
         }
     }
 );
-*/
 //Sticker create 
 var imgmsg = '';
 if (config.LANG === 'SI') imgmsg = 'ඡායාරූපයකට mention දෙන්න!';
@@ -112,46 +112,5 @@ cmd({
     } catch (e) {
         reply('Error !!');
         console.error(e);
-    }
-});
-
-cmd({
-    pattern: "take",
-    desc: "Steal a sticker and resend it with a custom packname.",
-    category: "sticker",
-    react: "🎭",
-    filename: __filename,
-    use: ".take [packname]"
-}, async (conn, mek, m, { from, args, reply, sender }) => {
-    try {
-        // Check if the message is a reply containing a sticker
-        const quotedSticker = m.quoted && m.quoted.message && m.quoted.message.stickerMessage;
-        if (!quotedSticker) {
-            return reply("⚠️ Please reply to a sticker using `.take` to modify it.");
-        }
-
-        // Download the sticker from the quoted message
-        const media = await conn.downloadAndSaveMediaMessage(m.quoted);
-        if (!media) return reply("❌ Failed to download the sticker.");
-
-        // Define the packname: use provided argument or default to "@username"
-        const packname = args.length > 0 ? args.join(" ") : `@${sender.split("@")[0]}`;
-        const author = "KERM MD"; // Default author name
-
-        // Create a temporary file name for the sticker
-        const fileName = `./temp_${Date.now()}.webp`;
-        writeFileSync(fileName, media);
-
-        // Generate a new sticker with the custom packname using the stickerMetadata function
-        const stickerBuffer = await stickerMetadata(fileName, { packname, author });
-
-        // Send the modified sticker back to the chat, quoting the original message
-        await conn.sendMessage(from, { sticker: stickerBuffer }, { quoted: mek });
-
-        // Delete the temporary file
-        unlinkSync(fileName);
-    } catch (error) {
-        console.error("Error in .take command:", error);
-        reply("❌ An error occurred while modifying the sticker.");
     }
 });
