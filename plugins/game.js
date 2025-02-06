@@ -175,6 +175,8 @@ cmd({
             { name: "Schalke 04", emoji: "🔴" },
             { name: "Sporting Braga", emoji: "🔵" },
             { name: "Zenit Saint-Pétersbourg", emoji: "🔵" },
+            { name: "Cameroun", emoji: "🟢🔴" },
+            { name: "France", emoji: "🔵⚪️" },
             { name: "FC Shakhtar Donetsk", emoji: "🟡" }
             // Vous pouvez ajouter d'autres clubs si besoin
         ];
@@ -187,11 +189,11 @@ cmd({
         }
 
         // Message d'annonce du match
-        const startMessage = `⚽ *Annonce du Match*\n\nLe match entre *${club1.name} ${club1.emoji}* et *${club2.name} ${club2.emoji}* va commencer dans 3 secondes !`;
+        const startMessage = `⚽ *Annonce du Match*\n\nLe match entre *${club1.name} ${club1.emoji}* et *${club2.name} ${club2.emoji}* va commencer dans 5 secondes !`;
         await reply(startMessage, { mentions: [sender] });
 
-        // Attendre 3 secondes avant de simuler le match
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        // Attendre 5 secondes avant de simuler le match
+        await new Promise(resolve => setTimeout(resolve, 5000));
 
         // Générer aléatoirement les scores entre 0 et 50
         const score1 = Math.floor(Math.random() * 51);
