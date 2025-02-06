@@ -32,7 +32,7 @@ cmd(
         let mime = mek.quoted.mtype;
         let pack = q;
 
-        if (mime === "imageMessage" || mime === "stickerMessage") {
+        if (mime === "stickerMessage") { // Change to handle only sticker messages
             let media = await mek.quoted.download();
             let sticker = new Sticker(media, {
                 pack: pack, 
@@ -45,11 +45,10 @@ cmd(
             const buffer = await sticker.toBuffer();
             return conn.sendMessage(mek.chat, { sticker: buffer }, { quoted: mek });
         } else {
-            return reply("*Uhh, Please reply to an image.*");
+            return reply("*Uhh, Please reply to a sticker.*"); // Update the message to indicate sticker
         }
     }
 );
-
 //Sticker create 
 var imgmsg = '';
 if (config.LANG === 'SI') imgmsg = 'ඡායාරූපයකට mention දෙන්න!';
