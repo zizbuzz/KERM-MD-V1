@@ -10,12 +10,12 @@ CONTACT ME HERE +237656520674
 YT: KermHackTools
 Github: Kgtech-cmr
 */
-/*
+
 const config = require('../config');
 const { Sticker, StickerTypes } = require('wa-sticker-formatter');
 const { cmd } = require('../command');
 const { getRandom } = require('../lib/functions');
-
+/*
 cmd(
     {
         pattern: 'take',
