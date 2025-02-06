@@ -200,7 +200,7 @@ cmd({
         const chosenTeam = Math.random() < 0.5 ? team1 : team2;
 
         // Message final annonçant le gagnant
-        const resultMessage = `🏆 *Résultat du Match*\n\nLe gagnant est : ${chosenTeam}\n\nIci le resulta @${sender.split("@")[0]} !`;
+        const resultMessage = `🏆 *Résultat du Match*\n\nLe gagnant est : ${chosenTeam}🥳\n\n> Ici le resultat😎 @${sender.split("@")[0]} !`;
         await reply(resultMessage, { mentions: [sender] });
     } catch (error) {
         console.error("Error in konami command:", error);
