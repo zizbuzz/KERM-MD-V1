@@ -122,93 +122,85 @@ cmd({
 
 cmd({
     pattern: "konami",
-    desc: "Simule un match entre deux clubs et affiche le résultat final.",
+    desc: "Simulate a match between two teams and choose a winner randomly after 30 seconds.",
     category: "game",
     react: "⚽",
     filename: __filename,
     use: ".konami"
 }, async (conn, mek, m, { from, sender, reply }) => {
     try {
-        // Liste étendue des clubs avec leurs emojis
-        const clubs = [
-            { name: "FC Barcelone", emoji: "🔵🔴" },
-            { name: "Real Madrid", emoji: "⚪️🔵" },
-            { name: "Manchester United", emoji: "🔴" },
-            { name: "Liverpool", emoji: "🔴" },
-            { name: "Bayern Munich", emoji: "🔴⚪️" },
-            { name: "Juventus", emoji: "⚫️⚪️" },
-            { name: "Paris Saint-Germain", emoji: "🔵🔴" },
-            { name: "Arsenal", emoji: "🔴" },
-            { name: "AC Milan", emoji: "🔴⚫️" },
-            { name: "Inter Milan", emoji: "🔵🔴" },
-            { name: "Chelsea", emoji: "🔵" },
-            { name: "Borussia Dortmund", emoji: "🟡⚫️" },
-            { name: "Tottenham", emoji: "⚪️🔴" },
-            { name: "Atletico Madrid", emoji: "🔴⚪️" },
-            { name: "Ajax", emoji: "🔴⚪️" },
-            { name: "Porto", emoji: "🔵" },
-            { name: "Benfica", emoji: "🟥" },
-            { name: "Lyon", emoji: "🔵" },
-            { name: "Marseille", emoji: "🔵⚪️" },
-            { name: "AS Monaco", emoji: "🔵🔴" },
-            { name: "Sporting CP", emoji: "🟢" },
-            { name: "Everton", emoji: "🔵" },
-            { name: "West Ham United", emoji: "🔴" },
-            { name: "AS Roma", emoji: "🟥" },
-            { name: "Fiorentina", emoji: "🟣" },
-            { name: "Napoli", emoji: "🔵" },
-            { name: "Celtic", emoji: "🟢" },
-            { name: "Rangers", emoji: "🔴" },
-            { name: "Feyenoord", emoji: "🟡🔴" },
-            { name: "PSV Eindhoven", emoji: "🔴" },
-            { name: "Real Sociedad", emoji: "🔵⚪️" },
-            { name: "Sevilla", emoji: "🔴" },
-            { name: "Villarreal", emoji: "🔶" },
-            { name: "Valencia", emoji: "🟡" },
-            { name: "Leicester City", emoji: "🔵" },
-            { name: "Newcastle United", emoji: "⚫️⚪️" },
-            { name: "Aston Villa", emoji: "🔴" },
-            { name: "Southampton", emoji: "🔴" },
-            { name: "Crystal Palace", emoji: "🔴" },
-            { name: "Wolverhampton", emoji: "🟠" },
-            { name: "Borussia Mönchengladbach", emoji: "🟢" },
-            { name: "Schalke 04", emoji: "🔴" },
-            { name: "Sporting Braga", emoji: "🔵" },
-            { name: "Zenit Saint-Pétersbourg", emoji: "🔵" },
-            { name: "Cameroun", emoji: "🟢🔴" },
-            { name: "France", emoji: "🔵⚪️" },
-            { name: "FC Shakhtar Donetsk", emoji: "🟡" }
-            // Vous pouvez ajouter d'autres clubs si besoin
+        // Liste étendue des clubs et équipes internationales avec leurs emojis
+        const teams = [
+            "Real Madrid 🇪🇸",
+            "FC Barcelone 🇪🇸",
+            "Manchester United 🇬🇧",
+            "Liverpool FC 🇬🇧",
+            "Bayern Munich 🇩🇪",
+            "Juventus 🇮🇹",
+            "Paris Saint-Germain 🇫🇷",
+            "Arsenal FC 🇬🇧",
+            "AC Milan 🇮🇹",
+            "Inter Milan 🇮🇹",
+            "Chelsea FC 🇬🇧",
+            "Borussia Dortmund 🇩🇪",
+            "Cameroun 🇨🇲",
+            "Côte D'Ivoire 🇨🇮",
+            "Tottenham Hotspur 🇬🇧",
+            "Sénégal 🇸🇳",
+            "RDC 🇨🇩",
+            "Congo 🇨🇬",
+            "Ajax Amsterdam 🇳🇱",
+            "FC Porto 🇵🇹",
+            "SL Benfica 🇵🇹",
+            "Olympique Lyonnais 🇫🇷",
+            "Olympique de Marseille 🇫🇷",
+            "AS Monaco 🇫🇷",
+            "Sporting CP 🇵🇹",
+            "Everton FC 🇬🇧",
+            "West Ham United 🇬🇧",
+            "Atletico Madrid 🇪🇸",
+            "AS Roma 🇮🇹",
+            "Fiorentina 🇮🇹",
+            "Napoli 🇮🇹",
+            "Celtic FC 🇬🇧",
+            "Rangers FC 🇬🇧",
+            "Feyenoord 🇳🇱",
+            "PSV Eindhoven 🇳🇱",
+            "Brazil 🇧🇷",
+            "Germany 🇩🇪",
+            "Argentina 🇦🇷",
+            "France 🇫🇷",
+            "Spain 🇪🇸",
+            "Italy 🇮🇹",
+            "England 🏴",
+            "Portugal 🇵🇹",
+            "Netherlands 🇳🇱",
+            "Belgium 🇧🇪",
+            "Mexico 🇲🇽",
+            "Uruguay 🇺🇾",
+            "USA 🇺🇸"
+            // Ajoutez d'autres équipes si nécessaire
         ];
 
-        // Sélection aléatoire de deux clubs différents
-        const club1 = clubs[Math.floor(Math.random() * clubs.length)];
-        let club2 = clubs[Math.floor(Math.random() * clubs.length)];
-        while (club2.name === club1.name) {
-            club2 = clubs[Math.floor(Math.random() * clubs.length)];
+        // Sélection aléatoire de deux équipes différentes
+        const team1 = teams[Math.floor(Math.random() * teams.length)];
+        let team2 = teams[Math.floor(Math.random() * teams.length)];
+        while (team2 === team1) {
+            team2 = teams[Math.floor(Math.random() * teams.length)];
         }
 
-        // Message d'annonce du match
-        const startMessage = `⚽ *Annonce du Match*\n\nLe match entre *${club1.name} ${club1.emoji}* et *${club2.name} ${club2.emoji}* va commencer dans 5 secondes !`;
-        await reply(startMessage, { mentions: [sender] });
+        // Annonce du match versus
+        const announcement = `⚽ *Match Versus*\n\n${team1} 🆚 ${team2}\n\n@${sender.split("@")[0]}, choisis le gagnant ! Tu as 30 secondes pour réfléchir.`;
+        await reply(announcement, { mentions: [sender] });
 
-        // Attendre 5 secondes avant de simuler le match
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        // Attendre 30 secondes
+        await new Promise(resolve => setTimeout(resolve, 30000));
 
-        // Générer aléatoirement les scores entre 0 et 50
-        const score1 = Math.floor(Math.random() * 51);
-        const score2 = Math.floor(Math.random() * 51);
+        // Choix aléatoire du gagnant parmi les deux équipes
+        const chosenTeam = Math.random() < 0.5 ? team1 : team2;
 
-        let resultMessage;
-        // Si le score est exactement 1-1, afficher "million"
-        if (score1 === 1 && score2 === 1) {
-            resultMessage = `🔥 *Million* 🔥\n\n@${sender.split("@")[0]}, le match s'est terminé sur 1-1, ce qui est considéré comme un résultat *Million*!`;
-        } else {
-            const total = score1 + score2;
-            resultMessage = `⚽ *Résultat du Match*\n\n*${club1.name} ${club1.emoji}* ${score1} - ${score2} *${club2.name} ${club2.emoji}*\n\nTotal : ${total} points pour @${sender.split("@")[0]}.`;
-        }
-
-        // Envoyer le résultat final en mentionnant l'utilisateur qui a lancé la commande
+        // Message final annonçant le gagnant
+        const resultMessage = `🏆 *Résultat du Match*\n\nLe gagnant est : ${chosenTeam}\n\nIci le resulta @${sender.split("@")[0]} !`;
         await reply(resultMessage, { mentions: [sender] });
     } catch (error) {
         console.error("Error in konami command:", error);
