@@ -41,7 +41,7 @@ cmd({
 
     let type = stickers.data.result.is_animated ? 'animated sticker' : 'not animated sticker';
 
-    let message = `*🧩KERM TELEGEAM STICKERS🧩*\n\n` +
+    let message = `*🧩KERM TELEGRAM STICKERS🧩*\n\n` +
                   `*Producer:* ${stickers.data.result.name}\n` +
                   `*Type:* ${type}\n` +
                   `*Length:* ${stickers.data.result.stickers.length}\n\n` +
@@ -51,7 +51,7 @@ cmd({
 await conn.sendMessage(
             from,
             {
-                image: { url: `https://i.ibb.co/dwmbSTkL/mrfrankofc.jpg` },
+                image: { url: `https://i.ibb.co/B2nBXKvx/lordkerm.jpg` },
                 caption: message,
                 contextInfo: {
                     mentionedJid: [m.sender],
@@ -59,7 +59,7 @@ await conn.sendMessage(
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '120363304325601080@newsletter',
-                        newsletterName: '❄️『 𝐒𝐔𝐁𝐙𝐄𝐑𝐎 𝐌𝐃 』❄️ ',
+                        newsletterName: '🐲𝐊𝐄𝐑𝐌 𝐓𝐆𝐒🐲',
                         serverMessageId: 143
                     }
                 }
@@ -80,7 +80,7 @@ await conn.sendMessage(
 
       // Create a WhatsApp sticker
       const sticker = new Sticker(buffer.data, {
-        pack: '❄️ SUBZERO-MD ❄️',
+        pack: '🐲𝐊𝐄𝐑𝐌 𝐌𝐃 𝐕𝟏🐲',
         author: 'ɱɾ ƒɾαɳҡ σƒc',
         type: StickerTypes.FULL,
         categories: ['🤩', '🎉'],
