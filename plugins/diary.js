@@ -24,7 +24,7 @@ const saveDiaries = () => {
 };
 
 // URL of the image (replace with a valid URL)
-const ALIVE_IMG = "https://i.ibb.co/4Zq1jCNP/lordkerm.jpg"; 
+const DIARY_IMG = "https://i.ibb.co/4Zq1jCNP/lordkerm.jpg"; 
 
 // ---------------------
 // .diary command (open or create diary)
@@ -68,7 +68,7 @@ cmd({
 
     // Send the image with the diary entries
     await conn.sendMessage(from, {
-        image: { url: ALIVE_IMG },
+        image: { url: DIARY_IMG },
         caption: formattedInfo,
         contextInfo: { 
             mentionedJid: [m.sender],
