@@ -187,14 +187,14 @@ cmd({
     const messagePayload = {
       video: { url: downloadUrl },
       mimetype: 'video/mp4',
-      caption: `*${videoDetails.title || 'Downloaded by SUBZERO-MD'}*`,
+      caption: `*${videoDetails.title || 'Downloaded by KERM-MD'}*`,
       contextInfo: {
         externalAdReply: {
-          title: videoDetails.title || 'SUBZERO-MD Video Download',
-          body: 'Powered by SUBZERO-MD',
+          title: videoDetails.title || 'KERM-MD-V1 Video Download',
+          body: 'Powered by KERM-MD',
           mediaType: 1,
-          sourceUrl: 'https://github.com/MrFrank-ofc/SUBZERO-BOT', // Replace with your desired link
-          thumbnailUrl: firstVideo.thumbnail || 'https://i.imgur.com/v9gJCSD.jpeg',
+          sourceUrl: 'https://github.com/Kgtech-cmr/KERM-MD-V1', // Replace with your desired link
+          thumbnailUrl: firstVideo.thumbnail || 'https://i.ibb.co/XrkdWW5C/lordkerm.jpg',
           renderLargerThumbnail: true,
         },
       },
