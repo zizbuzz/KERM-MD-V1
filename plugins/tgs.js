@@ -81,7 +81,7 @@ await conn.sendMessage(
       // Create a WhatsApp sticker
       const sticker = new Sticker(buffer.data, {
         pack: '🐲𝐊𝐄𝐑𝐌 𝐌𝐃 𝐕𝟏🐲',
-        author: 'ɱɾ ƒɾαɳҡ σƒc',
+        author: '𝐋𝐎𝐑𝐃 𝐊𝐄𝐑𝐌',
         type: StickerTypes.FULL,
         categories: ['🤩', '🎉'],
         id: '12345',
