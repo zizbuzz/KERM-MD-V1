@@ -67,7 +67,7 @@ cmd({
     if (command === 'tiny' || command === 'tinyurl') {
       apiUrl = `https://api.davidcyriltech.my.id/tinyurl?url=${encodeURIComponent(q)}`;
     } else {
-      apiUrl = `https://api.davidcyriltech.my.id/bitly?link=${encodeURIComponent(q)}`;
+      apiUrl = `https://api.davidcyriltech.my.id/tinyurl?url=${encodeURIComponent(q)}`;
     }
 
     await reply('> *Shortening URL...*');
