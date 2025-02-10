@@ -65,9 +65,9 @@ cmd({
     // Construire l'URL de l'API selon la commande utilisée
     let apiUrl = '';
     if (command === 'tiny' || command === 'tinyurl') {
-      apiUrl = `https://api.dreaded.site/api/shorten-url?url=${encodeURIComponent(q)}`;
+      apiUrl = `https://api.davidcyriltech.my.id/tinyurl?url=${encodeURIComponent(q)}`;
     } else {
-      apiUrl = `https://api.dreaded.site/api/shorten-url?url=${encodeURIComponent(q)}`;
+      apiUrl = `https://api.davidcyriltech.my.id/tinyurl?url=${encodeURIComponent(q)}`;
     }
 
     await reply('> *Shortening URL...*');
