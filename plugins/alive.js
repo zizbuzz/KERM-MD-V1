@@ -67,6 +67,23 @@ Hi 🫵🏽 ${pushname}
                 }
             }
         }, { quoted: mek });
+        
+        // Send the audio file with context info
+        await conn.sendMessage(from, {
+            audio: { url: 'https://github.com/mrfrank-ofc/SUBZERO-MD-DATABASE/raw/refs/heads/main/audios/subzero-menu.mp3' },
+            mimetype: 'audio/mp4',
+            ptt: true,
+            contextInfo: { 
+                mentionedJid: [m.sender],
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: '120363321386877609@newsletter',
+                    newsletterName: '𝐊𝐄𝐑𝐌 𝐀𝐋𝐈𝐕𝐄',
+                    serverMessageId: 143
+                }
+            }
+        }, { quoted: mek });
 
     } catch (error) {
         console.error("Error in alive command: ", error);
