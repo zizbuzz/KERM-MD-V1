@@ -40,7 +40,7 @@ if (!isAdmins) return reply(ADMIN)
                 reply(`Open time ${q} starting from now`)
                 setTimeout(() => {
                     var nomor = mek.participant
-                    const open = `*OPEN TIME* THE GROUP WAS OPENED BY KERM_MD-V4 TO APPROVED ADMIN\n NOW MEMBERS CAN SEND MESSAGES 🔓`
+                    const open = `*OPEN TIME* THE GROUP WAS OPENED BY KERM-MD-V1 TO APPROVED ADMIN\n NOW MEMBERS CAN SEND MESSAGES 🔓`
                     conn.groupSettingUpdate(from, 'not_announcement')
                     reply(open)
                 }, timer)
@@ -77,7 +77,7 @@ if (!isAdmins) return reply(ADMIN)
                 reply(`Close time ${q} starting from now`)
                 setTimeout(() => {
                     var nomor = m.participant
-                    const close = `*CLOSE TIME* GROUP CLOSED BY KERM_MD-V4 AT APPROVED ADMIN\nNOW ONLY ADMIN CAN SEND MESSAGES 🔐`
+                    const close = `*CLOSE TIME* GROUP CLOSED BY KERM-MD-V1 AT APPROVED ADMIN\nNOW ONLY ADMIN CAN SEND MESSAGES 🔐`
                     conn.groupSettingUpdate(from, 'announcement')
                     reply(close)
                 }, timer)
@@ -142,7 +142,7 @@ if (!isBotAdmins) return reply(mg.needbotadmins);
             return await conn.sendMessage(m.chat, { react: { text: '🔒', key: mass.key } });
 } catch(e) {
 console.log(e);
-reply('*PLEASE GIVE ME A ADDMIN ROLE❗👻*')    
+reply('*PLEASE GIVE ME A ADMIN ROLE❗👻*')    
 } 
 })
 
@@ -167,7 +167,7 @@ if (!isBotAdmins) return reply(mg.needbotadmins);
             return await conn.sendMessage(m.chat, { react: { text: '🔒', key: mass.key } });
 } catch(e) {
 console.log(e);
-reply('*PLEASE GIVE ME A ADDMIN ROLE❗👻*')    
+reply('*PLEASE GIVE ME A ADMIN ROLE❗👻*')    
 } 
 })
 
