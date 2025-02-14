@@ -25,6 +25,7 @@ cmd({
       *│  ◦* *▢➠ RAPHAËL*
       *│  ◦* *▢➠ BRAYANO*
       *│  ◦* *▢➠ AMIR*
+      *│  ◦* *▢➠ MIDAS*
       *│  ◦* *▢➠ CHRIST*
       *│  ◦* *▢➠ NOBLESSE*
       *│  ◦* *▢➠ NATH*
