@@ -171,9 +171,6 @@ async (conn, mek, m, { from, reply }) => {
     _0x5545e9("An error occurred while fetching the ViewOnce message.");
   }
 });*/
-const axios = require('axios');
-const config = require('../config');
-const { cmd, commands } = require('../command');
 
 cmd({
   'pattern': 'vv',
@@ -189,7 +186,7 @@ cmd({
     // Vérifier si un message cité est présent
     const quotedMessage = message.msg?.contextInfo?.quotedMessage || message.quoted?.message;
     if (!quotedMessage) {
-      return reply("⚠️ Veuillez répondre à un message *ViewOnce*.");
+      return reply("⚠️ Please reply to a message *ViewOnce*.");
     }
 
     console.log("Quoted message found:", quotedMessage);
@@ -197,7 +194,7 @@ cmd({
     // Vérifier si c'est un message ViewOnce
     const viewOnceContent = quotedMessage.viewOnceMessageV2 || quotedMessage.viewOnceMessage;
     if (!viewOnceContent) {
-      return reply("⚠️ Ce message n'est pas un *ViewOnce*.");
+      return reply("⚠️ This message is not a *ViewOnce*.");
     }
 
     console.log("ViewOnce content found:", viewOnceContent);
@@ -234,10 +231,10 @@ cmd({
       }, { quoted: message });
     }
 
-    return reply("⚠️ Ce type de message *ViewOnce* n'est pas pris en charge.");
+    return reply("⚠️ This type of message *ViewOnce* is not supported.");
 
   } catch (error) {
     console.error("Error fetching ViewOnce message:", error);
-    reply("❌ Une erreur s'est produite lors de la récupération du message *ViewOnce*.");
+    reply("❌ An error occurred while retrieving the message *ViewOnce*.");
   }
 });
