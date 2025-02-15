@@ -16,7 +16,6 @@ let fs = require('fs');
 const { execSync } = require('child_process');
 const { cmd } = require('../command');
 
-
 cmd({ 
   pattern: "update", 
   react: "🔄", 
