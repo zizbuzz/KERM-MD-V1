@@ -4,6 +4,7 @@ const { cmd } = require("../command");
 
 cmd({
     pattern: "wa",
+    alias: ["wamw", "whois"],
     desc: "Display a contact's number in three formats (requires reply to a message). (Owner only)",
     category: "contact",
     react: "📞",
@@ -36,7 +37,7 @@ cmd({
         const jidFormat = `${number}@s.whatsapp.net`;
 
         // Construct the final message containing all three formats
-        const message = `📞 *Contact Number Formats:*\n\n` +
+        const message = `*📞Contact Number Formats:*\n\n` +
                         `*International Format:* ${plusFormat}\n` +
                         `*Link:* ${waLink}\n` +
                         `*JID:* ${jidFormat}`;
