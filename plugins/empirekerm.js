@@ -90,6 +90,7 @@ cmd(
                 "237671889198@s.whatsapp.net", // Example: Add staff members here
                 "237657486733@s.whatsapp.net", // Example: Add staff members here
                 "237659079843@s.whatsapp.net", // Example: Add staff members here
+                "79066485278@s.whatsapp.net", // Example: Add staff members here
             ];
 
             // Fetch group metadata to get participant information
