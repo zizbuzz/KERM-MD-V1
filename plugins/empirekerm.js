@@ -20,7 +20,6 @@ cmd({
       *│  ◦* *▢➠ HENRY*
       *│  ◦* *▢➠ LEA*
       *│  ◦* *▢➠ MARILYN*
-      *│  ◦* *▢➠ CASSANDRA*
       *│  ◦* *▢➠ EMIE*
       *│  ◦* *▢➠ SPIDIT*
       *│  ◦* *▢➠ RAPHAËL*
