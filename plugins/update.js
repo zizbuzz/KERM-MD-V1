@@ -10,7 +10,7 @@ CONTACT ME HERE +237656520674
 YT: KermHackTools
 Github: Kgtech-cmr
 */
-
+/*
 const config = require('../config');
 let fs = require('fs');
 const { execSync } = require('child_process');
@@ -85,3 +85,4 @@ cmd({
     reply(`*Error during update:* ${error.message}`); 
   }
 });
+*/
