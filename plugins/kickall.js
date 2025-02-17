@@ -51,7 +51,7 @@ cmd({
         stopKickall = false; // Reset the stop flag
 
         // Send warning message before execution
-        reply(`⚠️ *Warning!* All non-admin members will be removed in *5 seconds*.\nTo cancel this operation, type *restart*.`);
+        reply(`⚠️ *Warning!* All non-admin members will be removed in *5 seconds*.\nTo cancel this operation, type *.stop*.`);
         
         // Countdown before execution with a chance to cancel
         for (let i = 5; i > 0; i--) {
@@ -90,7 +90,7 @@ cmd({
 
 // Command to stop kickall execution
 cmd({
-    pattern: "restart",
+    pattern: "stop",
     desc: "Stops the kickall command.",
     react: "⏹️",
     category: "group",
