@@ -48,7 +48,7 @@ cmd({
         'forwardingScore': 0x3e7,
         'isForwarded': true,
         'forwardedNewsletterMessageInfo': {
-          'newsletterJid': "120363395768630577@newsletterr",
+          'newsletterJid': "120363321386877609@newsletter",
           'newsletterName': "𝐊𝐄𝐑𝐌 𝐆𝐈𝐓𝐇𝐔𝐁 𝐂𝐋𝐎𝐍𝐄🏌️",
           'serverMessageId': 0x8f
         }
