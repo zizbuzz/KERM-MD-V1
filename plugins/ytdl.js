@@ -217,6 +217,7 @@ cmd({
     console.log(_0x3c31c1);
     _0x233cc6('' + _0x3c31c1);
   }
+/*
 });
 cmd({
   'pattern': 'video',
@@ -511,6 +512,7 @@ cmd({
     _0x419796('' + _0x2c8571);
   }
 });
+*/
 cmd({
   'pattern': "yta",
   'alias': "ytmp3",
