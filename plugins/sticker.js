@@ -16,7 +16,7 @@ const { Sticker, StickerTypes } = require('wa-sticker-formatter');
 const { cmd } = require('../command');
 const { getRandom } = require('../lib/functions');
 
-
+/*
 cmd(
     {
         pattern: 'take',
@@ -50,6 +50,7 @@ cmd(
         }
     }
 );
+*/
 //Sticker create 
 var imgmsg = '';
 if (config.LANG === 'SI') imgmsg = 'ඡායාරූපයකට mention දෙන්න!';
@@ -62,7 +63,7 @@ else descg = 'ɪᴛ ᴄᴏɴᴠᴇʀᴛs ʏᴏᴜʀ ʀᴇᴘʟɪᴇᴅ ᴘʜᴏ�
 cmd({
     pattern: 'sticker',
     react: '🤹‍♀️',
-    alias: ['s', 'stickers'],
+    alias: ['s', 'stickers', 'take'],
     desc: descg,
     category: 'convert',
     use: '.sticker <Reply to image>',
