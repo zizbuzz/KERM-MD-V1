@@ -3,9 +3,9 @@ const util = require('util');
 const fs = require("fs");
 const path = require("path");
 
-Xcmd(
+cmd(
   {
-    Xname: "eval",
+    pattern: "eval",
     Xclass: "system",
     Xinfo: "Evaluate code",
     Xpath: __filename,
