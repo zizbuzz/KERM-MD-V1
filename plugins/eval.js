@@ -4,7 +4,6 @@ const fs = require("fs");
 const path = require("path");
 
 cmd({
-  
     pattern: "eval",
     desc: "system",
     category: "Evaluate code",
@@ -12,14 +11,14 @@ cmd({
   },
   async (m, match) => {
     let c = match;
-    if (!c) return m.reply(`_Please provide code to run_`);
+    if (!c) return m.send(`_Please provide code to run_`);
 
     try {
       let s = await eval(c);
       if (typeof s !== "string") s = util.inspect(s);
-      await m.reply(s);
+      await m.send(s);
     } catch (e) {
-      await m.reply(util.format(e));
+      await m.send(util.format(e));
     }
   }
 );
