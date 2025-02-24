@@ -9,16 +9,16 @@ cmd({
     category: "Evaluate code",
     filename: __filename,
   },
-  async (m, match) => {
-    let c = match;
-    if (!c) return m.send(`_Please provide code to run_`);
+  async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+    let c = q;
+    if (!c) return reply(`_Please provide code to run_`);
 
     try {
       let s = await eval(c);
       if (typeof s !== "string") s = util.inspect(s);
-      await m.send(s);
+      await reply(s);
     } catch (e) {
-      await m.send(util.format(e));
+      await reply(util.format(e));
     }
   }
 );
