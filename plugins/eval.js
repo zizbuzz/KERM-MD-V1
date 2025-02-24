@@ -7,8 +7,8 @@ cmd({
   
     pattern: "eval",
     desc: "system",
-    Xinfo: "Evaluate code",
-    Xpath: __filename,
+    category: "Evaluate code",
+    path: __filename,
   },
   async (m, match) => {
     let c = match;
