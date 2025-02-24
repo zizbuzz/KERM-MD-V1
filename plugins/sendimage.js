@@ -1,5 +1,7 @@
 
 
+const { cmd } = require('../command');
+
 cmd({
   pattern: 'sendimage',
   desc: 'Send an image from a URL.',
@@ -17,11 +19,11 @@ cmd({
     const imageUrl = args[0];
     
     // Envoie l'image avec la légende
-    conn.sendMessage(m.chat, {
+    await conn.sendMessage(m.chat, {
       image: { url: imageUrl },
       caption: `Here is your image!`,
       mimetype: "image/png"
-    });
+    }, { quoted: mek });
   } catch (error) {
     console.error('Error in sendimage command:', error);
     reply(`❌ An error occurred: ${error.message}`);
