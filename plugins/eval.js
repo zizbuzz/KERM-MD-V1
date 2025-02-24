@@ -1,6 +1,6 @@
-
-
+const { cmd } = require('../command');
 const util = require('util')
+
 Xcmd(
   {
     Xname: "eval",
