@@ -3,10 +3,10 @@ const util = require('util');
 const fs = require("fs");
 const path = require("path");
 
-cmd(
-  {
+cmd({
+  
     pattern: "eval",
-    Xclass: "system",
+    desc: "system",
     Xinfo: "Evaluate code",
     Xpath: __filename,
   },
