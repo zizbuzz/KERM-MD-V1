@@ -16,7 +16,7 @@ const { cmd } = require("../command");
 const moment = require("moment");
 
 let botStartTime = Date.now(); // Enregistrement de l'heure de démarrage du bot
-const ALIVE_IMG = "https://i.ibb.co/zrvpnRX/mrfrankofc.jpg"; // Assurez-vous que cette URL est valide
+const ALIVE_IMG = "https://i.ibb.co/dwCrqM45/lordkerm.jpg"; // Assurez-vous que cette URL est valide
 
 cmd({
     pattern: "alive",
