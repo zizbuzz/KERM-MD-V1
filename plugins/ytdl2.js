@@ -1,4 +1,4 @@
-/*
+
 const { cmd } = require('../command');
 const yts = require('yt-search');
 const axios = require('axios');
@@ -16,7 +16,7 @@ const APIS = [
 // Command to play/download YouTube audio
 cmd(
   {
-    pattern: 'play',
+    pattern: 'song',
     react: '✔️',
     alias: ['ytmp3', 'ytplay', 'ytdoc', 'play2', 'play3'],
     desc: 'Download audio from YouTube by searching for keywords (using multiple APIs).',
@@ -80,7 +80,7 @@ cmd(
 // Command to download song (similar to "play" command)
 cmd(
   {
-    pattern: 'song',
+    pattern: 'song2',
     react: '🎵',
     alias: ['yta', 'ytaudio', 'audio', 'song2', 'song3'],
     desc: 'Download audio from YouTube by searching for keywords (using multiple APIs).',
@@ -145,4 +145,3 @@ cmd(
     }
   }
 );
-*/
